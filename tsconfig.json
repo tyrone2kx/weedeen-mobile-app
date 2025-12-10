@@ -1,5 +1,35 @@
 {
   "extends": "@react-native/typescript-config",
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/node_modules", "**/Pods"]
+  "include": [
+    "src",
+    "assets",
+    "App.tsx",
+    ".eslintrc.js",
+    "nativewind-env.d.ts"
+  ],
+  "typeRoots": [
+    "node_modules/@types",
+    "src/@types"
+  ],
+  "exclude": ["**/node_modules", "**/Pods"],
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    /* Linting */
+    "strict": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./",
+    "paths": {
+      "@wd/*": [
+        "src/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ]
+    }
+  }
 }

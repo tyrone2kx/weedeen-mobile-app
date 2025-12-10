@@ -1,0 +1,153 @@
+export const light = {
+  black: {
+    400: '#384553',
+    600: '#021B33',
+    700: '#011B33',
+    900: '#000000',
+    DEFAULT: '#000000',
+  },
+  blue: {
+    300: '#D0EBFF',
+    400: '#358AC7',
+    500: '#3C91E6',
+    600: '#2196F3',
+    DEFAULT: '#358AC7',
+  },
+  gray: {
+    100: '#ECECEC',
+    150: '#E6E9EC',
+    200: '#E1E1E1',
+    250: '#DCDEE0',
+    300: '#D7D7D7',
+    400: '#CDCDCD',
+    500: '#8C8C8C',
+    DEFAULT: '#8C8C8C',
+  },
+  green: {
+    300: '#D4F6E4',
+    400: '#CDF0D6',
+    500: '#4ABE82',
+    600: '#3A904E',
+    DEFAULT: '#4ABE82',
+  },
+  orange: {
+    400: '#FFE9E5',
+    500: '#FD6E5E',
+    600: '#E6462D',
+    DEFAULT: '#FD6E5E',
+  },
+  purple: {
+    300: '#E8E4FF',
+    400: '#5668D5',
+    500: '#362391',
+    DEFAULT: '#362391',
+  },
+  yellow: {
+    400: '#FFF7DD',
+    450: '#F9E593',
+    500: '#FFCC00',
+    600: '#FFB85F',
+    DEFAULT: '#FFCC00',
+  },
+  red: {
+    300: '#F5E0E7',
+    500: '#CA1551',
+    600: '#A21141',
+    DEFAULT: '#CA1551',
+  },
+  white: {
+    100: '#FFFFFF',
+    200: '#FCFCFC',
+    300: '#F4F4F4',
+    400: '#F9FAFB',
+    DEFAULT: '#FFFFFF',
+  },
+  pink: {
+    500: '#DE8FC2',
+    DEFAULT: '#DE8FC2',
+  },
+  brown: {
+    500: '#59323C',
+    DEFAULT: '#59323C',
+  },
+  transparent: 'transparent',
+  current: 'currentColor',
+} as const;
+
+export const dark = {
+  black: {
+    400: '#E0E1E2',
+    600: '#F9FAFB',
+    700: '#FCFCFC',
+    900: '#FFFFFF',
+    DEFAULT: '#FFFFFF',
+  },
+  blue: {
+    300: '#D0EBFF',
+    400: '#358AC7',
+    500: '#3C91E6',
+    600: '#2196F3',
+    DEFAULT: '#358AC7',
+  },
+  gray: {
+    100: '#252d37',
+    150: '#29323d',
+    200: '#2d3844',
+    250: '#323e4b',
+    300: '#384553',
+    400: '#435364',
+    500: '#8cadd0',
+    DEFAULT: '#8cadd0',
+  },
+  green: {
+    300: '#D4F6E4',
+    400: '#CDF0D6',
+    500: '#4ABE82',
+    600: '#3A904E',
+    DEFAULT: '#4ABE82',
+  },
+  orange: {
+    400: '#FFE9E5',
+    500: '#FD6E5E',
+    600: '#E6462D',
+    DEFAULT: '#FD6E5E',
+  },
+  purple: {
+    300: '#E8E4FF',
+    400: '#5668D5',
+    500: '#362391',
+    DEFAULT: '#362391',
+  },
+  yellow: {
+    400: '#FFF7DD',
+    450: '#F9E593',
+    500: '#FFCC00',
+    600: '#FFB85F',
+    DEFAULT: '#FFCC00',
+  },
+  red: {
+    300: '#F5E0E7',
+    500: '#CA1551',
+    600: '#A21141',
+    DEFAULT: '#CA1551',
+  },
+  white: {
+    100: '#000000',
+    200: '#011B33',
+    300: '#021B33',
+    400: '#010101',
+    DEFAULT: '#000000',
+  },
+  pink: {
+    500: '#DE8FC2',
+    DEFAULT: '#DE8FC2',
+  },
+  brown: {
+    500: '#59323C',
+    DEFAULT: '#59323C',
+  },
+  transparent: 'transparent',
+  current: 'currentColor',
+} as const;
+
+export type TColors = typeof light | typeof dark;

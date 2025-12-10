@@ -1,0 +1,30 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+
+import type { User } from './User';
+
+export type VisitorAccess = {
+  id: string;
+  tenant: string;
+  userId?: string;
+  user?: User;
+  visitorName: string;
+  visitorPhone?: string;
+  visitorType:
+    | 'friend'
+    | 'family'
+    | 'delivery'
+    | 'service_provider'
+    | 'other'
+    | 'unknown';
+  visitorTypeOther?: string;
+  purposeOfVisit?: string;
+  accessCode: string;
+  accessCodeExpiry?: string;
+  accessCodeUsed: boolean;
+  accessCodeUsedAt?: string;
+  approvedByUserId?: string;
+  createdAt: string;
+  updatedAt: string;
+};

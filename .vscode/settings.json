@@ -1,0 +1,22 @@
+{
+  "eslint.format.enable": true,
+  "editor.formatOnSave": true, // Format code on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "eslint.workingDirectories": [{ "mode": "auto" }], // Auto-detect the working directory for ESLint
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // Set Prettier as the default formatter
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Use Prettier for JS files
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Use Prettier for TS files
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Use Prettier for TSX files
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Use Prettier for JSON files
+  }
+}

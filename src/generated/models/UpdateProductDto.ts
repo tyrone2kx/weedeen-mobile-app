@@ -1,0 +1,16 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+
+export type UpdateProductDto = {
+  storeId?: string;
+  updatedByUserId?: string;
+  name?: string;
+  productSerialNo?: string;
+  category?: string;
+  quantity?: number;
+  description?: string;
+  status?: 'in_stock' | 'out_of_stock' | 'discontinued';
+  images?: Array<string>;
+  price?: number;
+};

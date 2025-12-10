@@ -1,0 +1,229 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { CreateFeeDto } from '../models/CreateFeeDto';
+import type { CreatePaymentDto } from '../models/CreatePaymentDto';
+import type { Fee } from '../models/Fee';
+import type { FeeStatisticsResponseDto } from '../models/FeeStatisticsResponseDto';
+import type { NotifyDefaultersDto } from '../models/NotifyDefaultersDto';
+import type { PaginatedFeeInvoicesDto } from '../models/PaginatedFeeInvoicesDto';
+import type { PaginatedFeesDto } from '../models/PaginatedFeesDto';
+import type { Payment } from '../models/Payment';
+import type { UpdateFeeDto } from '../models/UpdateFeeDto';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
+import { request as __request } from '../core/request';
+
+export class FeesService {
+  /**
+   * @returns Fee
+   * @throws ApiError
+   */
+  public static feesControllerCreate({
+    requestBody,
+  }: {
+    requestBody: CreateFeeDto;
+  }): CancelablePromise<Fee> {
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/fees',
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+
+  /**
+   * @returns PaginatedFeesDto
+   * @throws ApiError
+   */
+  public static feesControllerFindAllFees({
+    isGeneralFee,
+    isActive,
+    startDate,
+    endDate,
+    page,
+    limit,
+    search,
+    ignorePagination,
+  }: {
+    isGeneralFee: boolean;
+    isActive: boolean;
+    startDate: string;
+    endDate: string;
+    page?: number;
+    limit?: number;
+    search?: string;
+    ignorePagination?: boolean;
+  }): CancelablePromise<PaginatedFeesDto> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/fees',
+      query: {
+        isGeneralFee: isGeneralFee,
+        isActive: isActive,
+        startDate: startDate,
+        endDate: endDate,
+        page: page,
+        limit: limit,
+        search: search,
+        ignorePagination: ignorePagination,
+      },
+    });
+  }
+
+  /**
+   * @returns Fee
+   * @throws ApiError
+   */
+  public static feesControllerUpdate({
+    id,
+    requestBody,
+  }: {
+    id: string;
+    requestBody: UpdateFeeDto;
+  }): CancelablePromise<Fee> {
+    return __request(OpenAPI, {
+      method: 'PATCH',
+      url: '/fees/{id}',
+      path: {
+        id: id,
+      },
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+
+  /**
+   * @returns Fee
+   * @throws ApiError
+   */
+  public static feesControllerFindOne({
+    id,
+  }: {
+    id: string;
+  }): CancelablePromise<Fee> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/fees/{id}',
+      path: {
+        id: id,
+      },
+    });
+  }
+
+  /**
+   * @returns PaginatedFeeInvoicesDto
+   * @throws ApiError
+   */
+  public static feesControllerFindAllFeeInvoices({
+    userId,
+    startDate,
+    endDate,
+    status,
+    feeId,
+    page,
+    limit,
+    search,
+    ignorePagination,
+  }: {
+    userId: string;
+    startDate: string;
+    endDate: string;
+    status: string;
+    feeId: string;
+    page?: number;
+    limit?: number;
+    search?: string;
+    ignorePagination?: boolean;
+  }): CancelablePromise<PaginatedFeeInvoicesDto> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/fees/invoices',
+      query: {
+        userId: userId,
+        startDate: startDate,
+        endDate: endDate,
+        status: status,
+        feeId: feeId,
+        page: page,
+        limit: limit,
+        search: search,
+        ignorePagination: ignorePagination,
+      },
+    });
+  }
+
+  /**
+   * @returns FeeStatisticsResponseDto
+   * @throws ApiError
+   */
+  public static feesControllerGetStatistics({
+    userId,
+    feeId,
+  }: {
+    userId: string;
+    feeId: string;
+  }): CancelablePromise<FeeStatisticsResponseDto> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/fees/statistics',
+      query: {
+        userId: userId,
+        feeId: feeId,
+      },
+    });
+  }
+
+  /**
+   * @returns Payment
+   * @throws ApiError
+   */
+  public static feesControllerVerifyPayment({
+    reference,
+  }: {
+    reference: string;
+  }): CancelablePromise<Payment> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/fees/payment/verify/{reference}',
+      path: {
+        reference: reference,
+      },
+    });
+  }
+
+  /**
+   * @returns Payment
+   * @throws ApiError
+   */
+  public static feesControllerInitializeFeePayment({
+    requestBody,
+  }: {
+    requestBody: CreatePaymentDto;
+  }): CancelablePromise<Payment> {
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/fees/payment/init',
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public static feesControllerNotifyDefaulters({
+    requestBody,
+  }: {
+    requestBody: NotifyDefaultersDto;
+  }): CancelablePromise<any> {
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/fees/notify-defaulters',
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+}

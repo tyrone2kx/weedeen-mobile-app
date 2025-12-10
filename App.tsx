@@ -4,42 +4,59 @@
  *
  * @format
  */
+import './global.css';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AppNavigationContainer from './src/navigation/AppNavigationContainer';
+import { persistor, store } from './src/redux-store/store';
+import { CreateNotifeeChannel } from './src/utils/notification';
+import { ToastConfigComponents } from './src/utils/toastConfig';
+import { useColorScheme } from 'nativewind';
+import { useEffect, useLayoutEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
 
+const queryClient = new QueryClient();
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const { setColorScheme } = useColorScheme();
+
+  useLayoutEffect(() => {
+    const handleSetTheme = async () => {
+      const theme = (await AsyncStorage.getItem('theme')) as
+        | 'light'
+        | 'dark'
+        | null;
+
+      setColorScheme(theme || 'light');
+    };
+
+    handleSetTheme();
+  }, []);
+
+  useEffect(() => {
+    CreateNotifeeChannel();
+  }, []);
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <PersistGate persistor={persistor}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <SafeAreaProvider>
+                <AppNavigationContainer />
+              </SafeAreaProvider>
+              <Toast config={ToastConfigComponents} />
+            </GestureHandlerRootView>
+          </PersistGate>
+        </QueryClientProvider>
+      </Provider>
+    </>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;

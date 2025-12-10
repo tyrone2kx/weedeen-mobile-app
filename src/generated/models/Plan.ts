@@ -1,0 +1,23 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+
+import type { Billing } from './Billing';
+import type { PricingStructure } from './PricingStructure';
+
+export type Plan = {
+  id: string;
+  name: string;
+  subtitle?: string;
+  description: string;
+  price: number;
+  duration: number;
+  features: Array<string>;
+  pricingStructure: Array<PricingStructure>;
+  currency?: string;
+  status: string;
+  planType: 'organization' | 'individual';
+  billings: Array<Billing>;
+  createdAt: string;
+  updatedAt: string;
+};
