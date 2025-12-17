@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { PaginatedUserDto } from '../models/PaginatedUserDto';
 import type { User } from '../models/User';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class AdminService {
   /**
    * @returns PaginatedUserDto
@@ -41,7 +40,6 @@ export class AdminService {
       },
     });
   }
-
   /**
    * @returns PaginatedUserDto
    * @throws ApiError
@@ -83,7 +81,6 @@ export class AdminService {
       },
     });
   }
-
   /**
    * @returns User
    * @throws ApiError

@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -9,11 +10,9 @@ import type { PaginatedPostsDto } from '../models/PaginatedPostsDto';
 import type { Post } from '../models/Post';
 import type { UpdateCommentDto } from '../models/UpdateCommentDto';
 import type { UpdatePostDto } from '../models/UpdatePostDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class PostsService {
   /**
    * @returns Post
@@ -31,7 +30,6 @@ export class PostsService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedPostsDto
    * @throws ApiError
@@ -58,7 +56,6 @@ export class PostsService {
       },
     });
   }
-
   /**
    * @returns Post
    * @throws ApiError
@@ -76,7 +73,6 @@ export class PostsService {
       },
     });
   }
-
   /**
    * @returns Post
    * @throws ApiError
@@ -98,7 +94,6 @@ export class PostsService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns any
    * @throws ApiError
@@ -116,7 +111,6 @@ export class PostsService {
       },
     });
   }
-
   /**
    * @returns any
    * @throws ApiError
@@ -138,7 +132,6 @@ export class PostsService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns any
    * @throws ApiError
@@ -156,7 +149,6 @@ export class PostsService {
       },
     });
   }
-
   /**
    * @returns any
    * @throws ApiError
@@ -174,7 +166,6 @@ export class PostsService {
       },
     });
   }
-
   /**
    * @returns Comment
    * @throws ApiError
@@ -196,7 +187,6 @@ export class PostsService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns Comment
    * @throws ApiError
@@ -214,7 +204,6 @@ export class PostsService {
       },
     });
   }
-
   /**
    * @returns Comment
    * @throws ApiError
@@ -236,7 +225,6 @@ export class PostsService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns Comment
    * @throws ApiError
@@ -258,7 +246,6 @@ export class PostsService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns any
    * @throws ApiError
@@ -276,7 +263,6 @@ export class PostsService {
       },
     });
   }
-
   /**
    * @returns any
    * @throws ApiError
@@ -294,7 +280,6 @@ export class PostsService {
       },
     });
   }
-
   /**
    * @returns any
    * @throws ApiError

@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -5,11 +6,9 @@ import type { ApiKey } from '../models/ApiKey';
 import type { GenerateKeyDto } from '../models/GenerateKeyDto';
 import type { Organization } from '../models/Organization';
 import type { UpdateOrganizationDto } from '../models/UpdateOrganizationDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class OrganizationService {
   /**
    * @returns boolean
@@ -28,7 +27,6 @@ export class OrganizationService {
       },
     });
   }
-
   /**
    * @returns ApiKey
    * @throws ApiError
@@ -39,7 +37,6 @@ export class OrganizationService {
       url: '/organization/active-keys',
     });
   }
-
   /**
    * @returns Organization
    * @throws ApiError
@@ -57,7 +54,6 @@ export class OrganizationService {
       },
     });
   }
-
   /**
    * @returns Organization
    * @throws ApiError
@@ -79,7 +75,6 @@ export class OrganizationService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns ApiKey
    * @throws ApiError
@@ -96,7 +91,6 @@ export class OrganizationService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns Organization
    * @throws ApiError

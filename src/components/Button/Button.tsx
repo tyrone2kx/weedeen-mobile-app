@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/immutability */
 import { Fonts } from '@wd/utils/Fonts';
 import { getObjectValue, getStringValue } from '@wd/utils/getValueTypes';
 import useTheme from '@wd/utils/theme/useTheme';
@@ -59,25 +60,25 @@ const Button: FC<ButtonProps> = ({
   const background =
     pale || light
       ? 'transparent'
-      : backgroundColor || style?.backgroundColor || theme.green.DEFAULT;
+      : backgroundColor || style?.backgroundColor || theme.blue.DEFAULT;
 
   const paleStyle = pale
     ? {
         borderWidth: 1,
-        borderColor: theme.green.DEFAULT,
+        borderColor: theme.blue.DEFAULT,
       }
     : light
-    ? {
-        borderWidth: 1,
-        borderColor: theme.green.DEFAULT,
-      }
-    : {};
+      ? {
+          borderWidth: 1,
+          borderColor: theme.blue.DEFAULT,
+        }
+      : {};
 
   const textColor = pale
-    ? theme.green.DEFAULT
+    ? theme.blue.DEFAULT
     : light
-    ? theme.green.DEFAULT
-    : theme.white.DEFAULT;
+      ? theme.blue.DEFAULT
+      : theme.white.DEFAULT;
 
   const reanimatedStyle = useAnimatedStyle(() => {
     return {
@@ -157,7 +158,7 @@ const Button: FC<ButtonProps> = ({
 const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
-    borderRadius: 100,
+    borderRadius: 10,
     flexDirection: 'row',
     height: 48,
     justifyContent: 'center',
@@ -187,5 +188,4 @@ const styles = StyleSheet.create({
 
 export default remapProps(Button, {
   className: 'style',
-  fontStyle: 'fontStyle',
 });

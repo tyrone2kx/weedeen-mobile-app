@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { User } from './User';
-
 export type Notification = {
   id: string;
   userId: string;
@@ -29,7 +28,7 @@ export type Notification = {
   status: 'unread' | 'read' | 'archived' | 'deleted';
   resourceId?: string | null;
   readAt: string | null;
-  metadata?: any;
+  metadata?: Record<string, any>;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

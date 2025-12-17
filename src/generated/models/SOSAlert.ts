@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Organization } from './Organization';
 import type { SOSResponse } from './SOSResponse';
 import type { User } from './User';
-
 export type SOSAlert = {
   id: string;
   subject: string;

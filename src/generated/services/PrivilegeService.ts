@@ -1,14 +1,13 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CreatePrivilegeDto } from '../models/CreatePrivilegeDto';
 import type { Privilege } from '../models/Privilege';
 import type { UpdatePrivilegeDto } from '../models/UpdatePrivilegeDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class PrivilegeService {
   /**
    * @returns Privilege
@@ -26,7 +25,6 @@ export class PrivilegeService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns Privilege
    * @throws ApiError
@@ -39,7 +37,6 @@ export class PrivilegeService {
       url: '/privilege',
     });
   }
-
   /**
    * @returns Privilege
    * @throws ApiError
@@ -61,7 +58,6 @@ export class PrivilegeService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns string
    * @throws ApiError

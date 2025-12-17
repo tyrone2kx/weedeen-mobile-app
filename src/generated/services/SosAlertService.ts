@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -8,11 +9,9 @@ import type { SOSAlert } from '../models/SOSAlert';
 import type { SosAlertStatisticsResponseDto } from '../models/SosAlertStatisticsResponseDto';
 import type { SOSResponse } from '../models/SOSResponse';
 import type { UpdateSOSAlertDto } from '../models/UpdateSOSAlertDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class SosAlertService {
   /**
    * @returns SosAlertStatisticsResponseDto
@@ -31,7 +30,6 @@ export class SosAlertService {
       },
     });
   }
-
   /**
    * @returns SOSAlert
    * @throws ApiError
@@ -48,7 +46,6 @@ export class SosAlertService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedSOSAlert
    * @throws ApiError
@@ -87,7 +84,6 @@ export class SosAlertService {
       },
     });
   }
-
   /**
    * @returns SOSAlert
    * @throws ApiError
@@ -105,7 +101,6 @@ export class SosAlertService {
       },
     });
   }
-
   /**
    * @returns SOSAlert
    * @throws ApiError
@@ -127,7 +122,6 @@ export class SosAlertService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns SOSResponse
    * @throws ApiError

@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -7,11 +8,9 @@ import type { PaginatedStoresDto } from '../models/PaginatedStoresDto';
 import type { Store } from '../models/Store';
 import type { StoresStatisticsResponseDto } from '../models/StoresStatisticsResponseDto';
 import type { UpdateStoreDto } from '../models/UpdateStoreDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class StoreService {
   /**
    * @returns Store
@@ -29,7 +28,6 @@ export class StoreService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedStoresDto
    * @throws ApiError
@@ -77,7 +75,6 @@ export class StoreService {
       },
     });
   }
-
   /**
    * @returns StoresStatisticsResponseDto
    * @throws ApiError
@@ -104,7 +101,6 @@ export class StoreService {
       },
     });
   }
-
   /**
    * @returns Store
    * @throws ApiError
@@ -122,7 +118,6 @@ export class StoreService {
       },
     });
   }
-
   /**
    * @returns Store
    * @throws ApiError
@@ -144,7 +139,6 @@ export class StoreService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -162,7 +156,6 @@ export class StoreService {
       },
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -188,7 +181,6 @@ export class StoreService {
       },
     });
   }
-
   /**
    * @returns Store
    * @throws ApiError

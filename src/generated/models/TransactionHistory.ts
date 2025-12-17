@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { User } from './User';
-
 export type TransactionHistory = {
   id: string;
   tenant: string;
@@ -21,7 +20,7 @@ export type TransactionHistory = {
   amount: number;
   transactionRef: string;
   splitCode?: string;
-  metadata?: any;
+  metadata?: Record<string, any>;
   transactionTime: string;
   invoiceId: number;
   transactionType: 'credit' | 'debit' | 'product_purchase' | 'delivery_fee';

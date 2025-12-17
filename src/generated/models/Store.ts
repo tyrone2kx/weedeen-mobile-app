@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Billing } from './Billing';
 import type { Order } from './Order';
 import type { Product } from './Product';
 import type { StoreBankAccount } from './StoreBankAccount';
 import type { User } from './User';
-
 export type Store = {
   id: string;
   userId: string;

@@ -6,8 +6,11 @@ import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
 import React, { FC } from 'react';
 import DashboardStack from '../dashboard-stack';
 import { StacksEnum } from '../enum';
+import FeesStack from '../fees-stack';
 import MenuStack from '../menu-stack';
+import ShopNowStack from '../shop-now-stack';
 import { AppBottomTabParamList } from '../types';
+import VisitorsStack from '../visitors-stack';
 import CustomTabBar from './components/CustomTabBar';
 
 const Tab = createBottomTabNavigator<AppBottomTabParamList>();
@@ -30,6 +33,20 @@ const BottomTabNavigation: FC = () => {
       tabBar={renderTabBar}
     >
       <Tab.Screen
+        component={MenuStack}
+        name={StacksEnum.MENU_STACK}
+        options={{
+          tabBarLabel: 'Menu',
+        }}
+      />
+      <Tab.Screen
+        component={VisitorsStack}
+        name={StacksEnum.VISITORS_STACK}
+        options={{
+          tabBarLabel: 'Visitors',
+        }}
+      />
+      <Tab.Screen
         component={DashboardStack}
         name={StacksEnum.DASHBOARD_STACK}
         options={{
@@ -37,10 +54,17 @@ const BottomTabNavigation: FC = () => {
         }}
       />
       <Tab.Screen
-        component={MenuStack}
-        name={StacksEnum.MENU_STACK}
+        component={ShopNowStack}
+        name={StacksEnum.SHOP_NOW_STACK}
         options={{
-          tabBarLabel: 'Menu',
+          tabBarLabel: 'Shop Now',
+        }}
+      />
+      <Tab.Screen
+        component={FeesStack}
+        name={StacksEnum.FEES_STACK}
+        options={{
+          tabBarLabel: 'Fees',
         }}
       />
     </Tab.Navigator>

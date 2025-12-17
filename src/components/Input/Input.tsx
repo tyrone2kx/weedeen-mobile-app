@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/immutability */
 import { Fonts } from '@wd/utils/Fonts';
 import { globalStyles } from '@wd/utils/GlobalStyles';
 import useTheme from '@wd/utils/theme/useTheme';
@@ -94,7 +95,7 @@ const Input: FC<InputProps> = ({
       intent: {
         solid: {
           inputContainer: {
-            backgroundColor: theme.white[400],
+            backgroundColor: theme.white[200],
             borderRadius: 12,
             paddingHorizontal: 18,
             paddingVertical: 10,
@@ -102,7 +103,7 @@ const Input: FC<InputProps> = ({
           },
           animatedBorder: {
             start: theme.gray[300],
-            stop: theme.green.DEFAULT,
+            stop: theme.blue.DEFAULT,
           },
           labelContainer: 'mb-1',
         },
@@ -110,7 +111,7 @@ const Input: FC<InputProps> = ({
           inputContainer: {},
           animatedBorder: {
             start: theme.gray[300],
-            stop: theme.green.DEFAULT,
+            stop: theme.blue.DEFAULT,
           },
           labelContainer: '',
         },
@@ -231,7 +232,7 @@ const Input: FC<InputProps> = ({
           >
             <RNIcon
               color={showPassword ? theme.black[600] : theme.gray.DEFAULT}
-              name={showPassword ? 'eye' : 'eye-slash'}
+              name={showPassword ? 'eye-open' : 'eye-closed'}
               size={20}
             />
           </TouchableOpacity>
@@ -240,7 +241,7 @@ const Input: FC<InputProps> = ({
       </AnimatedTouchableOpacity>
       <View className="flex-row">
         {error ? (
-          <Text className="text-red" intent="sm">
+          <Text className="text-red-500" intent="sm">
             {errorText}
           </Text>
         ) : null}

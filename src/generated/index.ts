@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -41,6 +42,7 @@ export type { Document } from './models/Document';
 export type { Fee } from './models/Fee';
 export type { FeeStatisticsResponseDto } from './models/FeeStatisticsResponseDto';
 export type { ForgotPasswordRequestDto } from './models/ForgotPasswordRequestDto';
+export type { ForgotPasswordResponseDto } from './models/ForgotPasswordResponseDto';
 export type { GeneralResponseDto } from './models/GeneralResponseDto';
 export type { GenerateKeyDto } from './models/GenerateKeyDto';
 export type { InviteTeamMemberDto } from './models/InviteTeamMemberDto';

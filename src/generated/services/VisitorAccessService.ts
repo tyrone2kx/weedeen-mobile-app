@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -7,11 +8,9 @@ import type { PaginatedVisitorAccessDto } from '../models/PaginatedVisitorAccess
 import type { UpdateVisitorAccessDto } from '../models/UpdateVisitorAccessDto';
 import type { VisitorAccess } from '../models/VisitorAccess';
 import type { VisitorAccessStatisticsResponseDto } from '../models/VisitorAccessStatisticsResponseDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class VisitorAccessService {
   /**
    * @returns VisitorAccess
@@ -29,7 +28,6 @@ export class VisitorAccessService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedVisitorAccessDto
    * @throws ApiError
@@ -71,7 +69,6 @@ export class VisitorAccessService {
       },
     });
   }
-
   /**
    * @returns VisitorAccessStatisticsResponseDto
    * @throws ApiError
@@ -98,7 +95,6 @@ export class VisitorAccessService {
       },
     });
   }
-
   /**
    * @returns VisitorAccess
    * @throws ApiError
@@ -116,7 +112,6 @@ export class VisitorAccessService {
       },
     });
   }
-
   /**
    * @returns VisitorAccess
    * @throws ApiError
@@ -138,7 +133,6 @@ export class VisitorAccessService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError

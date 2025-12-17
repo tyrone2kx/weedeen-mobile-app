@@ -13,6 +13,13 @@ export enum RoutesEnum {
   VERIFY_ACCOUNT_SCREEN = 'VerifyAccountScreen',
   NOTIFICATION_SCREEN = 'NotificationScreen',
   MENU_SCREEN = 'MenuScreen',
+  VISITORS_SCREEN = 'VisitorsScreen',
+  SHOP_NOW_SCREEN = 'ShopNowScreen',
+  FEES_SCREEN = 'FeesScreen',
+  ORDERS_SCREEN = 'OrdersScreen',
+  EMERGENCIES_SCREEN = 'EmergenciesScreen',
+  MY_STORES_SCREEN = 'MyStoresScreen',
+  SUBSCRIPTION_SCREEN = 'SubscriptionScreen',
 }
 
 export enum StacksEnum {
@@ -20,6 +27,12 @@ export enum StacksEnum {
   APP_STACK = 'APP_STACK',
   DASHBOARD_STACK = 'DASHBOARD_STACK',
   MENU_STACK = 'MENU_STACK',
+  ORDERS_STACK = 'ORDERS_STACK',
+  VISITORS_STACK = 'VISITORS_STACK',
+  SHOP_NOW_STACK = 'SHOP_NOW_STACK',
+  FEES_STACK = 'FEES_STACK',
+  EMERGENCIES_STACK = 'EMERGENCIES_STACK',
+  MY_STORES_STACK = 'MY_STORES_STACK',
   NOTIFICATION_STACK = 'NOTIFICATION_STACK',
   SUBSCRIPTION_STACK = 'SUBSCRIPTION_STACK',
 }

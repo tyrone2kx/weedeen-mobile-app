@@ -10,7 +10,7 @@ const MenuStack: FC = () => {
   return (
     <MenuNav.Navigator
       initialRouteName={RoutesEnum.MENU_SCREEN}
-      // screenOptions={{ headerShown: false, animation: 'fade_from_bottom' }}
+      screenOptions={{ headerShown: false, animation: 'fade_from_bottom' }}
     >
       <MenuNav.Screen component={MenuScreen} name={RoutesEnum.MENU_SCREEN} />
     </MenuNav.Navigator>

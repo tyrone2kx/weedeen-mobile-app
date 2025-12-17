@@ -11,7 +11,7 @@ const DashboardStack: FC = () => {
   return (
     <DashboardStackNav.Navigator
       initialRouteName={RoutesEnum.DASHBOARD_SCREEN}
-      // screenOptions={{ headerShown: false, animation: 'fade_from_bottom' }}
+      screenOptions={{ headerShown: false, animation: 'fade_from_bottom' }}
     >
       <DashboardStackNav.Screen
         component={DashboardScreen}

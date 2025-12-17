@@ -8,10 +8,10 @@ export const light = {
   },
   blue: {
     300: '#D0EBFF',
-    400: '#358AC7',
+    400: '#2563eb',
     500: '#3C91E6',
     600: '#2196F3',
-    DEFAULT: '#358AC7',
+    DEFAULT: '#2563eb',
   },
   gray: {
     100: '#ECECEC',
@@ -87,7 +87,7 @@ export const dark = {
     400: '#358AC7',
     500: '#3C91E6',
     600: '#2196F3',
-    DEFAULT: '#358AC7',
+    DEFAULT: '#2563eb',
   },
   gray: {
     100: '#252d37',

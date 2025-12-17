@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Invoice } from './Invoice';
 import type { Organization } from './Organization';
 import type { Role } from './Role';
@@ -9,7 +9,6 @@ import type { Store } from './Store';
 import type { TransactionHistory } from './TransactionHistory';
 import type { UserFee } from './UserFee';
 import type { UserRole } from './UserRole';
-
 export type User = {
   id: string;
   firstName: string;
@@ -28,6 +27,7 @@ export type User = {
   fcmToken?: string;
   userType?: 'admin' | 'resident' | 'estate_admin';
   tenant: string;
+  otp?: string;
   isActive: boolean;
   verifiedAt?: string;
   isVerified: boolean;

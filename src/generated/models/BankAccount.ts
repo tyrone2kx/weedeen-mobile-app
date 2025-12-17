@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Store } from './Store';
 import type { StoreBankAccount } from './StoreBankAccount';
 import type { User } from './User';
-
 export type BankAccount = {
   id: string;
   tenant: string;
@@ -16,7 +15,7 @@ export type BankAccount = {
   accountName: string;
   bankCode: string;
   paystackSubAccountId?: string;
-  metadata?: any;
+  metadata?: Record<string, any>;
   isDeleted: boolean;
   store: Store;
   user: User;

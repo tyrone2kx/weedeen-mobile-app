@@ -1,8 +1,14 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { HomeIcon, MenuIcon } from '@wd/components/icons';
+import Icon from '@wd/components/Icon/Icon';
 import { StacksEnum } from '@wd/navigation/enum';
 import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
 import useTheme from '@wd/utils/theme/useTheme';
+import {
+  HomeIcon,
+  ShoppingCartIcon,
+  UserCircleIcon,
+  WalletIcon,
+} from 'lucide-react-native';
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
@@ -59,7 +65,21 @@ const CustomTabBar: FC<CustomTabBarProps> = ({
                 color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
               />
             ) : routeName === StacksEnum.MENU_STACK ? (
-              <MenuIcon
+              <Icon
+                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
+                name="dashboard"
+                size={24}
+              />
+            ) : routeName === StacksEnum.VISITORS_STACK ? (
+              <UserCircleIcon
+                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
+              />
+            ) : routeName === StacksEnum.SHOP_NOW_STACK ? (
+              <ShoppingCartIcon
+                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
+              />
+            ) : routeName === StacksEnum.FEES_STACK ? (
+              <WalletIcon
                 color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
               />
             ) : (

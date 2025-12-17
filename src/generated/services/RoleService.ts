@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -5,11 +6,9 @@ import type { CreateRoleDto } from '../models/CreateRoleDto';
 import type { CreateUserRoleDto } from '../models/CreateUserRoleDto';
 import type { Role } from '../models/Role';
 import type { UserRole } from '../models/UserRole';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class RoleService {
   /**
    * @returns Role
@@ -27,7 +26,6 @@ export class RoleService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns Role
    * @throws ApiError
@@ -38,7 +36,6 @@ export class RoleService {
       url: '/role',
     });
   }
-
   /**
    * @returns UserRole
    * @throws ApiError

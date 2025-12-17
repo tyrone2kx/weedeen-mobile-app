@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -5,11 +6,9 @@ import type { CreateDocumentDto } from '../models/CreateDocumentDto';
 import type { Document } from '../models/Document';
 import type { GeneralResponseDto } from '../models/GeneralResponseDto';
 import type { UpdateDocumentDto } from '../models/UpdateDocumentDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class DocumentService {
   /**
    * @returns Document
@@ -28,7 +27,6 @@ export class DocumentService {
       },
     });
   }
-
   /**
    * @returns Document
    * @throws ApiError
@@ -45,7 +43,6 @@ export class DocumentService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -63,7 +60,6 @@ export class DocumentService {
       },
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError

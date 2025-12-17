@@ -1,9 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { CreateAccountDto } from '../models/CreateAccountDto';
 import type { CreateAccountResponseDto } from '../models/CreateAccountResponseDto';
 import type { ForgotPasswordRequestDto } from '../models/ForgotPasswordRequestDto';
+import type { ForgotPasswordResponseDto } from '../models/ForgotPasswordResponseDto';
 import type { GeneralResponseDto } from '../models/GeneralResponseDto';
 import type { InviteTeamMembersRequestDto } from '../models/InviteTeamMembersRequestDto';
 import type { InviteTeamMembersResponseDto } from '../models/InviteTeamMembersResponseDto';
@@ -14,11 +16,9 @@ import type { UpdateAuthDto } from '../models/UpdateAuthDto';
 import type { UpdatePasswordDto } from '../models/UpdatePasswordDto';
 import type { VerifyAccountRequestDto } from '../models/VerifyAccountRequestDto';
 import type { VerifyAccountResponseDto } from '../models/VerifyAccountResponseDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class AuthService {
   /**
    * @returns CreateAccountResponseDto
@@ -36,7 +36,6 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -53,7 +52,6 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns LoginResponseDto
    * @throws ApiError
@@ -70,7 +68,6 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns VerifyAccountResponseDto
    * @throws ApiError
@@ -87,7 +84,6 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -104,16 +100,15 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
-   * @returns any
+   * @returns ForgotPasswordResponseDto
    * @throws ApiError
    */
   public static authControllerForgotPassword({
     requestBody,
   }: {
     requestBody: ForgotPasswordRequestDto;
-  }): CancelablePromise<any> {
+  }): CancelablePromise<ForgotPasswordResponseDto> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/auth/forgot-password',
@@ -121,7 +116,6 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -138,7 +132,6 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns InviteTeamMembersResponseDto
    * @throws ApiError
@@ -155,18 +148,18 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns any
    * @throws ApiError
    */
-  public static authControllerRefreshUserTokens(): CancelablePromise<any> {
+  public static authControllerRefreshUserTokens(): CancelablePromise<
+    Record<string, any>
+  > {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/auth/refresh-token',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -188,7 +181,6 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -210,7 +202,6 @@ export class AuthService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError

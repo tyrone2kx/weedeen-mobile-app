@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { CreateOrderItemDto } from './CreateOrderItemDto';
-
 export type CreateOrderDto = {
   hasDelivery: boolean;
   deliveryAddress?: string;

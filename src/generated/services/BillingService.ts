@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -14,11 +15,9 @@ import type { PurchaseCreditRequestDto } from '../models/PurchaseCreditRequestDt
 import type { TransactionHistory } from '../models/TransactionHistory';
 import type { UpdateBankAccountDto } from '../models/UpdateBankAccountDto';
 import type { VerifyPaymentResponseDto } from '../models/VerifyPaymentResponseDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class BillingService {
   /**
    * @returns Invoice
@@ -36,7 +35,6 @@ export class BillingService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns Plan
    * @throws ApiError
@@ -49,7 +47,6 @@ export class BillingService {
       url: '/billing/plans',
     });
   }
-
   /**
    * @returns Invoice
    * @throws ApiError
@@ -67,7 +64,6 @@ export class BillingService {
       },
     });
   }
-
   /**
    * @returns PaginatedInvoiocesDto
    * @throws ApiError
@@ -97,7 +93,6 @@ export class BillingService {
       },
     });
   }
-
   /**
    * @returns Invoice
    * @throws ApiError
@@ -120,7 +115,6 @@ export class BillingService {
       },
     });
   }
-
   /**
    * @returns TransactionHistory
    * @throws ApiError
@@ -138,7 +132,6 @@ export class BillingService {
       },
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -160,7 +153,6 @@ export class BillingService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns VerifyPaymentResponseDto
    * @throws ApiError
@@ -178,7 +170,6 @@ export class BillingService {
       },
     });
   }
-
   /**
    * @returns PaymentInformation
    * @throws ApiError
@@ -191,7 +182,6 @@ export class BillingService {
       url: '/billing/payment-information',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -209,7 +199,6 @@ export class BillingService {
       },
     });
   }
-
   /**
    * @returns BankAccount
    * @throws ApiError
@@ -226,7 +215,6 @@ export class BillingService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns BankAccount
    * @throws ApiError
@@ -244,7 +232,6 @@ export class BillingService {
       },
     });
   }
-
   /**
    * @returns BankAccount
    * @throws ApiError
@@ -266,7 +253,6 @@ export class BillingService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -284,7 +270,6 @@ export class BillingService {
       },
     });
   }
-
   /**
    * @returns BankDto
    * @throws ApiError

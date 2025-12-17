@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
-import { useNotificationListeners } from '@wd/utils/pushNotification';
 import { useColorScheme } from 'nativewind';
 import React, { FC } from 'react';
 import AuthStack from './auth-stack';
@@ -11,8 +10,8 @@ import { RootStackParamList } from './types';
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 
 const AppStackScreens: FC = () => {
-  useNotificationListeners();
-  const accessToken = useAppSelector(state => state.user.accessToken);
+  // useNotificationListeners();
+  const isLoggedIn = useAppSelector(state => state.user.isLoggedIn);
 
   const { colorScheme = 'light' } = useColorScheme();
 
@@ -23,7 +22,7 @@ const AppStackScreens: FC = () => {
         navigationBarColor: colorScheme === 'light' ? 'white' : 'black',
       }}
     >
-      {!accessToken ? (
+      {!isLoggedIn ? (
         <AppStack.Screen component={AuthStack} name={StacksEnum.AUTH_STACK} />
       ) : (
         <AppStack.Screen

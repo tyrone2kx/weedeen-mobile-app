@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -12,11 +13,9 @@ import type { OrderStatisticsResponseDto } from '../models/OrderStatisticsRespon
 import type { PaginatedInvoiceDto } from '../models/PaginatedInvoiceDto';
 import type { PaginatedOrdersDto } from '../models/PaginatedOrdersDto';
 import type { UpdateOrderDto } from '../models/UpdateOrderDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class OrderService {
   /**
    * @returns Invoice
@@ -34,7 +33,6 @@ export class OrderService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedOrdersDto
    * @throws ApiError
@@ -76,7 +74,6 @@ export class OrderService {
       },
     });
   }
-
   /**
    * @returns PaginatedInvoiceDto
    * @throws ApiError
@@ -121,7 +118,6 @@ export class OrderService {
       },
     });
   }
-
   /**
    * @returns OrderStatisticsResponseDto
    * @throws ApiError
@@ -139,7 +135,6 @@ export class OrderService {
       },
     });
   }
-
   /**
    * @returns OrderStatisticsForStoresResponseDto
    * @throws ApiError
@@ -163,7 +158,6 @@ export class OrderService {
       },
     });
   }
-
   /**
    * @returns OrderStatisticsForRidersResponseDto
    * @throws ApiError
@@ -187,7 +181,6 @@ export class OrderService {
       },
     });
   }
-
   /**
    * @returns OrderStatisticsForPackagersResponseDto
    * @throws ApiError
@@ -208,7 +201,6 @@ export class OrderService {
       },
     });
   }
-
   /**
    * @returns Order
    * @throws ApiError
@@ -226,7 +218,6 @@ export class OrderService {
       },
     });
   }
-
   /**
    * @returns Order
    * @throws ApiError
@@ -248,7 +239,6 @@ export class OrderService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -266,7 +256,6 @@ export class OrderService {
       },
     });
   }
-
   /**
    * @returns Invoice
    * @throws ApiError

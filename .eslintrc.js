@@ -69,8 +69,10 @@ module.exports = {
     '@typescript-eslint/no-throw-literal': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
-    '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-require-imports': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
     'react-native/no-inline-styles': 'off',
   },
 };

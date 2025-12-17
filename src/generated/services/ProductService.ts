@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -7,11 +8,9 @@ import type { PaginatedProductsDto } from '../models/PaginatedProductsDto';
 import type { Product } from '../models/Product';
 import type { ProductStatisticsResponseDto } from '../models/ProductStatisticsResponseDto';
 import type { UpdateProductDto } from '../models/UpdateProductDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class ProductService {
   /**
    * @returns Product
@@ -29,7 +28,6 @@ export class ProductService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedProductsDto
    * @throws ApiError
@@ -77,7 +75,6 @@ export class ProductService {
       },
     });
   }
-
   /**
    * @returns ProductStatisticsResponseDto
    * @throws ApiError
@@ -101,7 +98,6 @@ export class ProductService {
       },
     });
   }
-
   /**
    * @returns GeneralResponseDto
    * @throws ApiError
@@ -124,7 +120,6 @@ export class ProductService {
       },
     });
   }
-
   /**
    * @returns Product
    * @throws ApiError
@@ -142,7 +137,6 @@ export class ProductService {
       },
     });
   }
-
   /**
    * @returns Product
    * @throws ApiError
@@ -164,7 +158,6 @@ export class ProductService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns Product
    * @throws ApiError

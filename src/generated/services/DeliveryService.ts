@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -8,11 +9,9 @@ import type { DeliveryStatisticsResponseDto } from '../models/DeliveryStatistics
 import type { PaginatedDeliveryDto } from '../models/PaginatedDeliveryDto';
 import type { UpdateDeliveryDto } from '../models/UpdateDeliveryDto';
 import type { User } from '../models/User';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class DeliveryService {
   /**
    * @returns Delivery
@@ -30,7 +29,6 @@ export class DeliveryService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedDeliveryDto
    * @throws ApiError
@@ -78,7 +76,6 @@ export class DeliveryService {
       },
     });
   }
-
   /**
    * @returns DeliveryStatisticsResponseDto
    * @throws ApiError
@@ -108,7 +105,6 @@ export class DeliveryService {
       },
     });
   }
-
   /**
    * @returns Delivery
    * @throws ApiError
@@ -130,7 +126,6 @@ export class DeliveryService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns User
    * @throws ApiError
@@ -141,7 +136,6 @@ export class DeliveryService {
       url: '/delivery/riders',
     });
   }
-
   /**
    * @returns Delivery
    * @throws ApiError
@@ -159,7 +153,6 @@ export class DeliveryService {
       },
     });
   }
-
   /**
    * @returns Delivery
    * @throws ApiError

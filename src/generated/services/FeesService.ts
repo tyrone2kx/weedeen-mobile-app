@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -10,11 +11,9 @@ import type { PaginatedFeeInvoicesDto } from '../models/PaginatedFeeInvoicesDto'
 import type { PaginatedFeesDto } from '../models/PaginatedFeesDto';
 import type { Payment } from '../models/Payment';
 import type { UpdateFeeDto } from '../models/UpdateFeeDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class FeesService {
   /**
    * @returns Fee
@@ -32,7 +31,6 @@ export class FeesService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedFeesDto
    * @throws ApiError
@@ -71,7 +69,6 @@ export class FeesService {
       },
     });
   }
-
   /**
    * @returns Fee
    * @throws ApiError
@@ -93,7 +90,6 @@ export class FeesService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns Fee
    * @throws ApiError
@@ -111,7 +107,6 @@ export class FeesService {
       },
     });
   }
-
   /**
    * @returns PaginatedFeeInvoicesDto
    * @throws ApiError
@@ -153,7 +148,6 @@ export class FeesService {
       },
     });
   }
-
   /**
    * @returns FeeStatisticsResponseDto
    * @throws ApiError
@@ -174,7 +168,6 @@ export class FeesService {
       },
     });
   }
-
   /**
    * @returns Payment
    * @throws ApiError
@@ -192,7 +185,6 @@ export class FeesService {
       },
     });
   }
-
   /**
    * @returns Payment
    * @throws ApiError
@@ -209,7 +201,6 @@ export class FeesService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns any
    * @throws ApiError

@@ -7,16 +7,13 @@ import { FirebaseEventEnum } from '@wd/utils/firebase/types';
 import RNavigationTheme from '@wd/utils/theme/RNavigationTheme';
 import { useColorScheme } from 'nativewind';
 import React, { useRef } from 'react';
+import BootSplash from 'react-native-bootsplash';
 import AppStackScreens from './AppStackScreen';
 import { RoutesEnum } from './enum';
 
-// const hideSplashScreen = () => {
-//   if (Platform.OS === 'ios') {
-//     void BootSplash.hide({ fade: true });
-//   } else if (Platform.OS === 'android') {
-//     SplashScreen.hide();
-//   }
-// };
+const hideSplashScreen = async () => {
+  await BootSplash.hide({ fade: true });
+};
 
 const AppNavigationContainer = () => {
   const navigationRef = useNavigationContainerRef();
@@ -35,9 +32,7 @@ const AppNavigationContainer = () => {
         LogEvent(FirebaseEventEnum.SCREEN_VIEW, {
           screen_name: currentScreenRef.current,
         });
-
-        // hideSplashScreen();
-
+        void hideSplashScreen();
         interactionStartDate.current = new Date();
       }}
       onStateChange={() => {

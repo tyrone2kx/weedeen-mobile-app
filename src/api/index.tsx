@@ -1,4 +1,6 @@
-import { REACT_APP_ENV } from '@env';
+/* eslint-disable @typescript-eslint/prefer-promise-reject-errors */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { APP_ENV } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { logoutUser } from '@wd/redux-store/reducers/user-reducer';
 import { store } from '@wd/redux-store/store';
@@ -9,25 +11,23 @@ import axios from 'axios';
 export const appEnv: TEnvModes =
   (process.env.NODE_ENV as TEnvModes) || 'production';
 
-export const envMode = (appEnv ||
-  REACT_APP_ENV ||
-  process.env.NODE_ENV) as TEnvModes;
+export const envMode = appEnv || APP_ENV || process.env.NODE_ENV;
 
 export const envModePrefix = envMode === 'production' ? '' : envMode;
 
 const config = {
   development: {
-    API_URL: 'https://weedeen-ui-dev-743175012151.us-central1.run.app',
+    API_URL: 'https://weeden-backend-dev-743175012151.us-central1.run.app',
     PAY_STACK_KEY: 'pk_test_fee9174baadd5830420d759c361350e3756e2198',
     PAY_STACK_DEFAULT_EMAIL: 'info@weedeen.com',
   },
   staging: {
-    API_URL: 'https://weedeen-ui-dev-743175012151.us-central1.run.app',
+    API_URL: 'https://weeden-backend-dev-743175012151.us-central1.run.app',
     PAY_STACK_KEY: 'pk_test_fee9174baadd5830420d759c361350e3756e2198',
     PAY_STACK_DEFAULT_EMAIL: 'info@weedeen.com',
   },
   production: {
-    API_URL: 'https://weedeen-ui-dev-743175012151.us-central1.run.app',
+    API_URL: 'https://weeden-backend-dev-743175012151.us-central1.run.app',
     PAY_STACK_KEY: 'pk_live_fa40e05c29621919e23c75941719e01948d06248',
     PAY_STACK_DEFAULT_EMAIL: 'payment@weedeen.com',
   },
@@ -86,7 +86,7 @@ export async function httpRequest<T>(request: () => Promise<T>): Promise<T> {
             const res = await refreshExpiredToken(refreshToken);
             if (res) {
               const { accessToken: token } = res;
-              AsyncStorage.setItem('accessToken', token);
+              await AsyncStorage.setItem('accessToken', token);
               await AsyncStorage.setItem('isRefreshingToken', 'false');
               httpClient.defaults.headers.common.Authorization = `Bearer ${token}`;
               originalRequest.headers.Authorization = `Bearer ${token}`;
@@ -95,7 +95,7 @@ export async function httpRequest<T>(request: () => Promise<T>): Promise<T> {
             }
           } catch (error2) {
             console.log('Error 2 caught here', error2);
-            signOut();
+            await signOut();
             reject(error);
           }
         } else {
@@ -108,7 +108,7 @@ export async function httpRequest<T>(request: () => Promise<T>): Promise<T> {
             } catch (error3) {
               console.log('Error 3 caught here', error3);
               await AsyncStorage.setItem('isRefreshingToken', 'false');
-              signOut();
+              await signOut();
               reject(error);
             }
           }, 2000);

@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Comment } from './Comment';
 import type { User } from './User';
-
 export type Post = {
   id: string;
   title: string;

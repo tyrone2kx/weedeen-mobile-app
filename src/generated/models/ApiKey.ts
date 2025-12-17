@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Organization } from './Organization';
 import type { User } from './User';
-
 export type ApiKey = {
   id: string;
   isActive: boolean;

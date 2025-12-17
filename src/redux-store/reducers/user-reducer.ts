@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Billing, User } from '@wd/generated';
@@ -23,6 +22,7 @@ export const INITIAL_USER_STATE: IAppUserState = {
   error: '',
   isLoggedIn: false,
   currentUser: undefined,
+  tabBarStyle: { display: 'flex' } as const,
   adminMenuView: 'home',
   activeUserType: UserTypeEnum.RESIDENT,
 };

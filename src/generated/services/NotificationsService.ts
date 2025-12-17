@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -5,11 +6,9 @@ import type { CreateNotificationDto } from '../models/CreateNotificationDto';
 import type { Notification } from '../models/Notification';
 import type { PaginatedNotificationDto } from '../models/PaginatedNotificationDto';
 import type { UpdateNotificationDto } from '../models/UpdateNotificationDto';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class NotificationsService {
   /**
    * @returns Notification
@@ -27,7 +26,6 @@ export class NotificationsService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns PaginatedNotificationDto
    * @throws ApiError
@@ -57,7 +55,6 @@ export class NotificationsService {
       },
     });
   }
-
   /**
    * @returns Notification
    * @throws ApiError
@@ -79,7 +76,6 @@ export class NotificationsService {
       mediaType: 'application/json',
     });
   }
-
   /**
    * @returns any
    * @throws ApiError

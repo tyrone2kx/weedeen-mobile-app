@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Delivery } from './Delivery';
 import type { Order } from './Order';
 import type { Plan } from './Plan';
 import type { Store } from './Store';
 import type { User } from './User';
-
 export type Invoice = {
   id: number;
   reference?: string;
