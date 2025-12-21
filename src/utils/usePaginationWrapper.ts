@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import { PaginatedType } from './types';
 
@@ -16,6 +16,10 @@ const usePaginationWrapper = (defaultLimit = 20) => {
   const [searchText, setSearchText] = useState<string>('');
   const [debouncedSearchText] = useDebounce(searchText, 300);
   const [pageable, setPageable] = useState<PaginatedType<any>>();
+  const isLastPage = page === totalPages;
+  const infiniteScrollCallback = useCallback(() => {
+    if (!isLastPage) setPage(prev => prev + 1);
+  }, [isLastPage]);
 
   const resetPagination = () => {
     setPage(1);
@@ -33,7 +37,7 @@ const usePaginationWrapper = (defaultLimit = 20) => {
   useEffect(() => {
     setPage(1);
     setLimit(defaultLimit);
-  }, [debouncedSearchText, defaultLimit]);
+  }, [debouncedSearchText]);
 
   return {
     limit,
@@ -50,6 +54,8 @@ const usePaginationWrapper = (defaultLimit = 20) => {
     setTotalElements,
     resetPagination,
     setPageable,
+    infiniteScrollCallback,
+    isLastPage,
   };
 };
 

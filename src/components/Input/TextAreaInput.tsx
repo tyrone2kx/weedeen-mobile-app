@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/immutability */
 import { Theme } from '@wd/utils/Theme';
 import React from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
@@ -9,7 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import Text from '../Text/Text';
 
-interface IProps {
+export interface TextAreaProps {
   value: string;
   onChange: (txt: string) => void;
   numberOfLines?: number;
@@ -32,14 +33,14 @@ const TextArea = ({
   hideBorder = false,
   onBlur,
   onFocus,
-}: IProps) => {
+}: TextAreaProps) => {
   const borderWidthValue = useSharedValue(1);
 
   const reanimtedBorderStyle = useAnimatedStyle(() => {
     const borderColor = interpolateColor(
       borderWidthValue.value,
       [1, 1.5],
-      [Theme.colors.gray[150], Theme.colors.green.DEFAULT],
+      [Theme.colors.gray[150], Theme.colors.blue.DEFAULT],
     );
     return {
       borderWidth: borderWidthValue.value,
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 4,
     fontWeight: '600',
-    textTransform: 'uppercase',
+    textTransform: 'capitalize',
     color: Theme.colors.black[600],
   },
 });

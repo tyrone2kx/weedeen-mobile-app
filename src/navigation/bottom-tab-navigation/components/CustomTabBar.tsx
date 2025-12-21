@@ -29,7 +29,7 @@ const CustomTabBar: FC<CustomTabBarProps> = ({
 
   return tabBarStyle === 'flex' ? (
     <Animated.View entering={FadeInUp} exiting={FadeOutDown}>
-      <View className="h-[90px] flex-row items-center justify-between rounded-t-2xl bg-white px-3">
+      <View className="h-[90px] flex-row items-center justify-between rounded-t-2xl bg-white border-t border-gray-200 px-3">
         {state.routes.map((route, index) => {
           const routeName = route.name as StacksEnum;
           const { options } = descriptors[route.key];

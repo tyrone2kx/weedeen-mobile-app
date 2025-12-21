@@ -50,10 +50,13 @@ module.exports = {
     'react/jsx-sort-props': ['warn', { ignoreCase: true }],
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-misused-promises': 'warn',
     '@typescript-eslint/ban-ts-comment': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/set-state-in-effect': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
     'eol-last': ['error', 'always'],
     'no-void': 'off',
     '@typescript-eslint/unbound-method': [

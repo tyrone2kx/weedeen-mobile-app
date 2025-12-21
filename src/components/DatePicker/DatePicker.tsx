@@ -44,7 +44,7 @@ const DayCell: FC<IDayCellProps> = ({
       onPress={onClick}
       style={{
         ...styles.dayCell,
-        backgroundColor: isSelected ? theme.green.DEFAULT : 'transparent',
+        backgroundColor: isSelected ? theme.blue.DEFAULT : 'transparent',
       }}
     >
       <Text
@@ -53,12 +53,12 @@ const DayCell: FC<IDayCellProps> = ({
           color: isSelected
             ? theme.white.DEFAULT
             : outOfRange && isDisabled
-            ? theme.gray[150]
-            : outOfRange
-            ? '#900001'
-            : isDisabled
-            ? theme.gray[150]
-            : theme.black[600],
+              ? theme.gray[150]
+              : outOfRange
+                ? '#900001'
+                : isDisabled
+                  ? theme.gray[150]
+                  : theme.black[600],
         }}
       >
         {day}
@@ -67,7 +67,7 @@ const DayCell: FC<IDayCellProps> = ({
   );
 };
 
-interface IProps {
+export interface DatePickerProps {
   isRange?: boolean;
   label?: string;
   value?: moment.Moment;
@@ -95,7 +95,7 @@ type CountType = 0 | 1 | 2;
 const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);
 
-const DatePicker: FC<IProps> = props => {
+const DatePicker: FC<DatePickerProps> = props => {
   const {
     isRange,
     value,
@@ -146,7 +146,7 @@ const DatePicker: FC<IProps> = props => {
           },
           animatedBorder: {
             start: theme.gray[300],
-            stop: theme.green.DEFAULT,
+            stop: theme.blue.DEFAULT,
           },
           labelContainer: 'mb-1',
         },
@@ -154,7 +154,7 @@ const DatePicker: FC<IProps> = props => {
           inputContainer: {},
           animatedBorder: {
             start: theme.gray[300],
-            stop: theme.green.DEFAULT,
+            stop: theme.blue.DEFAULT,
           },
           labelContainer: '',
         },
@@ -226,8 +226,8 @@ const DatePicker: FC<IProps> = props => {
               minDate
                 ? moment(date).isBefore(minDate, 'day')
                 : maxDate
-                ? moment(date).isAfter(maxDate, 'day')
-                : false
+                  ? moment(date).isAfter(maxDate, 'day')
+                  : false
             }
             isSelected={
               isRange
@@ -245,8 +245,8 @@ const DatePicker: FC<IProps> = props => {
               minDate
                 ? moment(date).isBefore(minDate, 'day')
                 : maxDate
-                ? moment(date).isAfter(maxDate, 'day')
-                : false
+                  ? moment(date).isAfter(maxDate, 'day')
+                  : false
             }
           />,
         );
@@ -271,8 +271,8 @@ const DatePicker: FC<IProps> = props => {
             minDate
               ? moment(date).isBefore(minDate, 'day')
               : maxDate
-              ? moment(date).isAfter(maxDate, 'day')
-              : false
+                ? moment(date).isAfter(maxDate, 'day')
+                : false
           }
           isSelected={
             isRange
@@ -301,8 +301,8 @@ const DatePicker: FC<IProps> = props => {
               minDate
                 ? moment(date).isBefore(minDate, 'day')
                 : maxDate
-                ? moment(date).isAfter(moment(maxDate), 'day')
-                : false
+                  ? moment(date).isAfter(moment(maxDate), 'day')
+                  : false
             }
             isSelected={
               isRange
@@ -320,8 +320,8 @@ const DatePicker: FC<IProps> = props => {
               minDate
                 ? moment(date).isBefore(minDate, 'day')
                 : maxDate
-                ? moment(date).isAfter(moment(maxDate), 'day')
-                : false
+                  ? moment(date).isAfter(moment(maxDate), 'day')
+                  : false
             }
           />,
         );
@@ -343,8 +343,8 @@ const DatePicker: FC<IProps> = props => {
             minDate
               ? moment(date).isBefore(minDate, 'day')
               : maxDate
-              ? moment(date).isAfter(maxDate, 'day')
-              : false
+                ? moment(date).isAfter(maxDate, 'day')
+                : false
           }
           isSelected={
             isRange
@@ -466,7 +466,7 @@ const DatePicker: FC<IProps> = props => {
   const hasLabel = label || labelComponent;
 
   return (
-    <View className="mb-5 flex-col" style={[{ width: width ?? '100%' }, style]}>
+    <View className="flex-col" style={[{ width: width ?? '100%' }, style]}>
       {!hideInput && (
         <>
           {hasLabel && (
@@ -508,14 +508,18 @@ const DatePicker: FC<IProps> = props => {
           >
             <View style={{ flexDirection: 'row' }}>
               {leftIcon}
-              <Text className={`${selectedDay ? 'text-black' : 'text-gray'}`}>
+              <Text
+                style={{
+                  color: selectedDay ? theme.black.DEFAULT : theme.gray.DEFAULT,
+                }}
+              >
                 {!selectedDay
                   ? placeholder || ''
                   : isRange
-                  ? `${moment(selectedDay).format('DD/MM/YYYY')} - ${moment(
-                      selectedEndDay,
-                    ).format('DD/MM/YYYY')}`
-                  : moment(selectedDay).format('Do MMM, YYYY')}
+                    ? `${moment(selectedDay).format('DD/MM/YYYY')} - ${moment(
+                        selectedEndDay,
+                      ).format('DD/MM/YYYY')}`
+                    : moment(selectedDay).format('Do MMM, YYYY')}
               </Text>
             </View>
             {rightIcon}
@@ -718,7 +722,7 @@ const styles = StyleSheet.create({
 
 export default remapProps(DatePicker, {
   className: 'style',
-  inputContainerStyle: 'inputContainerStyle',
-  popUpInputContainerStyle: 'popUpInputContainerStyle',
-  labelContainerStyle: 'labelContainerStyle',
+  // inputContainerStyle: 'inputContainerStyle',
+  // popUpInputContainerStyle: 'popUpInputContainerStyle',
+  // labelContainerStyle: 'labelContainerStyle',
 });

@@ -65,7 +65,7 @@ const Loader: FC<IProps> = ({ size = 50, style = {}, section, label }) => {
           style={[
             styles.waterDropFill,
             {
-              backgroundColor: theme.green.DEFAULT,
+              backgroundColor: theme.blue.DEFAULT,
               height: fillInterpolation,
             },
           ]}

@@ -20,6 +20,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import Icon from '../Icon/Icon';
 
+import useTheme from '@wd/utils/theme/useTheme';
 import Text from '../Text/Text';
 import { CloseIcon } from '../icons';
 
@@ -34,7 +35,7 @@ export interface ISelectOptionType {
   extras?: any;
 }
 
-interface ISelectProps {
+export interface ISelectProps {
   style?: ViewStyle;
   label?: string;
   subLabel?: string;
@@ -50,6 +51,9 @@ interface ISelectProps {
   inputContainerStyle?: ViewStyle;
   modalInputContainerStyle?: ViewStyle;
   labelContainerStyle?: ViewStyle;
+  className?: string;
+  onBlur?: () => void;
+  onTouch?: () => void;
 }
 
 const variants = {
@@ -62,18 +66,20 @@ const variants = {
         marginTop: 3,
       },
       animatedBorder: {
-        start: Theme.colors.gray[150],
-        stop: Theme.colors.green.DEFAULT,
+        start: Theme.colors.gray[300],
+        stop: Theme.colors.blue.DEFAULT,
       },
-      labelContainer: 'mb-1',
+      labelContainer: {
+        marginBottom: 1,
+      },
     },
     outline: {
       inputContainer: {},
       animatedBorder: {
-        start: Theme.colors.gray[150],
-        stop: Theme.colors.green.DEFAULT,
+        start: Theme.colors.gray[300],
+        stop: Theme.colors.blue.DEFAULT,
       },
-      labelContainer: '',
+      labelContainer: {},
     },
   },
 };
@@ -94,6 +100,9 @@ const Select: FC<ISelectProps> = ({
   inputContainerStyle,
   modalInputContainerStyle,
   labelContainerStyle,
+  className = '',
+  onBlur,
+  onTouch,
 }) => {
   const borderWidthValue = useSharedValue(1);
 
@@ -184,12 +193,14 @@ const Select: FC<ISelectProps> = ({
 
   const hasLabel = label || subLabel;
 
+  const { theme } = useTheme();
+
   return (
-    <View className="relative mb-5" style={style}>
+    <View className={`relative ${className}`} style={style}>
       {hasLabel && (
         <View
-          className={`w-full flex-col items-start ${variants.intent[intent].labelContainer}`}
-          style={labelContainerStyle}
+          className={`w-full flex-col items-start`}
+          style={[variants.intent[intent].labelContainer, labelContainerStyle]}
         >
           {label && (
             <View className="flex-row">
@@ -213,6 +224,7 @@ const Select: FC<ISelectProps> = ({
         onPress={() => {
           borderWidthValue.value = withTiming(1.5);
           handleModal(true);
+          onTouch?.();
         }}
         ref={ref}
         style={[
@@ -224,7 +236,9 @@ const Select: FC<ISelectProps> = ({
         ]}
       >
         <Text style={styles.input}>
-          {inputVal || <Text> {placeholder} </Text>}
+          {inputVal || (
+            <Text style={{ color: theme.gray.DEFAULT }}>{placeholder}</Text>
+          )}
         </Text>
         <Pressable
           onPress={() => {
@@ -233,11 +247,7 @@ const Select: FC<ISelectProps> = ({
             }
           }}
         >
-          <Icon
-            color={Theme.colors.gray.DEFAULT}
-            name="arrow-down-1"
-            size={18}
-          />
+          <Icon color={Theme.colors.gray.DEFAULT} name="arrow-down" size={18} />
         </Pressable>
       </AnimatedTouchableOpacity>
 
@@ -261,7 +271,7 @@ const Select: FC<ISelectProps> = ({
                 {
                   backgroundColor: Theme.colors.white.DEFAULT,
                   width: '100%',
-                  borderColor: Theme.colors.green.DEFAULT,
+                  borderColor: Theme.colors.blue.DEFAULT,
                   borderWidth: 2,
                   paddingHorizontal: 18,
                   borderRadius: 12,
@@ -306,6 +316,7 @@ const Select: FC<ISelectProps> = ({
                   <TouchableOpacity
                     onPress={() => {
                       onChange?.(data);
+                      onBlur?.();
                       setSelectedValue(data);
                       setInputVal(data.label);
                       setInputValue?.(data.label);
@@ -313,7 +324,7 @@ const Select: FC<ISelectProps> = ({
                     }}
                     style={[
                       styles.options,
-                      { borderColor: Theme.colors.gray[150] },
+                      { borderColor: Theme.colors.gray[200] },
                     ]}
                   >
                     {data.icon}
@@ -394,7 +405,7 @@ const styles = StyleSheet.create({
 
 export default remapProps(Select, {
   className: 'style',
-  inputContainerStyle: 'inputContainerStyle',
-  modalInputContainerStyle: 'modalInputContainerStyle',
-  labelContainerStyle: 'labelContainerStyle',
+  // inputContainerStyle: 'inputContainerStyle',
+  // modalInputContainerStyle: 'modalInputContainerStyle',
+  // labelContainerStyle: 'labelContainerStyle',
 });

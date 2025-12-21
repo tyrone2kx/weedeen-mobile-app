@@ -15,21 +15,25 @@ interface IProps {
   style?: StyleProp<ViewStyle>;
   textStyle?: TextStyle;
   onPress?: () => void;
+  icon?: React.ReactNode;
 }
 
 const Tag = ({
   title,
-  color = '#0066F5',
+  color = '#999',
   style,
   textStyle,
   onPress,
+  icon,
 }: IProps) => {
   return onPress ? (
     <TouchableOpacity
       activeOpacity={0.8}
+      className="rounded-full"
       onPress={onPress}
       style={[{ backgroundColor: color, ...styles.tag }, style]}
     >
+      {icon}
       <Text
         style={{
           ...styles.text,
@@ -41,7 +45,10 @@ const Tag = ({
       </Text>
     </TouchableOpacity>
   ) : (
-    <View style={[{ backgroundColor: color, ...styles.tag }, style]}>
+    <View
+      className="rounded-full"
+      style={[{ backgroundColor: color, ...styles.tag }, style]}
+    >
       <Text
         style={{
           ...styles.text,
@@ -60,15 +67,16 @@ export default Tag;
 const styles = StyleSheet.create({
   text: {
     textTransform: 'uppercase',
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontSize: 10,
   },
   tag: {
-    padding: 2,
-    paddingHorizontal: 4,
-    height: 20,
-    borderRadius: 2,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    height: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 2,
   },
 });

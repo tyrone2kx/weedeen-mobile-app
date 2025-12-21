@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
 
 export default remapProps(Input, {
   className: 'style',
-  textInputStyle: 'textInputStyle',
-  inputContainerStyle: 'inputContainerStyle',
-  labelContainerStyle: 'labelContainerStyle',
+  // textInputStyle: 'textInputStyle',
+  // inputContainerStyle: 'inputContainerStyle',
+  // labelContainerStyle: 'labelContainerStyle',
 });

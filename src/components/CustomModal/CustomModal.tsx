@@ -9,13 +9,16 @@ import {
   View,
 } from 'react-native';
 import { CloseIcon } from '../icons';
+import Text from '../Text/Text';
 
 interface IProps {
   isOpen?: boolean;
   closeOnOutsideClick?: boolean;
   hideCloseButton?: boolean;
   onClose: () => void;
-  children: any;
+  children: React.ReactNode;
+  title?: string;
+  enforceMinHeight?: boolean;
 }
 
 const { height } = Dimensions.get('screen');
@@ -26,9 +29,11 @@ const CustomModal = ({
   children,
   closeOnOutsideClick,
   hideCloseButton,
+  title,
+  enforceMinHeight = true,
 }: IProps) => {
   return (
-    <Modal animationType="slide" transparent visible={isOpen}>
+    <Modal animationType="fade" transparent visible={isOpen}>
       <Pressable
         onPress={() => {
           if (closeOnOutsideClick) {
@@ -37,21 +42,33 @@ const CustomModal = ({
         }}
         style={[styles.overlay]}
       >
-        <View style={[styles.container]}>
-          {!hideCloseButton && (
+        <View
+          style={{
+            ...styles.container,
+            minHeight: enforceMinHeight
+              ? styles.container.minHeight
+              : undefined,
+          }}
+        >
+          {!!title || !hideCloseButton ? (
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'flex-end',
+                justifyContent: 'space-between',
                 padding: 20,
               }}
             >
-              <TouchableOpacity onPress={onClose}>
-                <CloseIcon color={Theme.colors.black[600]} />
-              </TouchableOpacity>
+              {title && (
+                <Text style={{ fontSize: 18, fontWeight: '600' }}>{title}</Text>
+              )}
+              {!hideCloseButton && (
+                <TouchableOpacity onPress={onClose}>
+                  <CloseIcon color={Theme.colors.black[600]} />
+                </TouchableOpacity>
+              )}
             </View>
-          )}
-          {children}
+          ) : null}
+          <View className="p-4">{children}</View>
         </View>
       </Pressable>
     </Modal>

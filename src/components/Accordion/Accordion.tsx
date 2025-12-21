@@ -1,4 +1,5 @@
 import { Theme } from '@wd/utils/Theme';
+import { IDisclosure } from '@wd/utils/useDisclosure/useDisclosure';
 import React, { useState } from 'react';
 import {
   LayoutAnimation,
@@ -24,12 +25,13 @@ if (Platform.OS === 'android') {
 
 interface IProps {
   defaultHeight?: number;
-  children: any;
+  children: React.ReactNode;
   title?: string;
   titleStyle?: TextStyle;
-  headerComponent?: any;
+  headerComponent?: React.ReactNode;
   containerStyle?: ViewStyle;
   childrenContainerStyle?: ViewStyle;
+  handler?: IDisclosure;
 }
 
 const Accordion = ({
@@ -40,6 +42,7 @@ const Accordion = ({
   children,
   containerStyle,
   childrenContainerStyle,
+  handler,
 }: IProps) => {
   const rotateValue = useSharedValue(0);
   const animatedStyle = useAnimatedStyle(() => {
@@ -48,50 +51,60 @@ const Accordion = ({
     };
   });
 
+  const isControlled = !!handler;
+
   const contentHeight = useSharedValue(0);
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const toggle = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpanded(!expanded);
+    if (!isControlled) {
+      setExpanded(!expanded);
+    } else {
+      handler?.toggle();
+    }
   };
 
   return (
     <View style={[styles.accordionContainer, containerStyle]}>
-      <TouchableOpacity
-        activeOpacity={0.95}
-        onPress={() => {
-          toggle();
-          if (!expanded) {
-            rotateValue.value = withTiming(180, { duration: 300 });
-          } else {
-            rotateValue.value = withTiming(0, { duration: 300 });
-          }
-        }}
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: defaultHeight,
-        }}
-      >
-        {headerComponent || (
-          <Text intent="h2" style={titleStyle}>
-            {title}
-          </Text>
-        )}
-        <Animated.View style={[animatedStyle]}>
-          <Icon color={Theme.colors.gray.DEFAULT} name="arrow-down-1" />
-        </Animated.View>
-      </TouchableOpacity>
-      {expanded ? (
+      {!isControlled ? (
+        <TouchableOpacity
+          activeOpacity={0.95}
+          onPress={() => {
+            toggle();
+            if (!expanded) {
+              rotateValue.value = withTiming(180, { duration: 300 });
+            } else {
+              rotateValue.value = withTiming(0, { duration: 300 });
+            }
+          }}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            height: defaultHeight,
+          }}
+        >
+          {headerComponent || (
+            <Text intent="h2" style={titleStyle}>
+              {title}
+            </Text>
+          )}
+          <Animated.View style={[animatedStyle]}>
+            <Icon color={Theme.colors.gray.DEFAULT} name="arrow-down-1" />
+          </Animated.View>
+        </TouchableOpacity>
+      ) : (
+        <View />
+      )}
+      {expanded || handler?.isOpen ? (
         <View
-          onLayout={(event) => {
+          onLayout={event => {
             contentHeight.value =
               event.nativeEvent.layout.height + defaultHeight;
           }}
           style={[
-            { paddingHorizontal: 16, paddingBottom: 20 },
+            { paddingHorizontal: 0, paddingBottom: 20 },
             childrenContainerStyle,
           ]}
         >
@@ -109,6 +122,6 @@ const styles = StyleSheet.create({
     // backgroundColor: '#FFF',
     width: '100%',
     overflow: 'hidden',
-    paddingHorizontal: 18,
+    paddingHorizontal: 0,
   },
 });

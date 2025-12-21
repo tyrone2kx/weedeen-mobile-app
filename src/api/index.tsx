@@ -17,7 +17,8 @@ export const envModePrefix = envMode === 'production' ? '' : envMode;
 
 const config = {
   development: {
-    API_URL: 'https://weeden-backend-dev-743175012151.us-central1.run.app',
+    // API_URL: 'https://weeden-backend-dev-743175012151.us-central1.run.app',
+    API_URL: 'http://172.20.10.2:5001',
     PAY_STACK_KEY: 'pk_test_fee9174baadd5830420d759c361350e3756e2198',
     PAY_STACK_DEFAULT_EMAIL: 'info@weedeen.com',
   },
