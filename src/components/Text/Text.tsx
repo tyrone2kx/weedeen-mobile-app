@@ -30,6 +30,7 @@ export type TextProps = AppTextProps & {
     | 'label';
   weight?: 'bold' | 'semibold' | 'medium' | 'normal' | 'light' | 'none';
   italicStyle?: 'normal' | 'medium' | 'semibold' | 'none';
+  className?: string;
 };
 
 export const variants = {
@@ -141,6 +142,7 @@ const Text: FC<TextProps> = ({
   intent = 'base',
   weight = 'none',
   italicStyle = 'none',
+  className,
   ...props
 }) => {
   const intentToUse = h1 ? 'h1' : h2 ? 'h2' : h3 ? 'h3' : intent;
@@ -154,7 +156,7 @@ const Text: FC<TextProps> = ({
   return (
     <AppText
       allowFontScaling={false}
-      className={`${colorClassName}`}
+      className={`${colorClassName} ${className}`}
       style={[
         variants.intent[intentToUse],
         variants.weight[weight],

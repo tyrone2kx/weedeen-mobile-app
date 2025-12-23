@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Theme } from '@wd/utils/Theme';
 import { generateUserInitials } from '@wd/utils/helpers';
 import { useState } from 'react';
@@ -11,6 +10,7 @@ import {
   View,
 } from 'react-native';
 
+import useTheme from '@wd/utils/theme/useTheme';
 import Text from '../Text/Text';
 import { UserIcon } from '../icons';
 
@@ -27,6 +27,7 @@ interface IProps {
   disabled?: boolean;
   fallbackToLogo?: boolean;
   kemLogo?: boolean;
+  borderColor?: string;
 }
 
 function getRandomNumber() {
@@ -45,6 +46,7 @@ const Avatar = ({
   onPress,
   disabled = false,
   fallbackToLogo,
+  borderColor,
 }: IProps) => {
   const obj = {
     primary: '#4E00DA',
@@ -55,11 +57,13 @@ const Avatar = ({
   const colors = [obj.primary, obj.secondary, obj.tertiary, obj.blue];
   const backgroundColor = color || colors[getRandomNumber()];
   const [bgColor] = useState(backgroundColor);
+  const { theme } = useTheme();
 
   const avatarStyle = {
     height: size,
     width: size,
     borderRadius: size / 2,
+    borderColor: borderColor || theme.gray.DEFAULT,
   };
 
   const avatarIconStyle = {
@@ -117,7 +121,7 @@ const Avatar = ({
         />
       ) : (
         <View
-          className="items-center justify-center border-4 border-solid border-gray-150 bg-gray-400"
+          className="items-center justify-center border-4 border-solid bg-gray-400"
           style={[avatarStyle, style]}
         >
           <UserIcon

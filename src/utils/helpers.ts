@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable no-param-reassign */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { envMode } from '@wd/api';
 import { Invoice } from '@wd/generated';
@@ -503,3 +501,47 @@ export function isObjectEmpty<T extends object>(obj?: T): boolean {
 export const openExternalLink = async (url: string) => {
   await Linking.openURL(url);
 };
+
+/**
+ * Transparentizes a hex color by a given percentage
+ * @param hexColor - The hex color code (with or without #)
+ * @param percentage - The percentage to transparentize (0-100)
+ * @returns The transparentized color in rgba format
+ */
+export function transparentizeColor(
+  hexColor: string,
+  percentage: number,
+): string {
+  // Remove the hash if present
+  const hex = hexColor.replace('#', '');
+
+  // Ensure percentage is between 0 and 100
+  const alpha = Math.max(0, Math.min(percentage, 100)) / 100;
+
+  // Parse hex color
+  let r: number, g: number, b: number;
+
+  if (hex.length === 3) {
+    // Short hex format (#RGB)
+    r = parseInt(hex[0] + hex[0], 16);
+    g = parseInt(hex[1] + hex[1], 16);
+    b = parseInt(hex[2] + hex[2], 16);
+  } else if (hex.length === 6) {
+    // Full hex format (#RRGGBB)
+    r = parseInt(hex.substring(0, 2), 16);
+    g = parseInt(hex.substring(2, 4), 16);
+    b = parseInt(hex.substring(4, 6), 16);
+  } else if (hex.length === 8) {
+    // Hex with alpha (#RRGGBBAA)
+    r = parseInt(hex.substring(0, 2), 16);
+    g = parseInt(hex.substring(2, 4), 16);
+    b = parseInt(hex.substring(4, 6), 16);
+    // Use existing alpha as base and apply percentage to it
+    const existingAlpha = parseInt(hex.substring(6, 8), 16) / 255;
+    return `rgba(${r}, ${g}, ${b}, ${existingAlpha * alpha})`;
+  } else {
+    throw new Error('Invalid hex color format');
+  }
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}

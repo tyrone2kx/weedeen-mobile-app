@@ -44,7 +44,7 @@ const variants = {
 const TopTab: React.FC<Props> = ({
   tabs,
   activeTab,
-  activeTheme = Theme.colors.green.DEFAULT,
+  activeTheme = Theme.colors.blue.DEFAULT,
   activeTextColor = Theme.colors.white.DEFAULT,
   type2,
   buttonStyle,

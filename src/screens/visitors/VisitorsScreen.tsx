@@ -4,6 +4,7 @@ import Circle from '@wd/components/Circle/Circle';
 import ConfirmationModal from '@wd/components/ConfirmationModal/ConfirmationModal';
 import DatePicker from '@wd/components/DatePicker/DatePicker';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
+import Header from '@wd/components/Header';
 import InfiniteScrollView from '@wd/components/InfiniteScrollView/InfiniteScrollView';
 import Input from '@wd/components/Input/Input';
 import Loader from '@wd/components/Loader/Loader';
@@ -12,6 +13,8 @@ import Select from '@wd/components/Select/Select';
 import StatCard from '@wd/components/StatCard/StatCard';
 import Text from '@wd/components/Text/Text';
 import { VisitorAccess } from '@wd/generated';
+import { RoutesEnum } from '@wd/navigation/enum';
+import { VisitorsStackScreenProps } from '@wd/navigation/types';
 import { globalStyles } from '@wd/utils/GlobalStyles';
 import { Notify } from '@wd/utils/helpers';
 import useTheme from '@wd/utils/theme/useTheme';
@@ -24,7 +27,7 @@ import {
   UserPlusIcon,
 } from 'lucide-react-native';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { RefreshControl, TouchableOpacity, View } from 'react-native';
 import VisitorItem from './components/VisitorItem';
 import useGetVisitors from './hooks/useGetVisitors';
@@ -32,7 +35,9 @@ import useGetVisitorsStatistics from './hooks/useGetVisitorsStatistics';
 import useVisitorMutations from './hooks/useVisitorMutations';
 import CreateInviteModal from './modals/CreateInviteModal';
 
-const VisitorsScreen = () => {
+const VisitorsScreen: FC<
+  VisitorsStackScreenProps<RoutesEnum.VISITORS_SCREEN>
+> = ({ navigation }) => {
   const { theme } = useTheme();
   const handler = useDisclosure();
   const {
@@ -100,6 +105,7 @@ const VisitorsScreen = () => {
         }}
       />
       <View className="p-4 relative" style={globalStyles.screen}>
+        <Header headerTitle="My Visitors" navigation={navigation} />
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
@@ -183,8 +189,8 @@ const VisitorsScreen = () => {
             <Loader style={{ marginVertical: '50%' }} />
           ) : !visitors.length ? (
             <EmptyState
-              Image={<UserCircleIcon size={40} />}
-              info="There are no visitors."
+              description="There are no visitors."
+              icon={<UserCircleIcon size={40} />}
               section
               title="No Visitors"
             />

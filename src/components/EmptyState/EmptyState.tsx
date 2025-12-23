@@ -1,30 +1,33 @@
 import { remapProps } from 'nativewind';
 import { FC, ReactElement } from 'react';
 import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
-import { EmptyImage } from '../icons';
 
+import useTheme from '@wd/utils/theme/useTheme';
 import Text from '../Text/Text';
 
 interface EmptyStateProp {
-  Image?: ReactElement;
+  icon?: ReactElement;
   title?: string;
-  info?: string;
+  description?: string;
   Action?: ReactElement;
   section?: boolean;
   style?: ViewStyle;
   titleStyle?: TextStyle;
   descriptionStyle?: TextStyle;
+  iconIsImage?: boolean;
 }
 const EmptyState: FC<EmptyStateProp> = ({
-  Image,
+  icon,
   title = 'Nothing to see here',
-  info = 'There are no available items.',
+  description = 'There are no available items.',
   Action,
   section,
   style,
-  titleStyle,
+  titleStyle = {},
   descriptionStyle,
+  iconIsImage,
 }) => {
+  const { theme } = useTheme();
   return (
     <View
       style={[
@@ -35,15 +38,41 @@ const EmptyState: FC<EmptyStateProp> = ({
         style,
       ]}
     >
-      {Image || <EmptyImage />}
+      {icon && (
+        <View className="mb-4">
+          {iconIsImage ? (
+            icon
+          ) : (
+            <View
+              className="flex-row items-center justify-center rounded-lg bg-gray-600 border"
+              style={{
+                height: 80,
+                width: 80,
+                borderColor: theme.gray[300],
+                backgroundColor: '#4b5563',
+              }}
+            >
+              {icon}
+            </View>
+          )}
+        </View>
+      )}
       {title && (
-        <Text className="mt-4 text-center" intent="h3" style={titleStyle}>
+        <Text
+          className="mt-4 text-center"
+          intent="h3"
+          style={{ color: theme.black[400], ...titleStyle }}
+        >
           {title}
         </Text>
       )}
-      {info && (
-        <Text className="mt-1 text-center" style={descriptionStyle}>
-          {info}
+      {description && (
+        <Text
+          className="mt-1 text-center"
+          style={descriptionStyle}
+          weight="light"
+        >
+          {description}
         </Text>
       )}
       {Action && <View className="mt-4 flex-row">{Action}</View>}

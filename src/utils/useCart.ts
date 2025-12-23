@@ -18,14 +18,6 @@ const useCart = ({ product, defaultQuantity }: Props) => {
   const cartItems = useAppSelector(state => state.cart.cartItems);
   const isInCart = cartItems?.some(item => item.product?.id === product.id);
 
-  useEffect(() => {
-    if (defaultQuantity) {
-      setQuantity(defaultQuantity);
-    } else {
-      setQuantity(1);
-    }
-  }, [defaultQuantity]);
-
   const handleCartItem = () => {
     if (isInCart) {
       dispatch(removeFromCart(product.id));

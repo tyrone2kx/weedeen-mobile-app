@@ -57,6 +57,7 @@ export type AppBottomTabScreenProps<T extends keyof AppBottomTabParamList> =
 
 export type ShopNowStackParamList = {
   [RoutesEnum.SHOP_NOW_SCREEN]: undefined;
+  [RoutesEnum.SINGLE_SHOP_SCREEN]: { id: string };
 };
 export type ShopNowStackScreenProps<T extends keyof ShopNowStackParamList> =
   CompositeScreenProps<

@@ -19,6 +19,7 @@ interface IProps {
   children: React.ReactNode;
   title?: string;
   enforceMinHeight?: boolean;
+  buttons?: React.ReactNode;
 }
 
 const { height } = Dimensions.get('screen');
@@ -31,6 +32,7 @@ const CustomModal = ({
   hideCloseButton,
   title,
   enforceMinHeight = true,
+  buttons,
 }: IProps) => {
   return (
     <Modal animationType="fade" transparent visible={isOpen}>
@@ -68,7 +70,10 @@ const CustomModal = ({
               )}
             </View>
           ) : null}
-          <View className="p-4">{children}</View>
+          <View className="p-4">
+            {children}
+            {buttons && <View className="py-4">{buttons}</View>}
+          </View>
         </View>
       </Pressable>
     </Modal>

@@ -1,6 +1,10 @@
-import { handleError } from '@mh/utils/handleError';
-import { returnUpdatedList } from '@mh/utils/helpers';
-import { UseQueryResult, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  UseQueryResult,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { handleError } from '@wd/utils/handleError';
+import { returnUpdatedList } from '@wd/utils/helpers';
 import { apiWrapper } from '.';
 
 type ServiceFunction<A, B> = (payload: A) => Promise<B>;
@@ -20,7 +24,10 @@ interface UseGetRequestOptions<A, B> {
 interface UseGetRequestResult<B> {
   loading: boolean;
   isLoading: boolean;
-  refetch: (options?: { throwOnError: boolean; cancelRefetch: boolean }) => Promise<UseQueryResult>;
+  refetch: (options?: {
+    throwOnError: boolean;
+    cancelRefetch: boolean;
+  }) => Promise<UseQueryResult>;
   data?: B;
   onUpdateCallback?: (val: any, key?: string) => void;
   onAddCallback?: (val: B) => void;
@@ -49,14 +56,14 @@ export function useGetRequest<A, B>({
       return data;
     },
     enabled,
-    throwOnError: (error) => {
+    throwOnError: error => {
       handleError(error);
       onError?.(error);
       return false;
     },
   });
 
-  const onAddCallback = (data) => {
+  const onAddCallback = data => {
     const list: any = queryClient.getQueryData(queryKey);
     queryClient.setQueryData(queryKey, [...list, data]);
   };

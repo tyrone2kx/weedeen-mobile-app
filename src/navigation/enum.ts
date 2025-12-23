@@ -1,6 +1,6 @@
 export enum RoutesEnum {
   HOME = 'Home',
-  PROFILE = 'Profile',
+  PROFILE_SCREEN = 'ProfileScreen',
   SETTINGS = 'Settings',
   PROFILE_SETTINGS_SCREEN = 'ProfileSettingsScreen',
   DASHBOARD_SCREEN = 'DashboardScreen',
@@ -20,6 +20,9 @@ export enum RoutesEnum {
   EMERGENCIES_SCREEN = 'EmergenciesScreen',
   MY_STORES_SCREEN = 'MyStoresScreen',
   SUBSCRIPTION_SCREEN = 'SubscriptionScreen',
+  SINGLE_SHOP_SCREEN = 'SingleShopScreen',
+  BANK_ACCOUNTS_SCREEN = 'BankAccountsScreen',
+  DELIVERIES_SCREEN = 'DeliveriesScreen',
 }
 
 export enum StacksEnum {

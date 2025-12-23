@@ -18,7 +18,7 @@ interface IProps {
   labelStyle?: TextStyle;
 }
 
-const Checkbox: FC<IProps> = (props) => {
+const Checkbox: FC<IProps> = props => {
   const {
     label,
     style = {},
