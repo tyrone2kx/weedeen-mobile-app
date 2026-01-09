@@ -19,6 +19,7 @@ export enum RoutesEnum {
   ORDERS_SCREEN = 'OrdersScreen',
   EMERGENCIES_SCREEN = 'EmergenciesScreen',
   MY_STORES_SCREEN = 'MyStoresScreen',
+  STORE_PROFILE_SCREEN = 'StoreProfileScreen',
   SUBSCRIPTION_SCREEN = 'SubscriptionScreen',
   SINGLE_SHOP_SCREEN = 'SingleShopScreen',
   BANK_ACCOUNTS_SCREEN = 'BankAccountsScreen',
@@ -38,4 +39,6 @@ export enum StacksEnum {
   MY_STORES_STACK = 'MY_STORES_STACK',
   NOTIFICATION_STACK = 'NOTIFICATION_STACK',
   SUBSCRIPTION_STACK = 'SUBSCRIPTION_STACK',
+  BANK_ACCOUNTS_STACK = 'BANK_ACCOUNTS_STACK',
+  DELIVERIES_STACK = 'DELIVERIES_STACK',
 }

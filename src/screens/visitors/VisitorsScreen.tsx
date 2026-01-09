@@ -1,4 +1,5 @@
 import Accordion from '@wd/components/Accordion/Accordion';
+import Button from '@wd/components/Button/Button';
 import CloseButtonIcon from '@wd/components/Button/CloseButtonIcon';
 import Circle from '@wd/components/Circle/Circle';
 import ConfirmationModal from '@wd/components/ConfirmationModal/ConfirmationModal';
@@ -104,8 +105,8 @@ const VisitorsScreen: FC<
           backgroundColor: theme.white[400],
         }}
       />
+      <Header headerTitle="My Visitors" navigation={navigation} />
       <View className="p-4 relative" style={globalStyles.screen}>
-        <Header headerTitle="My Visitors" navigation={navigation} />
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
@@ -189,6 +190,9 @@ const VisitorsScreen: FC<
             <Loader style={{ marginVertical: '50%' }} />
           ) : !visitors.length ? (
             <EmptyState
+              Action={
+                <Button label="Generate Access Code" onPress={handler.onOpen} />
+              }
               description="There are no visitors."
               icon={<UserCircleIcon size={40} />}
               section
@@ -220,7 +224,10 @@ const VisitorsScreen: FC<
 
       <CreateInviteModal
         isOpen={handler.isOpen}
-        onClose={handler.onClose}
+        onClose={() => {
+          handler.onClose();
+          setActiveVisitor(null);
+        }}
         visitor={activeVisitor || undefined}
       />
       <ConfirmationModal

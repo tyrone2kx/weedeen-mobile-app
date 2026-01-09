@@ -37,8 +37,8 @@ const ShopScreen: FC<ShopNowStackScreenProps<RoutesEnum.SHOP_NOW_SCREEN>> = ({
           backgroundColor: theme.white[400],
         }}
       />
+      <Header headerTitle="Shop Now" navigation={navigation} />
       <View className="p-4" style={globalStyles.screen}>
-        <Header headerTitle="Shop Now" navigation={navigation} />
         <TopTab
           activeTab={activeTab}
           buttonStyle="border-0"

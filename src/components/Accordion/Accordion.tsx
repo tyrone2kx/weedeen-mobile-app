@@ -86,12 +86,16 @@ const Accordion = ({
           }}
         >
           {headerComponent || (
-            <Text intent="h2" style={titleStyle}>
+            <Text intent="h3" style={titleStyle}>
               {title}
             </Text>
           )}
           <Animated.View style={[animatedStyle]}>
-            <Icon color={Theme.colors.gray.DEFAULT} name="arrow-down-1" />
+            <Icon
+              color={Theme.colors.gray.DEFAULT}
+              name="arrow-down"
+              size={18}
+            />
           </Animated.View>
         </TouchableOpacity>
       ) : (

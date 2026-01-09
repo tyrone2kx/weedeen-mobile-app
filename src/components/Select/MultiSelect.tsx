@@ -70,7 +70,7 @@ const MultiSelect = ({
 
   const [displayOptions, setDisplayOptions] = useState<
     IMultiSelectOptionType[]
-  >(options.map(item => ({ ...item, pid: uuid.v4() as string })));
+  >(options.map(item => ({ ...item, pid: uuid.v4() })));
 
   useEffect(() => {
     if (!displayOptions.length) {
@@ -129,6 +129,7 @@ const MultiSelect = ({
           >
             {selectedValue.map((item, index) => (
               <View
+                key={item.pid}
                 style={[
                   styles.pills,
                   { borderColor: Theme.colors.green.DEFAULT },

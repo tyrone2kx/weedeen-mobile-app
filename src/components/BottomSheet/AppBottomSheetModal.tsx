@@ -1,4 +1,3 @@
-import useTheme from '@wd/utils/theme/useTheme';
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -7,6 +6,7 @@ import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { BottomSheetScrollViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetScrollable/types';
+import useTheme from '@wd/utils/theme/useTheme';
 import { remapProps } from 'nativewind';
 import React, { FC, ReactNode, RefObject, useMemo } from 'react';
 import {
@@ -27,7 +27,7 @@ type AppBottomSheetModalProps = Omit<
   breakpoints: BottomSheetModalProps['snapPoints'];
   startingBreakpointIndex?: BottomSheetModalProps['index'];
   content?: ReactNode;
-  bottomSheetRef: RefObject<BottomSheetModal>;
+  bottomSheetRef: RefObject<BottomSheetModal | null>;
   headerTitle?: string;
   headerComponent?: ReactNode;
   borderTopColor?: string;
@@ -40,7 +40,7 @@ type AppBottomSheetModalProps = Omit<
   hideHeader?: boolean;
 };
 
-export const BackdropComponent: FC<BottomSheetBackdropProps> = (props) => {
+export const BackdropComponent: FC<BottomSheetBackdropProps> = props => {
   return (
     <BottomSheetBackdrop
       {...props}
@@ -179,7 +179,7 @@ export const styles = StyleSheet.create({
 });
 
 export default remapProps(AppBottomSheetModal, {
-  wrapperStyle: 'wrapperStyle',
-  contentContainerStyle: 'contentContainerStyle',
-  headerContainerStyle: 'headerContainerStyle',
+  // wrapperStyle: 'wrapperStyle',
+  // contentContainerStyle: 'contentContainerStyle',
+  // headerContainerStyle: 'headerContainerStyle',
 });

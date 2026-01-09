@@ -19,7 +19,10 @@ type TEvent = EventArg<
 
 const showBottomTabRoutes = [
   RoutesEnum.DASHBOARD_SCREEN,
-  RoutesEnum.PROFILE_SETTINGS_SCREEN,
+  RoutesEnum.MENU_SCREEN,
+  RoutesEnum.SHOP_NOW_SCREEN,
+  RoutesEnum.FEES_SCREEN,
+  RoutesEnum.VISITORS_SCREEN,
 ];
 
 const useTabBarDisplay = () => {

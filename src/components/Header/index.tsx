@@ -97,7 +97,7 @@ const Header: FC<IProps> = ({
                 intent="h3"
                 numberOfLines={1}
                 style={{
-                  flex: showRightContent ? 0.5 : 0.9,
+                  flex: showRightContent ? 0.6 : 0.9,
                 }}
                 weight="semibold"
               >

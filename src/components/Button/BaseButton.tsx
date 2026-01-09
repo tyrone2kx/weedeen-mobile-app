@@ -1,6 +1,12 @@
 import { remapProps } from 'nativewind';
 import { FC } from 'react';
-import { Pressable, PressableProps, Text, TextProps } from 'react-native';
+import {
+  Pressable,
+  PressableProps,
+  Text,
+  TextProps,
+  TextStyle,
+} from 'react-native';
 
 type VariantProps = {
   intent?: 'base' | 'primary' | 'secondary' | 'outlined' | 'ghost';
@@ -10,7 +16,7 @@ type VariantProps = {
 
 type PressableButtonProps = VariantProps & PressableProps;
 
-const PressableButton: FC<PressableButtonProps> = (props) => {
+const PressableButton: FC<PressableButtonProps> = props => {
   const {
     intent = 'base',
     size = 'base',
@@ -21,7 +27,7 @@ const PressableButton: FC<PressableButtonProps> = (props) => {
 
   const variants = {
     intent: {
-      base: '',
+      base: 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400 px-4 py-2 rounded-md',
       primary: '',
       secondary: '',
       outlined: '',
@@ -49,12 +55,12 @@ const PressableButton: FC<PressableButtonProps> = (props) => {
 
 type ButtonTextProps = Omit<VariantProps, 'state'> & TextProps;
 
-const ButtonText: FC<ButtonTextProps> = (props) => {
+const ButtonText: FC<ButtonTextProps> = props => {
   const { intent = 'base', size = 'base', style, ...rest } = props;
 
   const variants = {
     intent: {
-      base: '',
+      base: 'text-white font-medium text-center',
       primary: '',
       secondary: '',
       outlined: '',
@@ -75,11 +81,11 @@ const ButtonText: FC<ButtonTextProps> = (props) => {
 };
 
 type BaseButtonProps = PressableButtonProps & {
-  textStyle?: TextProps['style'];
+  textStyle?: TextStyle;
   children?: TextProps['children'];
 };
 
-const BaseButton: FC<BaseButtonProps> = (props) => {
+const BaseButton: FC<BaseButtonProps> = props => {
   const {
     intent = 'base',
     size = 'base',
@@ -100,5 +106,4 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
 
 export default remapProps(BaseButton, {
   className: 'style',
-  textStyle: 'textStyle',
 });

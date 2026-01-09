@@ -37,7 +37,7 @@ const useGetResidentInvoices = ({
     infiniteScrollCallback,
   } = usePaginationWrapper();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: [
       'invoices',
       user?.id,
@@ -68,6 +68,8 @@ const useGetResidentInvoices = ({
     if (data) setPageable(data);
   }, [data]);
 
+  const isRefreshing = isLoading && page > 1;
+
   return {
     status,
     setStatus,
@@ -86,6 +88,8 @@ const useGetResidentInvoices = ({
     totalPages,
     totalElements,
     infiniteScrollCallback,
+    refetch,
+    isRefreshing,
   };
 };
 

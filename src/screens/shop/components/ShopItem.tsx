@@ -7,9 +7,10 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Props {
   store: Store;
+  onPress?: () => void;
 }
 
-const ShopItem = ({ store }: Props) => {
+const ShopItem = ({ store, onPress }: Props) => {
   const navigation =
     useNavigation<
       ShopNowStackScreenProps<RoutesEnum.SHOP_NOW_SCREEN>['navigation']
@@ -17,8 +18,10 @@ const ShopItem = ({ store }: Props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={() =>
-        navigation.navigate(RoutesEnum.SINGLE_SHOP_SCREEN, { id: store.id })
+      onPress={
+        onPress ||
+        (() =>
+          navigation.navigate(RoutesEnum.SINGLE_SHOP_SCREEN, { id: store.id }))
       }
       style={styles.container}
     >
@@ -41,7 +44,7 @@ const ShopItem = ({ store }: Props) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    maxWidth: 300,
+    // maxWidth: 300,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#e5e7eb',
@@ -70,6 +73,8 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
   },
   title: {
     fontSize: 18,

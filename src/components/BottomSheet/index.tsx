@@ -1,4 +1,3 @@
-import { Theme } from '@wd/utils/Theme';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -6,6 +5,7 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+import { Theme } from '@wd/utils/Theme';
 import React, { FC, ReactNode, RefObject, useMemo } from 'react';
 import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -28,7 +28,7 @@ type AppBottomSheetProps = Omit<
   callBackOnClose?: () => void;
 };
 
-export const BackdropComponent: FC<BottomSheetBackdropProps> = (props) => {
+export const BackdropComponent: FC<BottomSheetBackdropProps> = props => {
   return (
     <BottomSheetBackdrop
       {...props}

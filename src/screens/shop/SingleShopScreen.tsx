@@ -1,3 +1,4 @@
+import Avatar from '@wd/components/Avatar/Avatar';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
 import InfiniteScrollView from '@wd/components/InfiniteScrollView/InfiniteScrollView';
 import Loader from '@wd/components/Loader/Loader';
@@ -25,19 +26,8 @@ const SingleShopScreen: FC<
   const { isLoading, store } = useGetSingleStore({ storeId: id });
   const viewHandler = useDisclosure();
   const {
-    status,
-    setStatus,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    searchText,
-    setSearchText,
     isLoading: productsLoading,
     products,
-    setLimit,
-    setPage,
-    totalPages,
     totalElements,
     infiniteScrollCallback,
     isRefreshing,
@@ -75,11 +65,14 @@ const SingleShopScreen: FC<
           />
         ) : (
           <>
-            <View className="mb-4">
-              <Text intent="h2">{store.name}</Text>
-              <Text className="mt-2" weight="light">
-                {store.description}
-              </Text>
+            <View className="mb-4 flex-row items-center gap-2">
+              <Avatar image={store.logo} size={80} />
+              <View>
+                <Text intent="h2">{store.name}</Text>
+                <Text className="mt-2" weight="light">
+                  {store.description}
+                </Text>
+              </View>
             </View>
 
             <View>

@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiWrapper } from '@wd/api';
+import AppBottomSheetModal from '@wd/components/BottomSheet/AppBottomSheetModal';
 import Button from '@wd/components/Button/Button';
 import CustomModal from '@wd/components/CustomModal/CustomModal';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
@@ -10,8 +11,10 @@ import Text from '@wd/components/Text/Text';
 import { BillingService, Invoice, OrderItem } from '@wd/generated';
 import { formatNaira, handleError, Notify } from '@wd/utils/helpers';
 import useTheme from '@wd/utils/theme/useTheme';
+import useAppBottomSheetModal from '@wd/utils/useAppBottomSheet/useBottomSheetModal';
 import { FileIcon } from 'lucide-react-native';
 import moment from 'moment';
+import { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import useGetSingleInvoice from '../hooks/useGetSingleInvoice';
 
@@ -20,9 +23,10 @@ interface Props {
   onClose: () => void;
   invoiceId?: number;
   onCancelInvoice?: (invoice: Invoice) => void;
+  onPaySuccess?: () => void;
 }
 
-const ViewInvoiceModal = ({ isOpen, onClose, invoiceId }: Props) => {
+const InvoiceModal = ({ isOpen, onClose, invoiceId, onPaySuccess }: Props) => {
   const { invoice, isLoading, refetch } = useGetSingleInvoice({ invoiceId });
   const delivery = invoice?.delivery;
   const rider = delivery?.rider;
@@ -43,6 +47,7 @@ const ViewInvoiceModal = ({ isOpen, onClose, invoiceId }: Props) => {
         type: 'success',
         message: 'Payment successful! Your order will be processed shortly.',
       });
+      onPaySuccess?.();
       void refetch();
     },
   });
@@ -227,6 +232,40 @@ const TableGrid: React.FC<TableGridProps> = ({ items }) => {
         ))}
       </ScrollView>
     </View>
+  );
+};
+
+const ViewInvoiceModal = (props: Props) => {
+  const {
+    bottomSheetRef,
+    handlePresentBottomSheet,
+    handleSheetChanges,
+    handleCloseBottomSheet,
+  } = useAppBottomSheetModal();
+
+  useEffect(() => {
+    if (props.isOpen) {
+      handlePresentBottomSheet();
+    }
+  }, [props.isOpen]);
+
+  return (
+    <AppBottomSheetModal
+      bottomSheetRef={bottomSheetRef}
+      breakpoints={['100%']}
+      content={
+        <InvoiceModal
+          {...props}
+          onClose={() => {
+            handleCloseBottomSheet();
+            props.onClose();
+          }}
+        />
+      }
+      headerTitle="View Invoice"
+      onChange={handleSheetChanges}
+      onDismiss={props.onClose}
+    />
   );
 };
 

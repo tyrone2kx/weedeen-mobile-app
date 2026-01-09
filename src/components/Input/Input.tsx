@@ -56,6 +56,7 @@ export interface InputProps {
   intent?: 'solid' | 'outline';
   labelContainerStyle?: ViewStyle;
   multiline?: TextInputProps['multiline'];
+  className?: string;
 }
 
 const Input: FC<InputProps> = ({
@@ -84,6 +85,7 @@ const Input: FC<InputProps> = ({
   intent = 'solid',
   labelContainerStyle,
   multiline,
+  className,
 }) => {
   const { theme } = useTheme();
 
@@ -157,7 +159,7 @@ const Input: FC<InputProps> = ({
   const errorText = Array.isArray(error) ? error.join(', ') : error;
 
   return (
-    <View className="mb-5 w-full flex-col" style={style}>
+    <View className={`mb-5 w-full flex-col ${className}`} style={style}>
       {hasLabel && (
         <View
           className={`flex-row ${variants.intent[intent].labelContainer}`}

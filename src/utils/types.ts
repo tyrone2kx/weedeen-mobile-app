@@ -145,3 +145,23 @@ export enum NotificationTypeEnum {
   COMMENT = 'comment',
   REPLY = 'reply',
 }
+
+export type FileType =
+  | 'image/jpeg'
+  | 'image/jpg'
+  | 'image/png'
+  | 'image/webp'
+  | 'image/gif'
+  | 'video/mp4'
+  | 'video/mpeg'
+  | 'video/quicktime'
+  | 'application/pdf'
+  | 'application/msword'
+  | 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  | 'application/vnd.ms-excel'
+  | 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  | 'application/vnd.ms-powerpoint'
+  | 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  | 'text/plain'
+  | 'application/zip'
+  | 'application/x-rar-compressed';

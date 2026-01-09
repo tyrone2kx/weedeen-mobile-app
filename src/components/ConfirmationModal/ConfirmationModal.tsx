@@ -17,7 +17,6 @@ interface IProps {
   isOpen?: boolean;
   cancelButtonText?: string;
   buttonText?: string;
-  enforceMinHeight?: boolean;
 }
 
 const ConfirmationModal = ({
@@ -31,26 +30,10 @@ const ConfirmationModal = ({
   title,
   buttonText = 'Yes, Proceed',
   cancelButtonText = 'Cancel',
-  enforceMinHeight = true,
 }: IProps) => {
   return (
     <CustomModal
-      enforceMinHeight={enforceMinHeight}
-      isOpen={isOpen}
-      onClose={onClose}
-      title={title}
-    >
-      <View className="flex-auto justify-center">
-        <View className="mb-5 items-center">
-          <View className="mb-5 h-[76px] w-[76px] items-center justify-center rounded-full bg-gray-150">
-            {icon ?? <Trash color={Theme.colors.red.DEFAULT} size={30} />}
-          </View>
-          <View className="items-center">
-            <Text style={{ fontSize: 15, color: Theme.colors.gray.DEFAULT }}>
-              {description}
-            </Text>
-          </View>
-        </View>
+      buttons={
         <View className="flex-row items-center justify-between gap-x-4">
           <View className="flex-1">
             <Button label={cancelButtonText} onPress={onClose} />
@@ -62,6 +45,23 @@ const ConfirmationModal = ({
               label={buttonText}
               onPress={onConfirm}
             />
+          </View>
+        </View>
+      }
+      enforceMinHeight={true}
+      isOpen={isOpen}
+      onClose={onClose}
+      title={title}
+    >
+      <View className="flex-1 justify-center">
+        <View className="mb-5 items-center">
+          <View className="mb-5 h-[76px] w-[76px] items-center justify-center rounded-full bg-gray-150">
+            {icon ?? <Trash color={Theme.colors.red.DEFAULT} size={30} />}
+          </View>
+          <View className="items-center">
+            <Text style={{ fontSize: 15, color: Theme.colors.gray.DEFAULT }}>
+              {description}
+            </Text>
           </View>
         </View>
       </View>

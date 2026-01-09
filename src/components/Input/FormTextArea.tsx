@@ -13,6 +13,7 @@ export interface FormTextAreaProps extends Omit<
   onValueChange?: (value: string) => void;
   showError?: boolean;
   errorContainerStyle?: any;
+  className?: string;
 }
 
 const FormTextArea: FC<FormTextAreaProps> = ({
@@ -22,6 +23,7 @@ const FormTextArea: FC<FormTextAreaProps> = ({
   onFocus: propOnFocus,
   showError = true,
   errorContainerStyle,
+  className = '',
   ...rest
 }) => {
   const [field, meta, helpers] = useField<string>(name);
@@ -43,7 +45,7 @@ const FormTextArea: FC<FormTextAreaProps> = ({
   const hasError = meta.touched && !!meta.error;
 
   return (
-    <View style={styles.container}>
+    <View className={className} style={styles.container}>
       <TextArea
         {...rest}
         hideBorder={hasError} // Optional: Hide default border when there's an error

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
 import { CloseIcon } from '../icons';
 import Text from '../Text/Text';
@@ -19,7 +20,10 @@ interface IProps {
   children: React.ReactNode;
   title?: string;
   enforceMinHeight?: boolean;
+  disableFlex?: boolean;
   buttons?: React.ReactNode;
+  className?: string;
+  style?: ViewStyle;
 }
 
 const { height } = Dimensions.get('screen');
@@ -31,8 +35,11 @@ const CustomModal = ({
   closeOnOutsideClick,
   hideCloseButton,
   title,
-  enforceMinHeight = true,
+  enforceMinHeight = false,
   buttons,
+  className = '',
+  disableFlex = false,
+  style = {},
 }: IProps) => {
   return (
     <Modal animationType="fade" transparent visible={isOpen}>
@@ -50,6 +57,8 @@ const CustomModal = ({
             minHeight: enforceMinHeight
               ? styles.container.minHeight
               : undefined,
+            flex: enforceMinHeight ? undefined : 1,
+            ...style,
           }}
         >
           {!!title || !hideCloseButton ? (
@@ -70,7 +79,7 @@ const CustomModal = ({
               )}
             </View>
           ) : null}
-          <View className="p-4">
+          <View className={`p-4 h-auto flex-1 ${className}`}>
             {children}
             {buttons && <View className="py-4">{buttons}</View>}
           </View>

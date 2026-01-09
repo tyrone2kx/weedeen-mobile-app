@@ -101,12 +101,56 @@ export type DashboardStackScreenProps<T extends keyof DashboardStackParamList> =
     RootStackScreenProps<keyof RootStackParamList>
   >;
 
+// ================= EMERGENCIES STACK =========================
+
+export type EmergenciesStackParamList = {
+  [RoutesEnum.EMERGENCIES_SCREEN]: undefined;
+};
+
+export type EmergenciesStackScreenProps<
+  T extends keyof EmergenciesStackParamList,
+> = CompositeScreenProps<
+  NativeStackScreenProps<EmergenciesStackParamList, T>,
+  RootStackScreenProps<keyof RootStackParamList>
+>;
+
+// ================= MY STORES STACK =========================
+
+export type MyStoresStackParamList = {
+  [RoutesEnum.MY_STORES_SCREEN]: undefined;
+  [RoutesEnum.STORE_PROFILE_SCREEN]: { id: string };
+};
+export type MyStoresStackScreenProps<T extends keyof MyStoresStackParamList> =
+  CompositeScreenProps<
+    NativeStackScreenProps<MyStoresStackParamList, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
+
+// ================= SUBSCRIPTION STACK =========================
+
+export type SubscriptionStackParamList = {
+  [RoutesEnum.SUBSCRIPTION_SCREEN]: undefined;
+};
+
+export type SubscriptionStackScreenProps<
+  T extends keyof SubscriptionStackParamList,
+> = CompositeScreenProps<
+  NativeStackScreenProps<SubscriptionStackParamList, T>,
+  RootStackScreenProps<keyof RootStackParamList>
+>;
+
 // ================= MENU STACK =========================
 
 export type MenuStackParamList = {
   [RoutesEnum.MENU_SCREEN]: undefined;
   [RoutesEnum.SETTINGS]: undefined;
   [RoutesEnum.PROFILE_SETTINGS_SCREEN]: undefined;
+  [StacksEnum.SUBSCRIPTION_STACK]: NavigatorScreenParams<SubscriptionStackParamList>;
+  [StacksEnum.EMERGENCIES_STACK]: NavigatorScreenParams<EmergenciesStackParamList>;
+  [StacksEnum.MY_STORES_STACK]: NavigatorScreenParams<MyStoresStackParamList>;
+  [RoutesEnum.ORDERS_SCREEN]: undefined;
+  [RoutesEnum.DELIVERIES_SCREEN]: undefined;
+  [RoutesEnum.BANK_ACCOUNTS_SCREEN]: undefined;
 };
 
 export type MenuStackScreenProps<T extends keyof MenuStackParamList> =

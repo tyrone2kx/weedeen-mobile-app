@@ -2,7 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { envMode } from '@wd/api';
 import { Invoice } from '@wd/generated';
 import moment from 'moment';
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
+import { Asset } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import uuidv4 from 'react-native-uuid';
 import { TErrorStatusCodes } from './types';
@@ -545,3 +546,18 @@ export function transparentizeColor(
 
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
+
+/**
+ * Convert a React Native Asset to a standard File object
+ * @param asset - The Asset object from react-native-image-picker
+ * @returns Promise<File> - A standard File object
+ */
+export const assetToFile = (asset: Asset) => {
+  return {
+    name: asset?.fileName || '',
+    type: asset?.type || '',
+    uri:
+      Platform.OS === 'ios' ? asset?.uri?.replace('file://', '') : asset?.uri,
+    size: asset?.fileSize || 0,
+  };
+};

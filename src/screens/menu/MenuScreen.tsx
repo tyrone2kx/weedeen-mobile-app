@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Avatar from '@wd/components/Avatar/Avatar';
 import SafeAreaComponent from '@wd/components/SafeAreaComponent/SafeAreaComponent';
 import Text from '@wd/components/Text/Text';
-import { RoutesEnum } from '@wd/navigation/enum';
+import { RoutesEnum, StacksEnum } from '@wd/navigation/enum';
 import { MenuStackScreenProps } from '@wd/navigation/types';
 import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
 import { logoutUser } from '@wd/redux-store/reducers/user-reducer';
@@ -27,7 +27,7 @@ const menuList = navigate => [
   {
     title: 'Profile',
     icon: <UserCircleIcon color="#2563eb" size={20} />,
-    onPress: () => navigate(RoutesEnum.PROFILE_SCREEN),
+    onPress: () => navigate(RoutesEnum.PROFILE_SETTINGS_SCREEN),
   },
   {
     title: 'My Orders',
@@ -47,7 +47,7 @@ const menuList = navigate => [
   {
     title: 'My Stores',
     icon: <BuildingIcon color="#2563eb" size={20} />,
-    onPress: () => navigate(RoutesEnum.MY_STORES_SCREEN),
+    onPress: () => navigate(StacksEnum.MY_STORES_STACK),
   },
   {
     title: 'Bank Accounts',

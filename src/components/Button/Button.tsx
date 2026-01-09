@@ -34,6 +34,7 @@ interface ButtonProps {
   pale?: boolean;
   light?: boolean;
   textContainerStyle?: ViewStyle | string;
+  className?: string;
 }
 
 const { width } = Dimensions.get('window');

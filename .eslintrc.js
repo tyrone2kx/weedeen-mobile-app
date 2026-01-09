@@ -77,5 +77,6 @@ module.exports = {
     '@typescript-eslint/no-require-imports': 'off',
     '@typescript-eslint/no-unsafe-call': 'off',
     'react-native/no-inline-styles': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
   },
 };
