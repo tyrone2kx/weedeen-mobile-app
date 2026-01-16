@@ -70,12 +70,16 @@ export class BillingService {
    */
   public static billingControllerFindAllInvoices({
     status,
+    storeId,
+    invoiceType,
     page,
     limit,
     search,
     ignorePagination,
   }: {
     status: string;
+    storeId: string;
+    invoiceType: string;
     page?: number;
     limit?: number;
     search?: string;
@@ -86,6 +90,8 @@ export class BillingService {
       url: '/billing/invoices',
       query: {
         status: status,
+        storeId: storeId,
+        invoiceType: invoiceType,
         page: page,
         limit: limit,
         search: search,

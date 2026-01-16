@@ -22,11 +22,13 @@ import {
   TrashIcon,
 } from 'lucide-react-native';
 import React, { FC, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import useGetSingleStore from '../shop/hooks/useGetSingleStore';
 import useDeleteStore from './hooks/useDeleteStore';
 import CreateStoreModal from './modals/CreateStoreModal';
 import StoreDetailsTab from './tabs/StoreDetailsTab';
+import StoreInventoryTab from './tabs/StoreInventoryTab';
+import StoreOrdersTab from './tabs/StoreOrdersTab';
 
 enum TabsEnum {
   DETAILS = 'Details',
@@ -73,8 +75,10 @@ const StoreProfileScreen: FC<
       />
       <View className="bg-white p-4 flex-row items-center justify-between elevation-md border-b border-gray-200 flex-wrap">
         <View className="flex-row items-center gap-2">
-          <ChevronLeftIcon />
-          <Avatar />
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <ChevronLeftIcon />
+          </TouchableOpacity>
+          <Avatar image={store?.logo} />
           <View>
             <Text className="" intent="h4">
               {store?.name || 'Store'}
@@ -147,6 +151,11 @@ const StoreProfileScreen: FC<
 
             {activeTab === TabsEnum.DETAILS && (
               <StoreDetailsTab store={store} />
+            )}
+
+            {activeTab === TabsEnum.ORDERS && <StoreOrdersTab store={store} />}
+            {activeTab === TabsEnum.INVENTORY && (
+              <StoreInventoryTab store={store} />
             )}
           </View>
         )}

@@ -2,13 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type CreatePaymentDto = {
-  userFeeId?: string;
-  customerFeeId?: string;
-  voucherCode?: string;
+export type PaymentConfigDto = {
   paymentMethod: 'paystack' | 'flutterwave' | 'cash' | 'POS';
-  status: 'success' | 'pending' | 'failed' | 'abandoned';
   amount: number;
   reference?: string;
-  resolvedById?: string;
 };

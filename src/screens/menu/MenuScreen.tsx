@@ -57,7 +57,7 @@ const menuList = navigate => [
   {
     title: 'Subscriptions & Billings',
     icon: <DollarSignIcon color="#2563eb" size={20} />,
-    onPress: () => navigate(RoutesEnum.SUBSCRIPTION_SCREEN),
+    onPress: () => navigate(StacksEnum.SUBSCRIPTION_STACK),
   },
 ];
 

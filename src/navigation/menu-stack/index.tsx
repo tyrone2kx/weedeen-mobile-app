@@ -9,6 +9,7 @@ import useTabBarDisplay from '@wd/utils/useTabBarDisplay/useTabBarDisplay';
 import React, { FC } from 'react';
 import { RoutesEnum, StacksEnum } from '../enum';
 import MyStoresStack from '../my-stores-stack';
+import SubscriptionsStack from '../subscriptions-stack';
 
 const MenuNav = createNativeStackNavigator<MenuStackParamList>();
 
@@ -42,6 +43,10 @@ const MenuStack: FC = () => {
       <MenuNav.Screen
         component={MyStoresStack}
         name={StacksEnum.MY_STORES_STACK}
+      />
+      <MenuNav.Screen
+        component={SubscriptionsStack}
+        name={StacksEnum.SUBSCRIPTION_STACK}
       />
     </MenuNav.Navigator>
   );

@@ -21,7 +21,7 @@ export type Billing = {
   cancelledAt: string;
   cancelledBy: string;
   status: 'active' | 'expired' | 'cancelled';
-  billingType: 'organization' | 'individual';
+  billingType: 'organization' | 'individual' | 'estates';
   invoiceId?: number;
   plan: Plan;
   createdAt: string;

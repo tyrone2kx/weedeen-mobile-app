@@ -1,4 +1,5 @@
 import DetailItem from '@wd/components/DetailItem/DetailItem';
+import { IMGView } from '@wd/components/FileIconViews/IconViews';
 import { Store } from '@wd/generated';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
@@ -31,6 +32,16 @@ const StoreDetailsTab = ({ store }: Props) => {
         <DetailItem
           description={store?.description || 'No description provided'}
           title="Store Description"
+        />
+        <DetailItem
+          descriptionComponent={
+            <View className="flex-row flex-wrap">
+              {store?.images?.map((img, index) => (
+                <IMGView key={index} url={img} />
+              ))}
+            </View>
+          }
+          title={'Images'}
         />
       </ScrollView>
     </View>

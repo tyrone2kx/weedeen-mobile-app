@@ -15,7 +15,8 @@ export type Plan = {
   pricingStructure: Array<PricingStructure>;
   currency?: string;
   status: string;
-  planType: 'organization' | 'individual';
+  modules: Array<'estate_management' | 'plot_management'>;
+  planType: 'organization' | 'individual' | 'estates';
   billings: Array<Billing>;
   createdAt: string;
   updatedAt: string;

@@ -1,143 +1,93 @@
-import { useMutation } from '@tanstack/react-query';
-import { apiWrapper } from '@wd/api';
+import Avatar from '@wd/components/Avatar/Avatar';
 import AppBottomSheetModal from '@wd/components/BottomSheet/AppBottomSheetModal';
 import Button from '@wd/components/Button/Button';
+import DetailItem from '@wd/components/DetailItem/DetailItem';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
 import Loader from '@wd/components/Loader/Loader';
-import usePaystack from '@wd/components/PaystackComponent/hooks/usePaystack';
-import { PaystackModal } from '@wd/components/PaystackComponent/Paystack';
 import Text from '@wd/components/Text/Text';
-import { BillingService, Invoice, OrderItem } from '@wd/generated';
-import { formatNaira, handleError, Notify } from '@wd/utils/helpers';
+import { Order, OrderItem } from '@wd/generated';
+import useGetSingleOrder from '@wd/screens/orders/hooks/useGetSingleOrder';
+import { formatNaira, formatNairaWithKobo } from '@wd/utils/helpers';
 import useTheme from '@wd/utils/theme/useTheme';
 import useAppBottomSheetModal from '@wd/utils/useAppBottomSheet/useBottomSheetModal';
 import { FileIcon } from 'lucide-react-native';
 import moment from 'moment';
 import { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import useGetSingleInvoice from '../hooks/useGetSingleInvoice';
 
 interface Props {
   isOpen?: boolean;
   onClose: () => void;
-  invoiceId?: number;
-  onCancelInvoice?: (invoice: Invoice) => void;
-  onPaySuccess?: () => void;
+  orderId?: number;
+  onCancelOrder?: (order: Order) => void;
 }
 
-const InvoiceModal = ({ onClose, invoiceId, onPaySuccess }: Props) => {
-  const { invoice, isLoading, refetch } = useGetSingleInvoice({ invoiceId });
+const OrderModal = ({ onClose, orderId }: Props) => {
+  const { order, isLoading } = useGetSingleOrder({ orderId });
+  const invoice = order?.invoice;
   const delivery = invoice?.delivery;
   const rider = delivery?.rider;
-  const orders = invoice?.orders || [];
-  const items = orders.flatMap(order => order.items || []);
-  const totalAmount = invoice?.amount || 0;
+  const items = order?.items || [];
+  const totalAmount = items.reduce(
+    (acc, item) => acc + item.unitPrice * item.quantity,
+    0,
+  );
+  const resident = order?.user;
 
-  const { mutate: verifyPayment } = useMutation({
-    mutationFn: (reference: string) =>
-      apiWrapper(() =>
-        BillingService.billingControllerVerifyPayment({ reference }),
-      ),
-    onError: error => {
-      void handleError(error);
-    },
-    onSuccess: () => {
-      Notify({
-        type: 'success',
-        message: 'Payment successful! Your order will be processed shortly.',
-      });
-      onPaySuccess?.();
-      void refetch();
-    },
-  });
-
-  const {
-    paystackHandle,
-    setPaystackConfig,
-    paystackModalProps,
-    paystackConfig,
-  } = usePaystack({
-    amount: totalAmount,
-    onSuccess: ref => verifyPayment(ref),
-  });
-
-  const { mutate: initializeTransaction, isPending } = useMutation({
-    mutationFn: (id: string) =>
-      apiWrapper(() =>
-        BillingService.billingControllerInitiatePayment({ invoiceId: id }),
-      ),
-    onError: error => {
-      void handleError(error);
-    },
-  });
   return (
     <View>
       {isLoading ? (
         <Loader section />
       ) : invoice ? (
         <View className="flex flex-col gap-4">
-          <Text className="text-lg font-bold text-gray-800">
-            Invoice #{invoice?.id}
-          </Text>
           <View className="flex gap-4 flex-wrap mb-4">
-            <Item
+            <DetailItem
               description={moment(invoice?.createdAt).format('Do MMM, YYYY')}
               title="Order Date"
             />
-            <Item description={invoice?.status || ''} title="Status" />
+            <DetailItem description={invoice?.status || ''} title="Status" />
           </View>
 
-          <View className="flex flex-col gap-4 mb-4">
-            <Item
-              description={delivery?.status || 'N/A'}
-              title="Delivery Status"
+          <View className="flex-row items-start gap-2 flex-wrap mb-4">
+            <Avatar
+              image={resident?.profilePic}
+              name={`${resident?.firstName} ${resident?.lastName}`}
             />
-            <Item
-              description={
-                rider
-                  ? `${rider?.firstName} ${rider?.lastName}`
-                  : 'Awaiting Assignment'
-              }
-              title="Rider"
+            <DetailItem
+              description=""
+              title={`${resident?.firstName} ${resident?.lastName}`}
             />
           </View>
+
+          {delivery && (
+            <View className="flex flex-col gap-4 mb-4">
+              <DetailItem
+                description={delivery?.status || 'N/A'}
+                title="Delivery Status"
+              />
+              <DetailItem
+                description={
+                  rider
+                    ? `${rider?.firstName} ${rider?.lastName}`
+                    : 'Awaiting Assignment'
+                }
+                title="Rider"
+              />
+            </View>
+          )}
 
           <View>
             <TableGrid items={items} />
+            <View className="mt-6 flex-row justify-end">
+              <DetailItem
+                description={formatNairaWithKobo(totalAmount)}
+                title="Total Amount"
+              />
+            </View>
           </View>
 
           <View className="flex w-full justify-between">
             <Button label={'Close'} onPress={onClose} pale />
-
-            <View className="flex gap-2">
-              {/* <Button
-              variant={'default'}
-              disabled={isLoading}
-              onPress={() => {
-                if (invoice) onCancelInvoice?.(invoice);
-              }}
-            >
-              Cancel Order
-            </Button> */}
-
-              <Button
-                disabled={isLoading || invoice?.status !== 'pending'}
-                isLoading={isPending}
-                label={invoice?.status === 'pending' ? 'Pay Now' : 'Paid'}
-                onPress={() => {
-                  if (invoice?.id)
-                    initializeTransaction(invoice.id?.toString(), {
-                      onSuccess: data => {
-                        setPaystackConfig(prev => ({
-                          ...(prev || {}),
-                          reference: data.transactionRef,
-                        }));
-                        paystackHandle.onOpen();
-                      },
-                    });
-                }}
-              />
-            </View>
           </View>
         </View>
       ) : (
@@ -147,10 +97,6 @@ const InvoiceModal = ({ onClose, invoiceId, onPaySuccess }: Props) => {
           title="Order not found"
         />
       )}
-      <PaystackModal
-        isOpen={paystackHandle.isOpen && !!paystackConfig?.reference}
-        {...paystackModalProps}
-      />
     </View>
   );
 };
@@ -159,17 +105,6 @@ interface ItemProps {
   title: string;
   description: string;
 }
-
-const Item = ({ title, description }: ItemProps) => {
-  return (
-    <View className="">
-      <Text className="font-semibold capitalize text-xs text-gray-600">
-        {title}
-      </Text>
-      <Text className="text-sm font-bold text-gray-700">{description}</Text>
-    </View>
-  );
-};
 
 interface TableGridProps {
   items: OrderItem[];
@@ -232,7 +167,7 @@ const TableGrid: React.FC<TableGridProps> = ({ items }) => {
   );
 };
 
-const ViewInvoiceModal = (props: Props) => {
+const ViewOrderModal = (props: Props) => {
   const {
     bottomSheetRef,
     handlePresentBottomSheet,
@@ -251,7 +186,7 @@ const ViewInvoiceModal = (props: Props) => {
       bottomSheetRef={bottomSheetRef}
       breakpoints={['100%']}
       content={
-        <InvoiceModal
+        <OrderModal
           {...props}
           onClose={() => {
             handleCloseBottomSheet();
@@ -259,7 +194,7 @@ const ViewInvoiceModal = (props: Props) => {
           }}
         />
       }
-      headerTitle="View Invoice"
+      headerTitle="View Order"
       onChange={handleSheetChanges}
       onDismiss={props.onClose}
     />
@@ -332,4 +267,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ViewInvoiceModal;
+export default ViewOrderModal;
