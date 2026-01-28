@@ -232,7 +232,6 @@ const VisitorsScreen: FC<
       />
       <ConfirmationModal
         description={`You are about to delete the visitor access code generated for ${activeVisitor?.visitorName}. This action is irreversible.`}
-        enforceMinHeight={false}
         isLoading={isDeleting}
         isOpen={deleteHandler.isOpen}
         onClose={() => {

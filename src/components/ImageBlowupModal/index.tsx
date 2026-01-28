@@ -14,6 +14,7 @@ import {
 import { Buffer } from 'buffer'; // Required for base64 encoding
 import { FileSystem } from 'react-native-file-access';
 
+import { X } from 'lucide-react-native';
 import { VideoView, useVideoPlayer } from 'react-native-video';
 import { WebView } from 'react-native-webview';
 import Button from '../Button/Button';
@@ -95,7 +96,7 @@ const ImageBlowupModal = ({
           >
             <Icon
               color={Theme.colors.green.DEFAULT}
-              name="document-download"
+              name="download"
               size={24}
             />
           </TouchableOpacity>
@@ -105,11 +106,7 @@ const ImageBlowupModal = ({
             className="h-12 w-12 items-center justify-center rounded-full bg-red-300"
             onPress={handleCloseBlowUp}
           >
-            <Icon
-              color={Theme.colors.red.DEFAULT}
-              name="close-square"
-              size={24}
-            />
+            <X color={Theme.colors.red.DEFAULT} size={24} />
           </TouchableOpacity>
         </View>
 
@@ -143,8 +140,8 @@ const ImageBlowupModal = ({
               </View>
             ) : (
               <VideoView
-                player={player}
                 controls
+                player={player}
                 style={{ width: '100%', height: '100%' }}
               />
             )}
@@ -152,7 +149,7 @@ const ImageBlowupModal = ({
         ) : (
           <EmptyState
             Action={<Button label="Close" onPress={handleCloseBlowUp} />}
-            info="Unable to load resource"
+            description="Unable to load resource"
             title="Loading Failed"
           />
         )}
