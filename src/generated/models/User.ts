@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AccessBlock } from './AccessBlock';
 import type { Invoice } from './Invoice';
 import type { Organization } from './Organization';
 import type { Role } from './Role';
@@ -10,7 +11,6 @@ import type { TransactionHistory } from './TransactionHistory';
 import type { UserFee } from './UserFee';
 import type { UserRole } from './UserRole';
 export type User = {
-  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -25,20 +25,38 @@ export type User = {
   longitude?: number;
   latitude?: number;
   fcmToken?: string;
-  userType?: 'admin' | 'resident' | 'estate_admin';
-  tenant: string;
+  tokens: number;
+  userType?:
+    | 'security'
+    | 'packager'
+    | 'rider'
+    | 'estate_admin'
+    | 'resident'
+    | 'admin'
+    | 'business_owner';
   otp?: string;
   isActive: boolean;
   verifiedAt?: string;
   isVerified: boolean;
-  organization?: Organization;
+  accessBlocks: Array<AccessBlock>;
   roles: Array<Role>;
   userRoles: Array<UserRole>;
   invoices: Array<Invoice>;
   userFees: Array<UserFee>;
   transactions: Array<TransactionHistory>;
   stores: Array<Store>;
+  deactivatedAt?: string;
+  deactivatedById?: string;
+  deactivatedBy?: User;
+  deactivationReason?: string;
+  deletedAt: string;
+  id: string;
+  tenant: string;
+  organization: Organization;
   createdAt: string;
   updatedAt: string;
-  deletedAt: string;
+  createdById: string;
+  updatedById: string;
+  createdBy: User;
+  updatedBy: User;
 };

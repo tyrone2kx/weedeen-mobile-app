@@ -8,8 +8,10 @@ import ProfileScreen from '@wd/screens/profile/ProfileScreen';
 import useTabBarDisplay from '@wd/utils/useTabBarDisplay/useTabBarDisplay';
 import React, { FC } from 'react';
 import { RoutesEnum, StacksEnum } from '../enum';
+import MyStaffStack from '../my-staff-stack';
 import MyStoresStack from '../my-stores-stack';
 import SubscriptionsStack from '../subscriptions-stack';
+import UtilitiesStack from '../utilities-stack';
 
 const MenuNav = createNativeStackNavigator<MenuStackParamList>();
 
@@ -47,6 +49,14 @@ const MenuStack: FC = () => {
       <MenuNav.Screen
         component={SubscriptionsStack}
         name={StacksEnum.SUBSCRIPTION_STACK}
+      />
+      <MenuNav.Screen
+        component={MyStaffStack}
+        name={StacksEnum.MY_STAFF_STACK}
+      />
+      <MenuNav.Screen
+        component={UtilitiesStack}
+        name={StacksEnum.UTILITIES_STACK}
       />
     </MenuNav.Navigator>
   );

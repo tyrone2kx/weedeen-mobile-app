@@ -62,7 +62,6 @@ const refreshExpiredToken = async refresh_token => {
 const signOut = async () => {
   await AsyncStorage.setItem('isRefreshingToken', 'false');
   await AsyncStorage.clear();
-  localStorage.clear();
   store.dispatch(logoutUser());
 };
 

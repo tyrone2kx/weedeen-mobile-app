@@ -4,5 +4,5 @@
 /* eslint-disable */
 export type PurchaseCreditRequestDto = {
   amount: number;
-  credits: number;
+  tokens: number;
 };

@@ -8,6 +8,7 @@ import usePaystack from '@wd/components/PaystackComponent/hooks/usePaystack';
 import { PaystackModal } from '@wd/components/PaystackComponent/Paystack';
 import Text from '@wd/components/Text/Text';
 import { BillingService, Invoice, OrderItem } from '@wd/generated';
+import useVerifyPayment from '@wd/screens/fees/hooks/useVerifyPayment';
 import { formatNaira, handleError, Notify } from '@wd/utils/helpers';
 import useTheme from '@wd/utils/theme/useTheme';
 import useAppBottomSheetModal from '@wd/utils/useAppBottomSheet/useBottomSheetModal';
@@ -33,14 +34,7 @@ const InvoiceModal = ({ onClose, invoiceId, onPaySuccess }: Props) => {
   const items = orders.flatMap(order => order.items || []);
   const totalAmount = invoice?.amount || 0;
 
-  const { mutate: verifyPayment } = useMutation({
-    mutationFn: (reference: string) =>
-      apiWrapper(() =>
-        BillingService.billingControllerVerifyPayment({ reference }),
-      ),
-    onError: error => {
-      void handleError(error);
-    },
+  const { mutate: verifyPayment } = useVerifyPayment({
     onSuccess: () => {
       Notify({
         type: 'success',

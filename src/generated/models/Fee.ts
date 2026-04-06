@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { BankAccount } from './BankAccount';
 import type { User } from './User';
 import type { UserFee } from './UserFee';
 export type Fee = {
@@ -20,7 +21,10 @@ export type Fee = {
   dueDate: string;
   isRecurrent: boolean;
   recurrentFrequency: 'daily' | 'weekly' | 'monthly' | 'yearly';
+  bankAccountId: string;
+  bankAccount: BankAccount;
   tag: string;
+  totalPayments?: number;
   invoices: Array<UserFee>;
   description: string;
   updatedAt: string;

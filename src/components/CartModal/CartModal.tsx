@@ -39,8 +39,6 @@ const CartModal = ({ isOpen = false, onClose, showInvoice }: Props) => {
     return total + (item.product.price || 0) * item.quantity;
   }, 0);
 
-  console.log('cartItems: ', cartItems);
-
   const ref = useRef<any>(null);
   const deliveryHandler = useDisclosure(true);
   const flatFee = user?.organization?.defaultDeliveryFee || 500;

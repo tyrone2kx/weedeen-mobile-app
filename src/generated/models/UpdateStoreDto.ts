@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { TimeInputType } from './TimeInputType';
 export type UpdateStoreDto = {
   name?: string;
   description?: string;
@@ -12,6 +13,11 @@ export type UpdateStoreDto = {
   flat?: string;
   latitude?: number;
   longitude?: number;
+  openingHours?: TimeInputType;
+  closingHours?: TimeInputType;
+  isOpenOnWeekends?: boolean;
+  isOpenOnHolidays?: boolean;
+  isTemporarilyClosed?: boolean;
   status?: 'active' | 'pending_approval' | 'rejected' | 'deactivated';
   deactivationReason?: string;
   deactivatedById?: string;

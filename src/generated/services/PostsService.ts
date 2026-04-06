@@ -8,6 +8,7 @@ import type { CreatePostDto } from '../models/CreatePostDto';
 import type { DeletePostResourceDto } from '../models/DeletePostResourceDto';
 import type { PaginatedPostsDto } from '../models/PaginatedPostsDto';
 import type { Post } from '../models/Post';
+import type { TrackPostViewDto } from '../models/TrackPostViewDto';
 import type { UpdateCommentDto } from '../models/UpdateCommentDto';
 import type { UpdatePostDto } from '../models/UpdatePostDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -109,6 +110,22 @@ export class PostsService {
       path: {
         id: id,
       },
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public static postsControllerTrackPostView({
+    requestBody,
+  }: {
+    requestBody: TrackPostViewDto;
+  }): CancelablePromise<any> {
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/posts/track-view',
+      body: requestBody,
+      mediaType: 'application/json',
     });
   }
   /**

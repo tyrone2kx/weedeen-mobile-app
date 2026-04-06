@@ -139,6 +139,30 @@ export type SubscriptionStackScreenProps<
   RootStackScreenProps<keyof RootStackParamList>
 >;
 
+// ================= MY STAFF STACK =========================
+export type MyStaffStackParamList = {
+  [RoutesEnum.MY_STAFF_SCREEN]: undefined;
+  [RoutesEnum.STAFF_PROFILE_SCREEN]: { id: string };
+};
+
+export type MyStaffStackScreenProps<T extends keyof MyStaffStackParamList> =
+  CompositeScreenProps<
+    NativeStackScreenProps<MyStaffStackParamList, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
+
+// ================= UTILITIES STACK =========================
+export type UtilitiesStackParamList = {
+  [RoutesEnum.UTILITIES_SCREEN]: undefined;
+  [RoutesEnum.UTILITY_PROFILE_SCREEN]: { id: string };
+};
+
+export type UtilitiesStackScreenProps<T extends keyof UtilitiesStackParamList> =
+  CompositeScreenProps<
+    NativeStackScreenProps<UtilitiesStackParamList, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
+
 // ================= MENU STACK =========================
 
 export type MenuStackParamList = {
@@ -151,6 +175,8 @@ export type MenuStackParamList = {
   [RoutesEnum.ORDERS_SCREEN]: undefined;
   [RoutesEnum.DELIVERIES_SCREEN]: undefined;
   [RoutesEnum.BANK_ACCOUNTS_SCREEN]: undefined;
+  [StacksEnum.MY_STAFF_STACK]: NavigatorScreenParams<MyStaffStackParamList>;
+  [StacksEnum.UTILITIES_STACK]: NavigatorScreenParams<UtilitiesStackParamList>;
 };
 
 export type MenuStackScreenProps<T extends keyof MenuStackParamList> =

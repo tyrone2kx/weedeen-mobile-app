@@ -4,6 +4,7 @@
 /* eslint-disable */
 export type UpdateBankAccountDto = {
   isActive?: boolean;
+  isDefault?: boolean;
   /**
    * Array of store UUIDs to link this bank account to
    */

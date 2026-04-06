@@ -6,6 +6,7 @@ import type { Billing } from './Billing';
 import type { Order } from './Order';
 import type { Product } from './Product';
 import type { StoreBankAccount } from './StoreBankAccount';
+import type { TimeInputType } from './TimeInputType';
 import type { User } from './User';
 export type Store = {
   id: string;
@@ -16,6 +17,11 @@ export type Store = {
   deactivationReason?: string;
   rejectionReason?: string;
   deactivatedById?: string;
+  openingHours?: TimeInputType;
+  closingHours?: TimeInputType;
+  isOpenOnWeekends: boolean;
+  isOpenOnHolidays: boolean;
+  isTemporarilyClosed: boolean;
   rejectedById?: string;
   deactivatedBy?: User;
   rejectedBy?: User;

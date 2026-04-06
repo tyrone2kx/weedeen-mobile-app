@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { TimeInputType } from './TimeInputType';
 export type CreateStoreDto = {
   name: string;
   description?: string;
@@ -12,4 +13,9 @@ export type CreateStoreDto = {
   flat?: string;
   latitude?: number;
   longitude?: number;
+  openingHours?: TimeInputType;
+  closingHours?: TimeInputType;
+  isOpenOnWeekends?: boolean;
+  isOpenOnHolidays?: boolean;
+  isTemporarilyClosed?: boolean;
 };

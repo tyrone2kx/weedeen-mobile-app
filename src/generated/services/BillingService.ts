@@ -23,14 +23,14 @@ export class BillingService {
    * @returns Invoice
    * @throws ApiError
    */
-  public static billingControllerPurchaseCredits({
+  public static billingControllerPurchaseTokens({
     requestBody,
   }: {
     requestBody: PurchaseCreditRequestDto;
   }): CancelablePromise<Invoice> {
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/billing/purchase-credits',
+      url: '/billing/purchase-tokens',
       body: requestBody,
       mediaType: 'application/json',
     });
@@ -225,7 +225,7 @@ export class BillingService {
    * @returns BankAccount
    * @throws ApiError
    */
-  public static billingControllerGetBankAccountsByUserId({
+  public static billingControllerGetBankAccounts({
     userId,
   }: {
     userId: string;

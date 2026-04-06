@@ -6,6 +6,7 @@ export type CreateBankAccountDto = {
   bankName: string;
   accountNumber: string;
   accountName: string;
+  ownerType: 'resident' | 'organization';
   bankCode: string;
   isActive?: boolean;
   /**

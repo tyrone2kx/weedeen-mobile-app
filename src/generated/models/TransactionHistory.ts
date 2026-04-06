@@ -23,7 +23,11 @@ export type TransactionHistory = {
   metadata?: Record<string, any>;
   transactionTime: string;
   invoiceId: number;
-  transactionType: 'credit' | 'debit' | 'product_purchase' | 'delivery_fee';
+  transactionType:
+    | 'token_purchase'
+    | 'debit'
+    | 'product_purchase'
+    | 'delivery_fee';
   createdAt: string;
   updatedAt: string;
 };

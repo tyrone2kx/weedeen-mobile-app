@@ -13,6 +13,7 @@ export type UpdateFeeDto = {
   recurrentFrequency?: 'daily' | 'weekly' | 'monthly' | 'yearly';
   tag?: string;
   description?: string;
+  bankAccountId?: string;
   flat?: string;
   block?: string;
   street?: string;

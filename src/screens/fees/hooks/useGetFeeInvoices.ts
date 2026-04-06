@@ -11,12 +11,14 @@ interface Props {
   ignorePagination?: boolean;
   userId?: string;
   feeId?: string;
+  utilityId?: string;
 }
 
 const useGetFeeInvoices = ({
   ignorePagination = false,
   userId,
   feeId,
+  utilityId,
 }: Props) => {
   const user = useAppSelector(state => state.user?.currentUser);
   const [status, setStatus] = useState<SelectOptionType>(null);
@@ -38,7 +40,18 @@ const useGetFeeInvoices = ({
   } = usePaginationWrapper();
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['fee-invoices', user?.id, status, debouncedSearchText],
+    queryKey: [
+      'fee-invoices',
+      user?.id,
+      status,
+      debouncedSearchText,
+      utilityId,
+      feeId,
+      startDate,
+      endDate,
+      page,
+      limit,
+    ],
     queryFn: async () =>
       apiWrapper(() =>
         FeesService.feesControllerFindAllFeeInvoices({
@@ -51,6 +64,7 @@ const useGetFeeInvoices = ({
           userId: userId || '',
           status: status?.value,
           feeId: feeId || '',
+          utilityId: utilityId || '',
         }),
       ),
   });

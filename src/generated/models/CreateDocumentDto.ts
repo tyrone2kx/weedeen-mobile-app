@@ -28,6 +28,7 @@ export type CreateDocumentDto = {
     | 'emergencies'
     | 'posts'
     | 'estates'
-    | 'estate-customers';
+    | 'estate-customers'
+    | 'staff';
   getMappings: boolean;
 };

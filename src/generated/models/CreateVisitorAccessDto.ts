@@ -11,10 +11,11 @@ export type CreateVisitorAccessDto = {
     | 'delivery'
     | 'service_provider'
     | 'other'
-    | 'unknown';
+    | 'unknown'
+    | 'staff';
   visitorTypeOther?: string;
   purposeOfVisit?: string;
-  accessCode?: string;
+  staffId?: string;
   accessCodeExpiry?: string;
   accessCodeUsed?: boolean;
   accessCodeUsedAt?: string;

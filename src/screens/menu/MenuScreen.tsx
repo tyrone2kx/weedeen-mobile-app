@@ -14,10 +14,12 @@ import {
   BikeIcon,
   BriefcaseIcon,
   BuildingIcon,
+  Contact2Icon,
   DollarSignIcon,
   LogOutIcon,
   ShoppingBagIcon,
   UserCircleIcon,
+  WrenchIcon,
 } from 'lucide-react-native';
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -28,6 +30,11 @@ const menuList = navigate => [
     title: 'Profile',
     icon: <UserCircleIcon color="#2563eb" size={20} />,
     onPress: () => navigate(RoutesEnum.PROFILE_SETTINGS_SCREEN),
+  },
+  {
+    title: 'Utilities',
+    icon: <WrenchIcon color="#2563eb" size={20} />,
+    onPress: () => navigate(StacksEnum.UTILITIES_STACK),
   },
   {
     title: 'My Orders',
@@ -48,6 +55,11 @@ const menuList = navigate => [
     title: 'My Stores',
     icon: <BuildingIcon color="#2563eb" size={20} />,
     onPress: () => navigate(StacksEnum.MY_STORES_STACK),
+  },
+  {
+    title: 'My Staff',
+    icon: <Contact2Icon color="#2563eb" size={20} />,
+    onPress: () => navigate(StacksEnum.MY_STAFF_STACK),
   },
   {
     title: 'Bank Accounts',

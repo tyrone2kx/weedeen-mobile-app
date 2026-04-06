@@ -7,7 +7,7 @@ import CustomModal from '../CustomModal/CustomModal';
 import Text from '../Text/Text';
 
 interface IProps {
-  description: string;
+  description?: string;
   title: string;
   onConfirm?: () => void;
   icon?: ReactNode;
@@ -17,6 +17,7 @@ interface IProps {
   isOpen?: boolean;
   cancelButtonText?: string;
   buttonText?: string;
+  descriptionComponent?: ReactNode;
 }
 
 const ConfirmationModal = ({
@@ -30,6 +31,7 @@ const ConfirmationModal = ({
   title,
   buttonText = 'Yes, Proceed',
   cancelButtonText = 'Cancel',
+  descriptionComponent,
 }: IProps) => {
   return (
     <CustomModal
@@ -59,9 +61,11 @@ const ConfirmationModal = ({
             {icon ?? <Trash color={Theme.colors.red.DEFAULT} size={30} />}
           </View>
           <View className="items-center">
-            <Text style={{ fontSize: 15, color: Theme.colors.gray.DEFAULT }}>
-              {description}
-            </Text>
+            {descriptionComponent ?? (
+              <Text style={{ fontSize: 15, color: Theme.colors.gray.DEFAULT }}>
+                {description}
+              </Text>
+            )}
           </View>
         </View>
       </View>

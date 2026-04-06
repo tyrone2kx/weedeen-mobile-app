@@ -4,6 +4,6 @@
 /* eslint-disable */
 export type CreateUserRoleDto = {
   userId: string;
-  roleId: string;
+  roleIds: Array<string>;
   description?: string;
 };

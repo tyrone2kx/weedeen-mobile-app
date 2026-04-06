@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { DeactivateUserDto } from '../models/DeactivateUserDto';
 import type { PaginatedUserDto } from '../models/PaginatedUserDto';
 import type { User } from '../models/User';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -37,6 +38,23 @@ export class AdminService {
         limit: limit,
         search: search,
         ignorePagination: ignorePagination,
+      },
+    });
+  }
+  /**
+   * @returns User
+   * @throws ApiError
+   */
+  public static adminControllerFindTeamMembersWithoutRole({
+    roleId,
+  }: {
+    roleId: string;
+  }): CancelablePromise<Array<User>> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/admin/team-members-without-role',
+      query: {
+        roleId: roleId,
       },
     });
   }
@@ -94,6 +112,39 @@ export class AdminService {
       method: 'GET',
       url: '/admin/users/{id}',
       query: {
+        id: id,
+      },
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public static adminControllerDeactivateUser({
+    requestBody,
+  }: {
+    requestBody: DeactivateUserDto;
+  }): CancelablePromise<any> {
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/admin/deactivate',
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+  /**
+   * @returns any
+   * @throws ApiError
+   */
+  public static adminControllerActivateUser({
+    id,
+  }: {
+    id: string;
+  }): CancelablePromise<any> {
+    return __request(OpenAPI, {
+      method: 'PATCH',
+      url: '/admin/activate/{id}',
+      path: {
         id: id,
       },
     });

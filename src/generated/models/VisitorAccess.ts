@@ -2,12 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { Staff } from './Staff';
 import type { User } from './User';
 export type VisitorAccess = {
   id: string;
-  tenant: string;
   userId?: string;
   user?: User;
+  staffId?: string;
+  staff?: Staff;
   visitorName: string;
   visitorPhone?: string;
   visitorType:
@@ -16,7 +18,8 @@ export type VisitorAccess = {
     | 'delivery'
     | 'service_provider'
     | 'other'
-    | 'unknown';
+    | 'unknown'
+    | 'staff';
   visitorTypeOther?: string;
   purposeOfVisit?: string;
   accessCode: string;
@@ -26,4 +29,5 @@ export type VisitorAccess = {
   approvedByUserId?: string;
   createdAt: string;
   updatedAt: string;
+  tenant: string;
 };
