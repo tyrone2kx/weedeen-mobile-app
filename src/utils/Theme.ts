@@ -11,6 +11,10 @@ export const Theme = {
     brown: '#854F28',
     gray: '#8C8C8C',
   },
+  green: '#0B7A68',
+  red: '#D92D20',
+  amber: '#F59E0B',
+  primary: '#0057FF',
 
   colors: light,
 } as const;

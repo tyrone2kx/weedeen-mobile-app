@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import Button from '@wd/components/Button/Button';
 import CustomModal from '@wd/components/CustomModal/CustomModal';
 import FormInput from '@wd/components/Input/FormInput';
@@ -19,6 +18,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Yup from 'yup';
+import useCreateVisitorAccess from '../hooks/useCreateVisitorAccess';
 import useVisitorMutations from '../hooks/useVisitorMutations';
 
 interface Props {
@@ -34,7 +34,7 @@ const CreateInviteModal = ({ isOpen, onClose: close, visitor }: Props) => {
     setCode('');
     close();
   };
-  const queryClient = useQueryClient();
+
   const initialValues = {
     visitorName: visitor?.visitorName || '',
     visitorPhone: visitor?.visitorPhone || '',
@@ -48,8 +48,10 @@ const CreateInviteModal = ({ isOpen, onClose: close, visitor }: Props) => {
       : 60, // Default to 60 minutes
   };
 
-  const { isCreating, createAccess, isUpdating, updateAccess } =
-    useVisitorMutations();
+  const { isUpdating, updateAccess } = useVisitorMutations();
+
+  const { isPending: isCreating, mutate: createAccess } =
+    useCreateVisitorAccess();
 
   const textToCopy = `Your access code to ${org?.name} is: ${code}.`;
   const { isCopied, copyToClipboard } = useCopyToClipboard();

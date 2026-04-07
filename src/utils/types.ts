@@ -146,6 +146,11 @@ export enum NotificationTypeEnum {
   REPLY = 'reply',
 }
 
+export enum GenderEnum {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
 export type FileType =
   | 'image/jpeg'
   | 'image/jpg'
