@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type GeneralResponseDto = {
-  data?: Record<string, any>;
-  success: boolean;
-  message?: string;
+    data?: Record<string, any>;
+    success: boolean;
+    message?: string;
 };
+

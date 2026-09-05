@@ -8,26 +8,23 @@ import type { Plan } from './Plan';
 import type { Store } from './Store';
 import type { User } from './User';
 export type Invoice = {
-  id: number;
-  tenant: string;
-  reference?: string;
-  storeId: string;
-  store?: Store;
-  planId?: string;
-  plan: Plan;
-  orders: Array<Order>;
-  user: User;
-  userId: string;
-  status: 'pending' | 'paid' | 'completed' | 'failed' | 'cancelled';
-  delivery?: Delivery;
-  paymentDate?: string;
-  amount: number;
-  tokens?: number;
-  invoiceType:
-    | 'token_purchase'
-    | 'subscription'
-    | 'product_purchase'
-    | 'delivery';
-  createdAt: string;
-  updatedAt: string;
+    id: number;
+    tenant: string;
+    reference?: string;
+    storeId: string;
+    store?: Store;
+    planId?: string;
+    plan: Plan;
+    orders: Array<Order>;
+    user: User;
+    userId: string;
+    status: 'pending' | 'paid' | 'completed' | 'failed' | 'cancelled';
+    delivery?: Delivery;
+    paymentDate?: string;
+    amount: number;
+    tokens?: number;
+    invoiceType: 'token_purchase' | 'subscription' | 'product_purchase' | 'delivery';
+    createdAt: string;
+    updatedAt: string;
 };
+

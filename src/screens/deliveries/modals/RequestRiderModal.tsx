@@ -23,7 +23,7 @@ interface Props {
 const RequestRiderModal = ({ isOpen, onClose, delivery }: Props) => {
   const queryClient = useQueryClient();
   const user = useAppSelector(state => state.user?.currentUser);
-  const defaultAddress = `${user?.street || ''} ${user?.block || ''} ${user?.flatNumber || ''}`;
+  const defaultAddress = user?.unitLabel || '';
   const initialValues = {
     additionalNotes: delivery?.additionalNotes || '',
     pickUpAddress: delivery?.pickUpAddress || defaultAddress,

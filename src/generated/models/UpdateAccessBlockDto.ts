@@ -3,12 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export type UpdateAccessBlockDto = {
-  /**
-   * Is blocked
-   */
-  isBlocked?: boolean;
-  /**
-   * Unblock reason
-   */
-  unblockReason?: string;
+    /**
+     * Is blocked
+     */
+    isBlocked?: boolean;
+    /**
+     * Unblock reason
+     */
+    unblockReason?: string;
 };
+

@@ -3,9 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PlotAutoCreateConfigDto = {
-  phase?: number;
-  size?: string;
-  plotPrefix?: string;
-  price?: number;
-  count: number;
+    phase?: number;
+    size?: string;
+    plotPrefix?: string;
+    price?: number;
+    count: number;
 };
+

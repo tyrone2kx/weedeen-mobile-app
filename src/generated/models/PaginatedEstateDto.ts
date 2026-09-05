@@ -4,9 +4,10 @@
 /* eslint-disable */
 import type { Estate } from './Estate';
 export type PaginatedEstateDto = {
-  data: Array<Estate>;
-  page: number;
-  limit: number;
-  totalPages: number;
-  totalElements: number;
+    data: Array<Estate>;
+    page: number;
+    limit: number;
+    totalPages: number;
+    totalElements: number;
 };
+

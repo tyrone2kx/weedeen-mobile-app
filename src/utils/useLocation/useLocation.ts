@@ -1,9 +1,6 @@
 import Geolocation from '@react-native-community/geolocation';
-import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
-import { updateAppUserState } from '@wd/redux-store/reducers/user-reducer';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PermissionsAndroid, Platform } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 async function requestLocationPermission(
   callback: (position: Geolocation.GeoPosition) => void,
@@ -49,42 +46,32 @@ async function requestLocationPermission(
   }
 }
 
+// NOTE: user location is no longer stored on the user profile. This hook now
+// resolves the device's live coordinates into local state (used for SOS /
+// delivery), rather than reading removed user.latitude/longitude fields.
 export const useLocation = () => {
-  const dispatch = useDispatch();
-  const currentUser = useAppSelector(state => state.user?.currentUser);
+  const [userLocation, setUserLocation] = useState<{
+    latitude?: number;
+    longitude?: number;
+  }>({});
 
-  const callback = useCallback(
-    (data: Geolocation.GeoPosition) => {
-      const { longitude, latitude } = data.coords;
-
-      dispatch(
-        updateAppUserState({
-          currentUser: {
-            ...currentUser!,
-            longitude,
-            latitude,
-          },
-        }),
-      );
-    },
-    [dispatch, currentUser],
-  );
+  const callback = useCallback((data: Geolocation.GeoPosition) => {
+    const { longitude, latitude } = data.coords;
+    setUserLocation({ latitude, longitude });
+  }, []);
 
   const updateUserLocation = () => {
     void requestLocationPermission(callback);
   };
 
   useEffect(() => {
-    if (!currentUser?.latitude || !currentUser?.longitude) {
+    if (!userLocation.latitude || !userLocation.longitude) {
       void requestLocationPermission(callback);
     }
-  }, [callback, currentUser]);
+  }, [callback, userLocation.latitude, userLocation.longitude]);
 
   return {
-    userLocation: {
-      latitude: currentUser?.latitude,
-      longitude: currentUser?.longitude,
-    },
+    userLocation,
     updateUserLocation,
   };
 };

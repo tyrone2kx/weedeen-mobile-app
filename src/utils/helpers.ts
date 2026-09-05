@@ -438,6 +438,15 @@ export const handleError = (
   if (statusCode === 409) {
     msgObj[`${statusCode}`] = msg;
   }
+  const limitErrorCode =
+    err?.body?.error || (response && response.data && response.data.error);
+  if (
+    statusCode === 403 &&
+    (limitErrorCode === 'UNIT_LIMIT_EXCEEDED' ||
+      limitErrorCode === 'USER_LIMIT_PER_UNIT_EXCEEDED')
+  ) {
+    msgObj['403'] = `${msg} Please upgrade your plan or contact support to add more.`;
+  }
   if (!msgObj[`${statusCode}`]) {
     msgObj[`${statusCode}`] = constMessage;
   }

@@ -28,6 +28,7 @@ export enum RoutesEnum {
   STAFF_PROFILE_SCREEN = 'StaffProfileScreen',
   UTILITY_PROFILE_SCREEN = 'UtilityProfileScreen',
   UTILITIES_SCREEN = 'UtilitiesScreen',
+  BENEFICIARIES_SCREEN = 'BeneficiariesScreen',
 }
 
 export enum StacksEnum {

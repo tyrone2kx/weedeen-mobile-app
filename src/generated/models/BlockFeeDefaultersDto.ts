@@ -3,14 +3,15 @@
 /* tslint:disable */
 /* eslint-disable */
 export type BlockFeeDefaultersDto = {
-  /**
-   * Reason for blocking access
-   */
-  reason: string;
-  feeId: string;
-  utilityIds?: Array<string>;
-  /**
-   * Feature being blocked
-   */
-  features: Array<'visitor_access' | 'utility'>;
+    /**
+     * Reason for blocking access
+     */
+    reason: string;
+    feeId: string;
+    utilityIds?: Array<string>;
+    /**
+     * Feature being blocked
+     */
+    features: Array<'visitor_access' | 'utility'>;
 };
+

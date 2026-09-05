@@ -4,20 +4,21 @@
 /* eslint-disable */
 import type { Customer } from './Customer';
 import type { Plot } from './Plot';
-import type { User } from './User';
+import type { UserDto } from './UserDto';
 export type CustomerPlot = {
-  id: string;
-  tenant: string;
-  customerId: string;
-  plotId: string;
-  customer: Customer;
-  plot: Plot;
-  status: 'pending' | 'allocated' | 'cancelled' | 're_sold';
-  createdById: string;
-  createdBy: User;
-  updatedById: string;
-  updatedBy: User;
-  allocatedAt: string;
-  createdAt: string;
-  updatedAt: string;
+    customerId: string;
+    plotId: string;
+    customer: Customer;
+    plot: Plot;
+    status: 'pending' | 'allocated' | 'cancelled' | 're_sold';
+    allocatedAt: string;
+    createdAt: string;
+    updatedAt: string;
+    id: string;
+    createdById: string;
+    updatedById: string;
+    createdBy: UserDto;
+    updatedBy: UserDto;
+    tenant: string;
 };
+

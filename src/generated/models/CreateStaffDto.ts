@@ -3,11 +3,12 @@
 /* tslint:disable */
 /* eslint-disable */
 export type CreateStaffDto = {
-  firstName: string;
-  lastName: string;
-  email?: string;
-  gender: 'male' | 'female';
-  phoneNumber?: string;
-  role?: string;
-  specialInstruction?: string;
+    firstName: string;
+    lastName: string;
+    email?: string;
+    gender: 'male' | 'female';
+    phoneNumber?: string;
+    role?: string;
+    specialInstruction?: string;
 };
+

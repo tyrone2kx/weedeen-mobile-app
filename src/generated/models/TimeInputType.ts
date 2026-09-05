@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type TimeInputType = {
-  hour: string;
-  minute: string;
-  meridiem: 'AM' | 'PM';
+    hour: string;
+    minute: string;
+    meridiem: 'AM' | 'PM';
 };
+

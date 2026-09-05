@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type AssignRoleToBulkUsersDto = {
-  userIds: Array<string>;
-  roleId: string;
+    userIds: Array<string>;
+    roleId: string;
 };
+

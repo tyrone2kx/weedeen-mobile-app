@@ -4,9 +4,10 @@
 /* eslint-disable */
 import type { Store } from './Store';
 export type PaginatedStoresDto = {
-  data: Array<Store>;
-  page: number;
-  limit: number;
-  totalPages: number;
-  totalElements: number;
+    data: Array<Store>;
+    page: number;
+    limit: number;
+    totalPages: number;
+    totalElements: number;
 };
+

@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type CreateRolePrivilegeDto = {
-  roleId: string;
-  privilegeId: string;
-  action: 'assign' | 'unassign';
+    roleId: string;
+    privilegeId: string;
+    action: 'assign' | 'unassign';
 };
+

@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MenuStackParamList } from '@wd/navigation/types';
 import BankAccountScreen from '@wd/screens/bank-accounts/BankAccountScreen';
+import BeneficiariesScreen from '@wd/screens/beneficiaries/BeneficiariesScreen';
 import DeliveriesScreen from '@wd/screens/deliveries/DeliveriesScreen';
 import MenuScreen from '@wd/screens/menu/MenuScreen';
 import OrdersScreen from '@wd/screens/orders/OrdersScreen';
@@ -41,6 +42,10 @@ const MenuStack: FC = () => {
       <MenuNav.Screen
         component={BankAccountScreen}
         name={RoutesEnum.BANK_ACCOUNTS_SCREEN}
+      />
+      <MenuNav.Screen
+        component={BeneficiariesScreen}
+        name={RoutesEnum.BENEFICIARIES_SCREEN}
       />
       <MenuNav.Screen
         component={MyStoresStack}

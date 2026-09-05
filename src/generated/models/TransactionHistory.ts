@@ -4,30 +4,19 @@
 /* eslint-disable */
 import type { User } from './User';
 export type TransactionHistory = {
-  id: string;
-  tenant: string;
-  userId: string;
-  user: User;
-  status:
-    | 'pending'
-    | 'failed'
-    | 'abandoned'
-    | 'ongoing'
-    | 'processing'
-    | 'queued'
-    | 'reversed'
-    | 'success';
-  amount: number;
-  transactionRef: string;
-  splitCode?: string;
-  metadata?: Record<string, any>;
-  transactionTime: string;
-  invoiceId: number;
-  transactionType:
-    | 'token_purchase'
-    | 'debit'
-    | 'product_purchase'
-    | 'delivery_fee';
-  createdAt: string;
-  updatedAt: string;
+    id: string;
+    tenant: string;
+    userId: string;
+    user: User;
+    status: 'pending' | 'failed' | 'abandoned' | 'ongoing' | 'processing' | 'queued' | 'reversed' | 'success';
+    amount: number;
+    transactionRef: string;
+    splitCode?: string;
+    metadata?: Record<string, any>;
+    transactionTime: string;
+    invoiceId: number;
+    transactionType: 'token_purchase' | 'debit' | 'product_purchase' | 'delivery_fee';
+    createdAt: string;
+    updatedAt: string;
 };
+

@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type CreateCommentDto = {
-  content: string;
-  parentCommentId?: string;
+    content: string;
+    parentCommentId?: string;
 };
+

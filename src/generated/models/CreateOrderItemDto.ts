@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type CreateOrderItemDto = {
-  productId: string;
-  quantity: number;
-  unitPrice: number;
+    productId: string;
+    quantity: number;
+    unitPrice: number;
 };
+

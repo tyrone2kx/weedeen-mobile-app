@@ -4,9 +4,10 @@
 /* eslint-disable */
 import type { Notification } from './Notification';
 export type PaginatedNotificationDto = {
-  data: Array<Notification>;
-  page: number;
-  limit: number;
-  totalPages: number;
-  totalElements: number;
+    data: Array<Notification>;
+    page: number;
+    limit: number;
+    totalPages: number;
+    totalElements: number;
 };
+

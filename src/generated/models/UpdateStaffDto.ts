@@ -3,12 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export type UpdateStaffDto = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  gender?: 'male' | 'female';
-  phoneNumber?: string;
-  role?: string;
-  specialInstruction?: string;
-  isActive?: boolean;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    gender?: 'male' | 'female';
+    phoneNumber?: string;
+    role?: string;
+    specialInstruction?: string;
+    isActive?: boolean;
 };
+

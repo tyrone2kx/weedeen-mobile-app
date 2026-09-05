@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type DeactivateUserDto = {
-  userId: string;
-  deactivationReason: string;
+    userId: string;
+    deactivationReason: string;
 };
+

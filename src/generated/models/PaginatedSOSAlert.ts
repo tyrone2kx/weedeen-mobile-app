@@ -4,9 +4,10 @@
 /* eslint-disable */
 import type { SOSAlert } from './SOSAlert';
 export type PaginatedSOSAlert = {
-  data: Array<SOSAlert>;
-  page: number;
-  limit: number;
-  totalPages: number;
-  totalElements: number;
+    data: Array<SOSAlert>;
+    page: number;
+    limit: number;
+    totalPages: number;
+    totalElements: number;
 };
+

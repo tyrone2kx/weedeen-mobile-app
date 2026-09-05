@@ -175,6 +175,7 @@ export type MenuStackParamList = {
   [RoutesEnum.ORDERS_SCREEN]: undefined;
   [RoutesEnum.DELIVERIES_SCREEN]: undefined;
   [RoutesEnum.BANK_ACCOUNTS_SCREEN]: undefined;
+  [RoutesEnum.BENEFICIARIES_SCREEN]: undefined;
   [StacksEnum.MY_STAFF_STACK]: NavigatorScreenParams<MyStaffStackParamList>;
   [StacksEnum.UTILITIES_STACK]: NavigatorScreenParams<UtilitiesStackParamList>;
 };

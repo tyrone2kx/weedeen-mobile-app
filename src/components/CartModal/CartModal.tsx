@@ -32,8 +32,7 @@ const CartModal = ({ isOpen = false, onClose, showInvoice }: Props) => {
   const cartItems = useAppSelector(state => state.cart.cartItems);
   const user = useAppSelector(state => state.user?.currentUser);
   const fullName = `${user?.firstName || ''} ${user?.lastName || ''}`.trim();
-  const address =
-    `${user?.flatNumber || ''}, ${user?.block || ''}, ${user?.street || ''}`.trim();
+  const address = user?.unitLabel || '';
 
   const totalAmount = (cartItems || []).reduce((total, item) => {
     return total + (item.product.price || 0) * item.quantity;

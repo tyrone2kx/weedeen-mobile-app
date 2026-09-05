@@ -4,6 +4,9 @@ import SafeAreaComponent from '@wd/components/SafeAreaComponent/SafeAreaComponen
 import Text from '@wd/components/Text/Text';
 import { RoutesEnum, StacksEnum } from '@wd/navigation/enum';
 import { MenuStackScreenProps } from '@wd/navigation/types';
+import { useQuery } from '@tanstack/react-query';
+import { apiWrapper } from '@wd/api';
+import { PlotService } from '@wd/generated';
 import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
 import { logoutUser } from '@wd/redux-store/reducers/user-reducer';
 import { globalStyles } from '@wd/utils/GlobalStyles';
@@ -25,7 +28,14 @@ import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-const menuList = navigate => [
+type MenuItem = {
+  title: string;
+  icon: React.ReactNode;
+  onPress: () => void;
+  requiresPrimary?: boolean;
+};
+
+const menuList = (navigate: any): MenuItem[] => [
   {
     title: 'Profile',
     icon: <UserCircleIcon color="#2563eb" size={20} />,
@@ -62,6 +72,12 @@ const menuList = navigate => [
     onPress: () => navigate(StacksEnum.MY_STAFF_STACK),
   },
   {
+    title: 'Beneficiaries',
+    icon: <UserCircleIcon color="#2563eb" size={20} />,
+    onPress: () => navigate(RoutesEnum.BENEFICIARIES_SCREEN),
+    requiresPrimary: true,
+  },
+  {
     title: 'Bank Accounts',
     icon: <BriefcaseIcon color="#2563eb" size={20} />,
     onPress: () => navigate(RoutesEnum.BANK_ACCOUNTS_SCREEN),
@@ -80,6 +96,14 @@ const MenuScreen: FC<MenuStackScreenProps<RoutesEnum.MENU_SCREEN>> = ({
   const { theme } = useTheme();
   const user = useAppSelector(state => state.user.currentUser);
   const fullName = `${user?.firstName || ''} ${user?.lastName || ''}`.trim();
+
+  // Only primary residents of a unit can manage beneficiaries.
+  const { data: myUnits } = useQuery({
+    queryKey: ['my-units'],
+    queryFn: () => apiWrapper(() => PlotService.plotControllerGetMyUnits()),
+  });
+  const isPrimaryResident =
+    Array.isArray(myUnits) && myUnits.some(u => u?.isPrimary && u?.isAssigned);
 
   const onLogout = async () => {
     dispatch(logoutUser());
@@ -121,7 +145,9 @@ const MenuScreen: FC<MenuStackScreenProps<RoutesEnum.MENU_SCREEN>> = ({
         </View>
 
         <View className="mb-4 p-4">
-          {menuList(navigation.navigate).map(item => (
+          {menuList(navigation.navigate)
+            .filter(item => !item.requiresPrimary || isPrimaryResident)
+            .map(item => (
             <TouchableOpacity
               className="flex-row gap-2 items-center mb-4"
               key={`menu-${item.title}`}

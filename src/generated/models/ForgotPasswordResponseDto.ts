@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ForgotPasswordResponseDto = {
-  token: string;
-  source: 'web' | 'app';
+    token: string;
+    source: 'web' | 'app';
 };
+

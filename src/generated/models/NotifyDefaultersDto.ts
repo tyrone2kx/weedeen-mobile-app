@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type NotifyDefaultersDto = {
-  feeId: string;
-  userList?: Array<string>;
-  message?: string;
+    feeId: string;
+    userList?: Array<string>;
+    message?: string;
 };
+

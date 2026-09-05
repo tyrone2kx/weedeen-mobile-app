@@ -3,10 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type UpdateBankAccountDto = {
-  isActive?: boolean;
-  isDefault?: boolean;
-  /**
-   * Array of store UUIDs to link this bank account to
-   */
-  storeIds?: Array<string>;
+    isActive?: boolean;
+    isDefault?: boolean;
+    /**
+     * Array of store UUIDs to link this bank account to
+     */
+    storeIds?: Array<string>;
 };
+

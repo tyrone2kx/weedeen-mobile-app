@@ -5,9 +5,10 @@
 import type { Billing } from './Billing';
 import type { User } from './User';
 export type VerifyAccountResponseDto = {
-  accessToken: string;
-  refreshToken: string;
-  user: User;
-  activeSubscription: Billing;
-  activeUserSubscriptions: Array<Billing>;
+    accessToken: string;
+    refreshToken: string;
+    user: User;
+    activeSubscription: Billing;
+    activeUserSubscriptions: Array<Billing>;
 };
+

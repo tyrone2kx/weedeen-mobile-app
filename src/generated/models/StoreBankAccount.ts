@@ -5,11 +5,12 @@
 import type { BankAccount } from './BankAccount';
 import type { Store } from './Store';
 export type StoreBankAccount = {
-  id: string;
-  bankAccountId: string;
-  storeId: string;
-  store: Store;
-  bankAccount: BankAccount;
-  createdAt: string;
-  updatedAt: string;
+    id: string;
+    bankAccountId: string;
+    storeId: string;
+    store: Store;
+    bankAccount: BankAccount;
+    createdAt: string;
+    updatedAt: string;
 };
+

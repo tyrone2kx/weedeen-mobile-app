@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type TrackPostViewDto = {
-  postId: string;
-  userId: string;
-  isClick?: boolean;
+    postId: string;
+    userId: string;
+    isClick?: boolean;
 };
+

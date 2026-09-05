@@ -1,11 +1,11 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { apiWrapper } from '@wd/api';
 import Avatar from '@wd/components/Avatar/Avatar';
 import Button from '@wd/components/Button/Button';
 import { PencilEditIcon } from '@wd/components/icons';
 import FormInput from '@wd/components/Input/FormInput';
 import Text from '@wd/components/Text/Text';
-import { AuthService, UpdateAuthDto } from '@wd/generated';
+import { AuthService, PlotService, UpdateAuthDto, UserUnit } from '@wd/generated';
 import { RoutesEnum } from '@wd/navigation/enum';
 import { MenuStackScreenProps } from '@wd/navigation/types';
 import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
@@ -43,6 +43,19 @@ const ProfileTab: FC<Props> = () => {
 
   const { changePhoto, isLoading: uploadImageLoading } =
     useProfileImageUpdate();
+
+  // Assigned unit is admin-managed; residents view it read-only.
+  const { data: myUnits } = useQuery({
+    queryKey: ['my-units'],
+    queryFn: () => apiWrapper(() => PlotService.plotControllerGetMyUnits()),
+  });
+  const units = (myUnits as UserUnit[]) || [];
+  const primaryUnit = units.find(u => u.isPrimary && u.isAssigned) || units[0];
+  const unitLabel =
+    primaryUnit?.unit?.unitLabel ||
+    primaryUnit?.unit?.plotNo ||
+    primaryUnit?.unit?.name ||
+    '';
 
   const changeUserImage = async (uploadedImage: Asset) => {
     if (uploadedImage) {
@@ -165,6 +178,13 @@ const ProfileTab: FC<Props> = () => {
               />
             )}
           </View>
+        </View>
+      </View>
+
+      <View className="mb-6">
+        <Text className="mb-1 text-sm text-gray-500">Assigned Unit</Text>
+        <View className="rounded-lg border border-gray-300 p-3">
+          <Text>{unitLabel || 'Not assigned'}</Text>
         </View>
       </View>
 

@@ -5,6 +5,7 @@
 import type { Billing } from './Billing';
 import type { Invoice } from './Invoice';
 export type VerifyPaymentResponseDto = {
-  invoice: Invoice;
-  activeSubscription: Billing;
+    invoice: Invoice;
+    activeSubscription: Billing;
 };
+

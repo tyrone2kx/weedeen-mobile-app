@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type UpdateCustomerPlotDto = {
-  status?: 'pending' | 'allocated' | 'cancelled' | 're_sold';
-  allocatedAt?: string;
+    status?: 'pending' | 'allocated' | 'cancelled' | 're_sold';
+    allocatedAt?: string;
 };
+

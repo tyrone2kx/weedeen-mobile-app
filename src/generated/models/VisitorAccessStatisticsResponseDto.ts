@@ -3,16 +3,17 @@
 /* tslint:disable */
 /* eslint-disable */
 export type VisitorAccessStatisticsResponseDto = {
-  /**
-   * Total number of visitors
-   */
-  totalVisitors: number;
-  /**
-   * Total number of used access codes
-   */
-  totalCompletedVisits: number;
-  /**
-   * Total number of unused access codes
-   */
-  totalExpectantVisitors: number;
+    /**
+     * Total number of visitors
+     */
+    totalVisitors: number;
+    /**
+     * Total number of used access codes
+     */
+    totalCompletedVisits: number;
+    /**
+     * Total number of unused access codes
+     */
+    totalExpectantVisitors: number;
 };
+

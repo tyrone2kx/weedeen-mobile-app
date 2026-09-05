@@ -3,5 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type MarkTokenAsUsedDto = {
-  token: string;
+    token: string;
 };
+

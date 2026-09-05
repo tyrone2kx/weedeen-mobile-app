@@ -4,9 +4,10 @@
 /* eslint-disable */
 import type { User } from './User';
 export type PaginatedUserDto = {
-  data: Array<User>;
-  page: number;
-  limit: number;
-  totalPages: number;
-  totalElements: number;
+    data: Array<User>;
+    page: number;
+    limit: number;
+    totalPages: number;
+    totalElements: number;
 };
+

@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PaymentConfigDto = {
-  paymentMethod: 'paystack' | 'flutterwave' | 'cash' | 'POS';
-  amount: number;
-  reference?: string;
+    paymentMethod: 'paystack' | 'flutterwave' | 'cash' | 'POS';
+    amount: number;
+    reference?: string;
 };
+

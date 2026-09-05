@@ -4,12 +4,13 @@
 /* eslint-disable */
 import type { AccessBlock } from './AccessBlock';
 export type PaginatedAccessBlocksDto = {
-  /**
-   * List of access blocks
-   */
-  data: Array<AccessBlock>;
-  page: number;
-  limit: number;
-  totalPages: number;
-  totalElements: number;
+    /**
+     * List of access blocks
+     */
+    data: Array<AccessBlock>;
+    page: number;
+    limit: number;
+    totalPages: number;
+    totalElements: number;
 };
+

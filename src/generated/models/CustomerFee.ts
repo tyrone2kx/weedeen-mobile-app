@@ -4,17 +4,20 @@
 /* eslint-disable */
 import type { Customer } from './Customer';
 import type { Fee } from './Fee';
+import type { Plot } from './Plot';
 export type CustomerFee = {
-  id: string;
-  tenant: string;
-  customerId: string;
-  feeId: string;
-  plotId: string;
-  customer: Customer;
-  fee: Fee;
-  isPaid: boolean;
-  paidAt: string;
-  lastNotifiedAt: string;
-  updatedAt: string;
-  createdAt: string;
+    id: string;
+    customerId: string;
+    feeId: string;
+    plotId: string;
+    customer: Customer;
+    fee: Fee;
+    plot: Plot;
+    isPaid: boolean;
+    paidAt: string;
+    lastNotifiedAt: string;
+    updatedAt: string;
+    createdAt: string;
+    tenant: string;
 };
+

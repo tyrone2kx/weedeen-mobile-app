@@ -21,7 +21,7 @@ const ViewUserFeeModal = ({ invoice, isOpen, onClose }: Props) => {
   const user = useAppSelector(state => state.user);
   const currentUser = user.currentUser;
 
-  const userAddress = `${currentUser?.flatNumber || ''} ${currentUser?.block || ''} ${currentUser?.street || ''} `;
+  const userAddress = currentUser?.unitLabel || '';
   const fee = invoice?.fee;
   return (
     <CustomModal

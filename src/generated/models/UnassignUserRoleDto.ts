@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type UnassignUserRoleDto = {
-  userId: string;
-  roleId: Array<string>;
+    userId: string;
+    roleId: Array<string>;
 };
+

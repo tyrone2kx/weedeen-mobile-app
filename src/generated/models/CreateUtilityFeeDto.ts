@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type CreateUtilityFeeDto = {
-  utilityId: string;
-  amount: number;
+    utilityId: string;
+    amount: number;
 };
+

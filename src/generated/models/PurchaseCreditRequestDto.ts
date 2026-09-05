@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PurchaseCreditRequestDto = {
-  amount: number;
-  tokens: number;
+    amount: number;
+    tokens: number;
 };
+

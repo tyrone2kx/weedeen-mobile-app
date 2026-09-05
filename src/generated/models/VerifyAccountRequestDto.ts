@@ -3,9 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 export type VerifyAccountRequestDto = {
-  token: string;
-  source?: 'web' | 'app';
-  code?: string;
-  isPasswordReset?: boolean;
-  isInvite?: boolean;
+    token: string;
+    source?: 'web' | 'app';
+    code?: string;
+    isPasswordReset?: boolean;
+    isInvite?: boolean;
 };
+

@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type DeletePostResourceDto = {
-  image?: string;
-  video?: string;
+    image?: string;
+    video?: string;
 };
+
