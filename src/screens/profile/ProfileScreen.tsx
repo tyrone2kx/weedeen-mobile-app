@@ -45,7 +45,7 @@ const ProfileScreen: FC<
         showRightContent={false}
         transparent={false}
       />
-      <View className="p-4 bg-white" style={globalStyles.screen}>
+      <View className="p-4" style={[globalStyles.screen, { backgroundColor: theme.white[400] }]}>
         <TopTab
           activeTab={activeTab}
           buttonStyle="border-0"

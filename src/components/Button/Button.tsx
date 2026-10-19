@@ -71,7 +71,7 @@ const Button: FC<ButtonProps> = ({
       }
     : {};
 
-  const textColor = isOutline ? theme.blue.DEFAULT : theme.white.DEFAULT;
+  const textColor = isOutline ? theme.blue.DEFAULT : '#FFFFFF';
 
   // Disabled: solid buttons get a light-brand tint (matches mockup); outlines dim.
   const disabledBackground = isOutline ? 'transparent' : 'rgba(37,99,235,0.45)';

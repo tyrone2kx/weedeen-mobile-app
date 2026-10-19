@@ -25,6 +25,7 @@ const FeeItem = ({ userFee, onView }: Props) => {
       onPress={onView}
       style={{
         borderWidth: 1,
+        backgroundColor: theme.white.DEFAULT,
         borderColor: theme.gray[200],
         shadowColor: '#101828',
         shadowOpacity: 0.05,

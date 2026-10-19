@@ -5,12 +5,12 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-import { Theme } from '@wd/utils/Theme';
 import React, { FC, ReactNode, RefObject, useMemo } from 'react';
 import { Keyboard, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Text from '../Text/Text';
 import { CloseIcon } from '../icons';
+import useTheme from '@wd/utils/theme/useTheme';
 
 type AppBottomSheetProps = Omit<
   BottomSheetProps,
@@ -54,6 +54,7 @@ export const AppBottomSheet: FC<AppBottomSheetProps> = ({
   ...props
 }) => {
   const snapPoints = useMemo(() => breakpoints, [breakpoints]);
+  const { theme } = useTheme();
 
   const borderTopStyle = borderTopColor
     ? {
@@ -79,12 +80,12 @@ export const AppBottomSheet: FC<AppBottomSheetProps> = ({
       {...props}
     >
       <View
-        className="flex-auto overflow-hidden rounded-t-[24px] bg-white"
-        style={[borderTopStyle, { paddingTop: top }]}
+        className="flex-auto overflow-hidden rounded-t-[24px]"
+        style={[borderTopStyle, { backgroundColor: theme.white.DEFAULT, paddingTop: top }]}
       >
         {/* Grab handle */}
         <View style={styles.handleWrap}>
-          <View style={styles.handle} />
+          <View style={[styles.handle, { backgroundColor: theme.gray[300] }]} />
         </View>
 
         <View className="flex-row items-center justify-between gap-x-4 px-5 pb-4">
@@ -100,7 +101,8 @@ export const AppBottomSheet: FC<AppBottomSheetProps> = ({
           )}
           <TouchableOpacity
             activeOpacity={0.8}
-            className="h-[38px] w-[38px] items-center justify-center rounded-full bg-gray-150"
+            className="h-[38px] w-[38px] items-center justify-center rounded-full"
+            style={{ backgroundColor: theme.gray[150] }}
             onPress={() => {
               callBackOnClose?.();
               bottomSheetRef?.current?.close();
@@ -109,7 +111,7 @@ export const AppBottomSheet: FC<AppBottomSheetProps> = ({
               }, 100);
             }}
           >
-            <CloseIcon color={Theme.colors.black[600]} height={18} width={18} />
+            <CloseIcon color={theme.black[600]} height={18} width={18} />
           </TouchableOpacity>
         </View>
 

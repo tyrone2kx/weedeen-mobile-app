@@ -42,7 +42,7 @@ const CustomNumberPad = ({
                     key={value}
                     onPress={() => onNumberPress(value)}
                   >
-                    <Text className="text-3xl text-black">{value}</Text>
+                    <Text className="text-3xl text-black dark:text-[#E7ECF3]">{value}</Text>
                   </TouchableOpacity>
                 ) : value === 'finger_print' ? (
                   <TouchableOpacity

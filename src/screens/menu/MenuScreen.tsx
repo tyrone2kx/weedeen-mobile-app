@@ -73,7 +73,7 @@ const AppearanceToggle = () => {
   return (
     <View
       className="mt-6 flex-row items-center justify-between rounded-2xl bg-white p-4"
-      style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+      style={{ borderWidth: 1, backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200] }}
     >
       <View style={{ flex: 1 }}>
         <Text intent="md" style={{ color: theme.black[700] }} weight="semibold">
@@ -184,7 +184,7 @@ const MenuScreen: FC<MenuStackScreenProps<RoutesEnum.MENU_SCREEN>> = ({
           {/* Menu list */}
           <View
             className="mt-6 overflow-hidden rounded-2xl bg-white"
-            style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+            style={{ borderWidth: 1, backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200] }}
           >
             {items.map((item, index) => (
               <TouchableOpacity

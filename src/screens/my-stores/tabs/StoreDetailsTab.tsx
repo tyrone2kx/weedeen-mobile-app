@@ -17,7 +17,7 @@ const StoreDetailsTab = ({ store }: Props) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           className="rounded-2xl bg-white px-4"
-          style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+          style={{ borderWidth: 1, backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200] }}
         >
           <DetailItem description={store?.name} title="Store Name" />
           <DetailItem

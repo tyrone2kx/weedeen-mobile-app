@@ -43,7 +43,7 @@ const ShopItem = ({ store, onPress, showStatus }: Props) => {
         (() =>
           navigation.navigate(RoutesEnum.SINGLE_SHOP_SCREEN, { id: store.id }))
       }
-      style={[styles.container, { borderColor: theme.gray[200] }]}
+      style={[styles.container, { borderColor: theme.gray[200], backgroundColor: theme.white.DEFAULT }]}
     >
       <View style={[styles.imageWrapper, { backgroundColor: theme.blue[300] }]}>
         {status ? (
@@ -56,7 +56,7 @@ const ShopItem = ({ store, onPress, showStatus }: Props) => {
         ) : (
           <View
             className="items-center justify-center rounded-full bg-white"
-            style={{ width: 64, height: 64 }}
+            style={{ width: 64, height: 64, backgroundColor: theme.white[200] }}
           >
             <StoreIcon color={theme.blue.DEFAULT} size={30} />
           </View>

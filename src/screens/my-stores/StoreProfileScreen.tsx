@@ -74,7 +74,7 @@ const StoreProfileScreen: FC<
         statusBarProps={{ backgroundColor: theme.white[400] }}
       />
       {/* Header */}
-      <View className="flex-row items-center justify-between bg-white px-4 py-3">
+      <View className="flex-row items-center justify-between px-4 py-3" style={{ backgroundColor: theme.white.DEFAULT }}>
         <View className="flex-1 flex-row items-center gap-3">
           <TouchableOpacity
             activeOpacity={0.8}

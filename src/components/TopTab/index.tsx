@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import Text from '../Text/Text';
+import useTheme from '@wd/utils/theme/useTheme';
 
 interface Tab {
   label: string;
@@ -38,6 +39,11 @@ const TopTab: React.FC<Props> = ({
   textStyle,
   style,
 }) => {
+  const { theme, colorScheme } = useTheme();
+  const isDark = colorScheme === 'dark';
+  const inactiveTextColor = theme.gray[500];
+  const trackBg = theme.gray[100];
+  const activePillBg = isDark ? theme.gray[250] : '#FFFFFF';
   return type2 ? (
     <View className="flex-row gap-x-3" style={style}>
       {tabs.map(tab => (
@@ -62,7 +68,7 @@ const TopTab: React.FC<Props> = ({
                 color:
                   tab.label === activeTab
                     ? activeTextColor
-                    : Theme.colors.gray[500],
+                    : inactiveTextColor,
                 ...textStyle,
               }}
               weight={tab.label === activeTab ? 'semibold' : 'medium'}
@@ -75,7 +81,7 @@ const TopTab: React.FC<Props> = ({
     </View>
   ) : (
     // Segmented control: track with a white active pill (matches mockup).
-    <View style={[styles.track, style]}>
+    <View style={[styles.track, { backgroundColor: trackBg }, style]}>
       {tabs.map(tab => {
         const active = tab.label === activeTab;
         return (
@@ -86,14 +92,14 @@ const TopTab: React.FC<Props> = ({
             onPress={tab.onPress}
             style={[
               styles.segment,
-              active ? styles.segmentActive : null,
+              active ? [styles.segmentActive, { backgroundColor: activePillBg }] : null,
               buttonStyle,
             ]}
           >
             {tab.icon}
             <Text
               style={{
-                color: active ? activeTextColor : Theme.colors.gray[500],
+                color: active ? activeTextColor : inactiveTextColor,
                 ...textStyle,
               }}
               weight={active ? 'semibold' : 'medium'}

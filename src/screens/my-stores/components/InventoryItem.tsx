@@ -28,7 +28,7 @@ const InventoryItem = ({ product, onDelete, onView, onEdit }: Props) => {
       style={{
         width: '100%',
         borderWidth: 1,
-        borderColor: theme.gray[200],
+        backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200],
         shadowColor: '#101828',
         shadowOpacity: 0.05,
         shadowRadius: 8,

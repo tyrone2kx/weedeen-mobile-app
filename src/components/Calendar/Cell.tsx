@@ -36,7 +36,7 @@ const Cell: FC<CellProps> = ({
         className={`h-full w-full items-center justify-center rounded-md border ${
           date.isSame(selectedDate, 'day')
             ? 'border-green bg-green-300'
-            : 'border-transparent bg-white'
+            : 'border-transparent bg-white dark:bg-[#0E1726]'
         }`}
         disabled={!dateIsWithinRange(date, minDate, maxDate)}
         onPress={() => onDatePress?.(date)}
@@ -46,7 +46,7 @@ const Cell: FC<CellProps> = ({
           className={` ${
             !dateIsWithinRange(date, minDate, maxDate)
               ? 'text-gray'
-              : 'text-black'
+              : 'text-black dark:text-[#E7ECF3]'
           } ${date.isSame(selectedDate, 'day') ? 'text-green' : ''}`}
           style={textStyle}
         >

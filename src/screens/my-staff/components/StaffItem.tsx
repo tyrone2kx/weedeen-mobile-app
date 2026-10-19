@@ -36,7 +36,7 @@ const StaffItem = ({ staff, onDelete, onEdit, onView, onDeactivate }: Props) => 
       className="mb-4 rounded-2xl bg-white p-4"
       style={{
         borderWidth: 1,
-        borderColor: theme.gray[200],
+        backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200],
         shadowColor: '#101828',
         shadowOpacity: 0.05,
         shadowRadius: 8,
@@ -96,7 +96,7 @@ const StaffItem = ({ staff, onDelete, onEdit, onView, onDeactivate }: Props) => 
                 `Your access code to ${org?.name} is: ${accessCode}.`,
               )
             }
-            style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+            style={{ borderWidth: 1, backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200] }}
           >
             {isCopied ? (
               <CheckIcon color={theme.green.DEFAULT} size={16} />

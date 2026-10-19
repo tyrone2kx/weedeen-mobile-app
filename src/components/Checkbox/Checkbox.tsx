@@ -70,7 +70,7 @@ const Checkbox: FC<IProps> = props => {
         </View>
         {label ? (
           <Text
-            className={`${disabled ? 'text-gray' : 'text-black'}`}
+            className={`${disabled ? 'text-gray' : 'text-black dark:text-[#E7ECF3]'}`}
             style={labelStyle}
           >
             {label}

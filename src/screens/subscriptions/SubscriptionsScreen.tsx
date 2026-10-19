@@ -70,7 +70,7 @@ const SubscriptionsScreen: FC<
         navigation={navigation}
         transparent={false}
       />
-      <View className="p-4 relative bg-white" style={globalStyles.screen}>
+      <View className="p-4 relative" style={[globalStyles.screen, { backgroundColor: theme.white[400] }]}>
         <View>
           <View className="flex-row items-center gap-4 mb-4">
             <View className="rounded-full p-2 border-blue-500 border">

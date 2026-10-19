@@ -43,6 +43,7 @@ const PlanItem = ({
     <View
       className="mr-4 justify-between rounded-3xl bg-white p-5"
       style={{
+        backgroundColor: theme.white.DEFAULT,
         width: planWidth,
         borderWidth: isCurrent ? 2 : 1,
         borderColor: isCurrent ? theme.blue.DEFAULT : theme.gray[200],

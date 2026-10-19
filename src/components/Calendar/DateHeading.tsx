@@ -19,14 +19,14 @@ const DayHeading: FC<DayHeadingProps> = ({
 }) => {
   return (
     // Render days of the week (Sun - Sat)
-    <View className="flex-row rounded-2xl bg-gray-150" style={style}>
+    <View className="flex-row rounded-2xl bg-gray-150 dark:bg-[#232D3A]" style={style}>
       {daysOfWeek.map((day) => (
         <View
           className="h-[40px] w-[14.23571%] items-center justify-center"
           key={day}
           style={containerStyle}
         >
-          <Text className="text-black" style={textStyle}>
+          <Text className="text-black dark:text-[#E7ECF3]" style={textStyle}>
             {day}
           </Text>
         </View>

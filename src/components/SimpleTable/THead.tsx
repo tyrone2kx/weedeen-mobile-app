@@ -10,7 +10,7 @@ export type THeadProps = {
 const THead: FC<THeadProps> = ({ children, style }) => {
   return (
     <View
-      className="rounded-t-lg border-b border-b-gray-200 bg-white-300"
+      className="rounded-t-lg border-b border-b-gray-200 bg-white-300 dark:bg-[#0E1726]"
       style={style}
     >
       {children}

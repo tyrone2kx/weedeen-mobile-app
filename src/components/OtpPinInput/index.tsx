@@ -76,7 +76,7 @@ export const OtpPinInput = ({
         key={index}
         style={[PinStyles.otp_input, digitFocusedStyle, digitFilledStyle]}
       >
-        <Text className="text-black" intent="xl">
+        <Text className="text-black dark:text-[#E7ECF3]" intent="xl">
           {digit}
         </Text>
       </View>

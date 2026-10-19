@@ -42,9 +42,12 @@ const Header: FC<IProps> = ({
   iconColor,
   style,
 }) => {
-  const bgColorClassName = transparent ? 'bg-transparent' : 'bg-white';
-
   const { theme } = useTheme();
+  const headerBg = transparent ? 'transparent' : theme.white.DEFAULT;
+  const circleButtonStyle = [
+    styles.circle_button,
+    { backgroundColor: theme.white[200], borderColor: theme.gray[200] },
+  ];
   const cartHandler = useDisclosure();
   const invoiceHandler = useDisclosure();
   const notificationHandler = useDisclosure();
@@ -84,8 +87,8 @@ const Header: FC<IProps> = ({
 
   return (
     <View
-      className={`min-h-[64px] justify-center ${bgColorClassName}`}
-      style={[style]}
+      className="min-h-[64px] justify-center"
+      style={[{ backgroundColor: headerBg }, style]}
     >
       <View
         className="flex-row items-center justify-between"
@@ -96,7 +99,7 @@ const Header: FC<IProps> = ({
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={handleBackPress}
-              style={styles.circle_button}
+              style={circleButtonStyle}
             >
               <Icon
                 color={iconColor ?? theme.black[600]}
@@ -113,11 +116,11 @@ const Header: FC<IProps> = ({
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={notificationHandler.onOpen}
-              style={styles.circle_button}
+              style={circleButtonStyle}
             >
               <MessageSquareIcon color={theme.black[600]} size={20} />
               {typeof totalUnread === 'number' ? (
-                <View style={styles.badge}>
+                <View style={[styles.badge, { borderColor: theme.white[200] }]}>
                   <Text
                     style={{ color: '#fff', fontSize: 10, lineHeight: 14 }}
                     weight="bold"
@@ -130,7 +133,7 @@ const Header: FC<IProps> = ({
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={cartHandler.onOpen}
-              style={styles.circle_button}
+              style={circleButtonStyle}
             >
               <ShoppingCartIcon color={theme.black[600]} size={20} />
             </TouchableOpacity>

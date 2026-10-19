@@ -26,7 +26,7 @@ const VisitorItem = ({ visitor, onDelete, onEdit }: Props) => {
       className="mb-4 rounded-2xl bg-white p-4"
       style={{
         borderWidth: 1,
-        borderColor: theme.gray[200],
+        backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200],
         shadowColor: '#101828',
         shadowOpacity: 0.05,
         shadowRadius: 8,
@@ -74,7 +74,7 @@ const VisitorItem = ({ visitor, onDelete, onEdit }: Props) => {
           activeOpacity={0.8}
           className="flex-row items-center gap-2 rounded-lg bg-white px-3 py-1.5"
           onPress={() => copyToClipboard(visitor.accessCode)}
-          style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+          style={{ borderWidth: 1, backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200] }}
         >
           {isCopied ? (
             <CheckIcon color={theme.green.DEFAULT} size={16} />

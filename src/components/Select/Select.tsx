@@ -306,7 +306,7 @@ const Select: FC<ISelectProps> = ({
             />
 
             <View
-              className="border-gray-150 bg-white"
+              className="border-gray-150 dark:border-[#2A3543] bg-white dark:bg-[#0E1726]"
               style={[styles.optionsContainer]}
             >
               <FlatList

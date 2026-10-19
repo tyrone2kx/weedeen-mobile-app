@@ -70,7 +70,7 @@ const Counter: FC<CounterProps> = ({
           -
         </Text>
       </TouchableOpacity>
-      <Text className="text-3xl text-black" style={valueTextStyle}>
+      <Text className="text-3xl text-black dark:text-[#E7ECF3]" style={valueTextStyle}>
         {value}
       </Text>
       <TouchableOpacity

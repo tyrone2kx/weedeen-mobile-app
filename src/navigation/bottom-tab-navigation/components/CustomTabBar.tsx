@@ -31,8 +31,9 @@ const CustomTabBar: FC<CustomTabBarProps> = ({
   return tabBarStyle === 'flex' ? (
     <Animated.View entering={FadeInUp} exiting={FadeOutDown}>
       <View
-        className="h-[84px] flex-row items-center justify-between bg-white px-2"
+        className="h-[84px] flex-row items-center justify-between px-2"
         style={{
+          backgroundColor: theme.white.DEFAULT,
           borderTopWidth: 1,
           borderTopColor: theme.gray[200],
           shadowColor: '#101828',

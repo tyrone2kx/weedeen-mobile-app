@@ -198,7 +198,6 @@ const Input: FC<InputProps> = ({
         <TextInput
           allowFontScaling={false}
           autoCapitalize={autoCapitalize}
-          className="text-black-600"
           editable={editable}
           keyboardType={type}
           multiline={isTextAreaEditor}
@@ -220,6 +219,7 @@ const Input: FC<InputProps> = ({
           secureTextEntry={!showPassword}
           style={[
             styles.textInput,
+            { color: theme.black[600] },
             isTextAreaEditor ? { height: 96 } : { height: 48 },
             textInputStyle,
           ]}

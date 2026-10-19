@@ -19,7 +19,7 @@ const variants = {
         icon: 'bg-white',
       },
       inactive: {
-        container: 'bg-white border-gray-200',
+        container: 'bg-white dark:bg-[#111A28] border-gray-200 dark:border-[#2A3543]',
         icon: 'bg-white',
       },
       disabled: {
@@ -33,7 +33,7 @@ const variants = {
         icon: 'bg-white',
       },
       inactive: {
-        container: 'bg-white border-gray-200',
+        container: 'bg-white dark:bg-[#111A28] border-gray-200 dark:border-[#2A3543]',
         icon: 'bg-white',
       },
       disabled: {

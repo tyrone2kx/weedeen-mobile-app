@@ -19,6 +19,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useTheme from '@wd/utils/theme/useTheme';
 
 interface SideSheetProps {
   isVisible: boolean;
@@ -53,6 +54,7 @@ const SideSheet: React.FC<SideSheetProps> = ({
   style,
   containerStyle,
 }) => {
+  const { theme } = useTheme();
   const isRightSide = side === 'right';
   const translateX = useSharedValue(isRightSide ? width : -width);
   const backdropOpacityValue = useSharedValue(0);
@@ -163,6 +165,7 @@ const SideSheet: React.FC<SideSheetProps> = ({
           <Animated.View
             style={[
               styles.sheet,
+              { backgroundColor: theme.white.DEFAULT },
               { width, [side]: 0 },
               sheetAnimatedStyle,
               style,

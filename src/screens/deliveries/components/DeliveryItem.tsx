@@ -35,7 +35,7 @@ const DeliveryItem = ({ delivery, onCancel, onView }: Props) => {
       className="mb-4 rounded-2xl bg-white p-4"
       style={{
         borderWidth: 1,
-        borderColor: theme.gray[200],
+        backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200],
         shadowColor: '#101828',
         shadowOpacity: 0.05,
         shadowRadius: 8,

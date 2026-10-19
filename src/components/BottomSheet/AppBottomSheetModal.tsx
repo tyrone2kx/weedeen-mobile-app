@@ -101,13 +101,13 @@ const AppBottomSheetModal: FC<AppBottomSheetModalProps> = ({
       {...props}
     >
       <View
-        className="flex-auto bg-white-400"
-        style={[borderTopStyle, wrapperStyle, { paddingTop: top }]}
+        className="flex-auto"
+        style={[borderTopStyle, wrapperStyle, { backgroundColor: theme.white[400], paddingTop: top }]}
       >
         {!hideHeader && (
           <View
-            className="flex-row items-center justify-between gap-x-4 border-b border-b-gray-200 bg-white px-5 py-4"
-            style={headerContainerStyle}
+            className="flex-row items-center justify-between gap-x-4 border-b px-5 py-4"
+            style={[{ backgroundColor: theme.white.DEFAULT, borderBottomColor: theme.gray[200] }, headerContainerStyle]}
           >
             {headerComponent || (
               <Text
@@ -121,7 +121,8 @@ const AppBottomSheetModal: FC<AppBottomSheetModalProps> = ({
             )}
             <TouchableOpacity
               activeOpacity={0.8}
-              className="h-[42px] w-[42px] items-center justify-center rounded-full bg-gray-150"
+              className="h-[42px] w-[42px] items-center justify-center rounded-full"
+              style={{ backgroundColor: theme.gray[150] }}
               onPress={() => {
                 if (handleClose) {
                   handleClose();

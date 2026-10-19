@@ -16,7 +16,7 @@ const CloseButtonIcon: FC<CloseButtonIconProps> = ({ onPress, style }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      className="h-[48px] w-[48px] items-center justify-center rounded-full bg-gray-150"
+      className="h-[48px] w-[48px] items-center justify-center rounded-full bg-gray-150 dark:bg-[#232D3A]"
       onPress={onPress}
       style={style}
     >

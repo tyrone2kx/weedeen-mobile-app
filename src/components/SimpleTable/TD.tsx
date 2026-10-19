@@ -16,7 +16,7 @@ const TD: FC<TDProps> = ({ children, style, textStyle, textProps }) => {
     <View className="flex-1 border-r border-r-gray-400 p-2" style={style}>
       {children ? (
         <Text
-          className="text-center text-black"
+          className="text-center text-black dark:text-[#E7ECF3]"
           style={textStyle}
           {...textProps}
         >

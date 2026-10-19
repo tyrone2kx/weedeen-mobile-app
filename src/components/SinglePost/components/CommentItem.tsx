@@ -66,7 +66,7 @@ const CommentItem = ({
           {editHandler.isOpen ? (
             /* Edit Comment Mode */
             <View className="bg-gray-100 rounded-lg p-3">
-              <Text className="font-semibold text-sm text-gray-900 mb-2">
+              <Text className="font-semibold text-sm text-gray-900 dark:text-[#E7ECF3] mb-2">
                 {comment.author.firstName} {comment.author.lastName}
               </Text>
               <TextArea
@@ -93,7 +93,7 @@ const CommentItem = ({
                   }}
                 />
                 <TouchableOpacity
-                  className="px-3 py-1 bg-gray-300 text-gray-700 rounded text-sm hover:bg-gray-400"
+                  className="px-3 py-1 bg-gray-300 dark:bg-[#2A3543] text-gray-700 dark:text-[#AEB8C7] rounded text-sm hover:bg-gray-400"
                   onPress={() => {
                     setEditText('');
                     editHandler.onClose();
@@ -107,12 +107,12 @@ const CommentItem = ({
             /* Normal Comment Display */
             <View className="bg-gray-100 rounded-lg p-3">
               <View>
-                <Text className="font-semibold text-sm text-gray-900">
+                <Text className="font-semibold text-sm text-gray-900 dark:text-[#E7ECF3]">
                   {comment.author.firstName} {comment.author.lastName}
                 </Text>
               </View>
               <View>
-                <Text className="text-gray-800">{comment.content}</Text>
+                <Text className="text-gray-800 dark:text-[#AEB8C7]">{comment.content}</Text>
               </View>
             </View>
           )}

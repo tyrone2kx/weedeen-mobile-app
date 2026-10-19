@@ -39,11 +39,11 @@ const variants = {
     primary: {
       active: {
         container: 'border-green',
-        text: 'text-black',
+        text: 'text-black dark:text-[#E7ECF3]',
       },
       inactive: {
         container: 'border-gray-200',
-        text: 'text-black',
+        text: 'text-black dark:text-[#E7ECF3]',
       },
       disabled: {
         container: 'border-gray-200',
@@ -53,11 +53,11 @@ const variants = {
     secondary: {
       active: {
         container: 'border-orange',
-        text: 'text-black',
+        text: 'text-black dark:text-[#E7ECF3]',
       },
       inactive: {
         container: 'border-gray-200',
-        text: 'text-black',
+        text: 'text-black dark:text-[#E7ECF3]',
       },
       disabled: {
         container: 'border-gray-200',

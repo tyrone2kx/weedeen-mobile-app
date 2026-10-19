@@ -223,7 +223,7 @@ const SinglePost = ({ post }: PostItemProps) => {
   };
 
   return (
-    <View className="bg-white border border-gray-300 rounded-lg shadow-md mb-4 max-w-2xl w-full h-fit">
+    <View className="bg-white dark:bg-[#0E1726] border border-gray-300 dark:border-[#2A3543] rounded-lg shadow-md mb-4 max-w-2xl w-full h-fit">
       {/* Post Header */}
       <View className="p-4">
         <View className="flex-row gap-3 items-center mb-3">
@@ -232,7 +232,7 @@ const SinglePost = ({ post }: PostItemProps) => {
             name={`${post.author.firstName} ${post.author.lastName}`}
           />
           <View className="flex-1">
-            <Text className="font-semibold text-gray-900">
+            <Text className="font-semibold text-gray-900 dark:text-[#E7ECF3]">
               {post.author.firstName} {post.author.lastName}
             </Text>
             <Text className="text-sm text-gray-500">
@@ -244,7 +244,7 @@ const SinglePost = ({ post }: PostItemProps) => {
         {/* Post Content */}
         <View className="mb-4">
           <Text className="font-semibold text-lg mb-2">{post.title}</Text>
-          <Text className="text-gray-800 whitespace-pre-wrap text-sm">
+          <Text className="text-gray-800 dark:text-[#AEB8C7] whitespace-pre-wrap text-sm">
             {post.content}
           </Text>
         </View>
@@ -418,14 +418,14 @@ const SinglePost = ({ post }: PostItemProps) => {
               name="heart-filled"
               size={32}
             />
-            <Text className="text-gray-600">Like</Text>
+            <Text className="text-gray-600 dark:text-[#AEB8C7]">Like</Text>
           </TouchableOpacity>
           <TouchableOpacity
             className="flex-row items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
             onPress={handleComment}
           >
             <SvgIcon />
-            <Text className="text-gray-600">Comment</Text>
+            <Text className="text-gray-600 dark:text-[#AEB8C7]">Comment</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -485,7 +485,7 @@ const SinglePost = ({ post }: PostItemProps) => {
 
 export const SvgIcon = props => (
   <Svg
-    className="w-5 h-5 text-gray-600"
+    className="w-5 h-5 text-gray-600 dark:text-[#AEB8C7]"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"

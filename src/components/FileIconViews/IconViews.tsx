@@ -21,7 +21,7 @@ export const PDFView = ({
   isVideo?: boolean;
 }) => {
   return (
-    <View className="flex-row bg-white space-x-2 w-[220px] border border-[#E9ECEF] p-2 rounded-xl relative m-1">
+    <View className="flex-row bg-white dark:bg-[#0E1726] space-x-2 w-[220px] border border-[#E9ECEF] dark:border-[#2A3543] p-2 rounded-xl relative m-1">
       <View className="h-[40px] w-[40px] rounded-lg bg-[#FF5688] flex items-center justify-center ">
         {isVideo ? (
           <VideoIcon color="white" size={16} />
@@ -60,7 +60,7 @@ export const IMGView = ({
   onRemove?: () => void;
 }) => {
   return (
-    <View className="flex-row bg-white relative space-x-2 h-[60px] w-[60px] rounded-xl m-1">
+    <View className="flex-row bg-white dark:bg-[#0E1726] relative space-x-2 h-[60px] w-[60px] rounded-xl m-1">
       <Image className="h-full w-full rounded-xl" src={file ? file.uri : url} />
       {onRemove && (
         <View className="h-4 w-4 flex-row items-center justify-center p-[2px] bg-black rounded-full absolute -right-1 -top-2">

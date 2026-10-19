@@ -628,25 +628,25 @@ const DatePicker: FC<DatePickerProps> = props => {
               }}
             >
               <View style={styles.dayCell}>
-                <Text className="text-center text-black">Su</Text>
+                <Text className="text-center text-black dark:text-[#E7ECF3]">Su</Text>
               </View>
               <View style={styles.dayCell}>
-                <Text className="text-center text-black">Mo</Text>
+                <Text className="text-center text-black dark:text-[#E7ECF3]">Mo</Text>
               </View>
               <View style={styles.dayCell}>
-                <Text className="text-center text-black">Tu</Text>
+                <Text className="text-center text-black dark:text-[#E7ECF3]">Tu</Text>
               </View>
               <View style={styles.dayCell}>
-                <Text className="text-center text-black">We</Text>
+                <Text className="text-center text-black dark:text-[#E7ECF3]">We</Text>
               </View>
               <View style={styles.dayCell}>
-                <Text className="text-center text-black">Th</Text>
+                <Text className="text-center text-black dark:text-[#E7ECF3]">Th</Text>
               </View>
               <View style={styles.dayCell}>
-                <Text className="text-center text-black">Fr</Text>
+                <Text className="text-center text-black dark:text-[#E7ECF3]">Fr</Text>
               </View>
               <View style={styles.dayCell}>
-                <Text className="text-center text-black">Sa</Text>
+                <Text className="text-center text-black dark:text-[#E7ECF3]">Sa</Text>
               </View>
             </View>
           </View>

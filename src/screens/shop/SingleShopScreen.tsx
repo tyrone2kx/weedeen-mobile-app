@@ -67,7 +67,7 @@ const SingleShopScreen: FC<
           <>
             <View
               className="mb-4 flex-row items-center gap-3 rounded-2xl bg-white p-4"
-              style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+              style={{ borderWidth: 1, backgroundColor: theme.white.DEFAULT, borderColor: theme.gray[200] }}
             >
               <Avatar image={store.logo} name={store.name} showName size={64} />
               <View style={{ flex: 1 }}>

@@ -21,14 +21,14 @@ const CartProduct = ({ item }: Props) => {
   });
   return (
     <View
-      className="relative border bg-white p-4 flex-col md:flex-row justify-between"
-      style={{ borderColor }}
+      className="relative border p-4 flex-col md:flex-row justify-between"
+      style={{ borderColor, backgroundColor: theme.white.DEFAULT }}
     >
       <View className="md:max-w-[70%]">
         <Text className="text-sm capitalize">{product.name}</Text>
       </View>
       <View className="flex-row justify-between md:justify-start md:flex-col items-center gap-2">
-        <Text className="font-bold text-gray-700">
+        <Text className="font-bold" style={{ color: theme.black[600] }}>
           {formatNairaWithKobo(product.price || 0)}
         </Text>
         <Quantity

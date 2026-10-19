@@ -11,7 +11,7 @@ interface Props {
 
 const Quantity = ({ className, quantity, setQuantity, stock }: Props) => {
   const quantityClass =
-    'p-1 w-[40] flex items-center justify-center cursor-pointer text-gray-800 transition-colors';
+    'p-1 w-[40] flex items-center justify-center cursor-pointer text-gray-800 dark:text-[#AEB8C7] transition-colors';
 
   const handleDecrease = () => {
     if (quantity > 0) {
@@ -24,7 +24,7 @@ const Quantity = ({ className, quantity, setQuantity, stock }: Props) => {
 
   return (
     <View
-      className={`rounded-full flex-row bg-white border ${className}`}
+      className={`rounded-full flex-row bg-white dark:bg-[#0E1726] border ${className}`}
       style={{ height: 40 }}
     >
       <TouchableOpacity
