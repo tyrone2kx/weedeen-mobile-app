@@ -1,5 +1,4 @@
-import Circle from '@wd/components/Circle/Circle';
-import MenuComponent from '@wd/components/MenuComponent/MenuComponent';
+import Tag, { TagVariant } from '@wd/components/Tag/Tag';
 import Text from '@wd/components/Text/Text';
 import { UserFee } from '@wd/generated';
 import { formatNairaWithKobo } from '@wd/utils/helpers';
@@ -7,7 +6,7 @@ import useTheme from '@wd/utils/theme/useTheme';
 import { HashIcon } from 'lucide-react-native';
 import moment from 'moment';
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 interface Props {
   userFee: UserFee;
@@ -15,70 +14,56 @@ interface Props {
   onView?: () => void;
 }
 
-const FeeItem = ({ userFee, onPayNow, onView }: Props) => {
+const FeeItem = ({ userFee, onView }: Props) => {
   const { theme } = useTheme();
-  const { color, title, textColor } = resolveStatus(userFee);
+  const { title, variant } = resolveStatus(userFee);
 
   return (
-    <View
-      className="rounded-xl bg-white border p-4 mb-4"
+    <TouchableOpacity
+      activeOpacity={0.8}
+      className="mb-4 flex-row items-center gap-3 rounded-2xl bg-white p-4"
+      onPress={onView}
       style={{
-        borderColor: theme.gray[300],
-        borderLeftWidth: 3,
-        borderLeftColor: color,
+        borderWidth: 1,
+        borderColor: theme.gray[200],
+        shadowColor: '#101828',
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 3 },
+        elevation: 2,
       }}
     >
-      <View className="flex-row justify-between">
-        <View className="items-start gap-2 flex-row mb-4">
-          <HashIcon color={theme.blue.DEFAULT} size={30} />
-          <View>
-            <View className="flex-row gap-2">
-              <Text>{userFee?.fee?.title}</Text>
-              <View className="flex-row gap-2 items-center">
-                <Circle size={5} />
-                <Text className="text-sm text-gray-400" weight="light">
-                  {moment(userFee.createdAt).fromNow()}
-                </Text>
-              </View>
-            </View>
-            <Text className="text-sm" style={{ color: textColor }}>
-              {title}
-            </Text>
-          </View>
-        </View>
-
-        <MenuComponent
-          id={`inv-item-${userFee.id}`}
-          menuList={[
-            { label: 'View', onPress: onView },
-            { label: 'Pay Now', onPress: onPayNow, disabled: userFee.isPaid },
-          ]}
-        />
+      <View
+        className="items-center justify-center rounded-xl"
+        style={{ width: 44, height: 44, backgroundColor: theme.blue[300] }}
+      >
+        <HashIcon color={theme.blue.DEFAULT} size={22} />
       </View>
 
-      <View className="flex-row justify-end">
-        <Text className="font-bold">
-          {formatNairaWithKobo(userFee.fee.amount)}
+      <View style={{ flex: 1 }}>
+        <Text intent="md" numberOfLines={1} weight="bold">
+          {userFee?.fee?.title}
         </Text>
+        <View className="mt-1 flex-row items-center gap-2">
+          <Tag title={title} variant={variant} />
+          <Text intent="xs" style={{ color: theme.gray[500] }}>
+            {moment(userFee.createdAt).fromNow()}
+          </Text>
+        </View>
       </View>
-    </View>
+
+      <Text intent="md" style={{ color: theme.black[700] }} weight="bold">
+        {formatNairaWithKobo(userFee.fee?.amount)}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
-const resolveStatus = (userFee: UserFee) => {
-  if (userFee.isPaid) {
-    return {
-      title: 'Paid',
-      color: '#E8F5E9',
-      textColor: '#388E3C',
-    };
-  } else {
-    return {
-      title: 'Unpaid',
-      color: '#FFEBEE',
-      textColor: '#D32F2F',
-    };
-  }
-};
+const resolveStatus = (
+  userFee: UserFee,
+): { title: string; variant: TagVariant } =>
+  userFee.isPaid
+    ? { title: 'Paid', variant: 'success' }
+    : { title: 'Unpaid', variant: 'danger' };
 
 export default FeeItem;

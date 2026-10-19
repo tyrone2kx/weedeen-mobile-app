@@ -1,14 +1,14 @@
-import Circle from '@wd/components/Circle/Circle';
+import Avatar from '@wd/components/Avatar/Avatar';
 import MenuComponent from '@wd/components/MenuComponent/MenuComponent';
-import Tag from '@wd/components/Tag/Tag';
+import Tag, { TagVariant } from '@wd/components/Tag/Tag';
 import Text from '@wd/components/Text/Text';
 import { VisitorAccess } from '@wd/generated';
 import useTheme from '@wd/utils/theme/useTheme';
 import useCopyToClipboard from '@wd/utils/useCopyToClipboard';
-import { CheckIcon, CopyIcon, UserIcon } from 'lucide-react-native';
+import { CheckIcon, CopyIcon } from 'lucide-react-native';
 import moment from 'moment';
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 interface Props {
   visitor: VisitorAccess;
@@ -18,91 +18,88 @@ interface Props {
 
 const VisitorItem = ({ visitor, onDelete, onEdit }: Props) => {
   const { theme } = useTheme();
-  const { color, title, textColor } = resolveStatus(visitor);
-
+  const { title, variant } = resolveStatus(visitor);
   const { copyToClipboard, isCopied } = useCopyToClipboard();
 
   return (
     <View
-      className="rounded-xl bg-white border p-4 mb-4"
-      style={{ borderColor: theme.gray[300] }}
+      className="mb-4 rounded-2xl bg-white p-4"
+      style={{
+        borderWidth: 1,
+        borderColor: theme.gray[200],
+        shadowColor: '#101828',
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 3 },
+        elevation: 2,
+      }}
     >
-      <View className="flex-row justify-between">
-        <View className="items-start gap-2 flex-row mb-4">
-          <UserIcon color={theme.blue.DEFAULT} size={30} />
-          <View>
-            <View className="flex-row gap-2">
-              <Text>{visitor.visitorName}</Text>
-              <View className="flex-row gap-2 items-center">
-                <Circle size={5} />
-                <Text className="text-sm text-gray-400" weight="light">
-                  {visitor.visitorType}
-                </Text>
-              </View>
-            </View>
-            <Tag color={color} textStyle={{ color: textColor }} title={title} />
+      <View className="flex-row items-start justify-between">
+        <View className="flex-1 flex-row items-center gap-3">
+          <Avatar name={visitor.visitorName} showName size={44} />
+          <View style={{ flex: 1 }}>
+            <Text intent="md" numberOfLines={1} weight="bold">
+              {visitor.visitorName}
+            </Text>
+            <Text intent="sm" style={{ color: theme.gray[500] }}>
+              {visitor.visitorType}
+            </Text>
           </View>
         </View>
 
-        <MenuComponent
-          id={`visitor-item-${visitor.id}`}
-          menuList={[
-            { label: 'Edit', onPress: onEdit },
-            { label: 'Delete', onPress: onDelete },
-          ]}
-        />
-      </View>
-      <View
-        className={`p-2 rounded-lg mb-4`}
-        style={{ backgroundColor: '#f2f2f2' }}
-      >
-        <Text style={{ fontSize: 12 }} weight="light">
-          {visitor.purposeOfVisit || 'Not Specified'}
-        </Text>
+        <View className="flex-row items-center gap-2">
+          <Tag title={title} variant={variant} />
+          <MenuComponent
+            id={`visitor-item-${visitor.id}`}
+            menuList={[
+              { label: 'Edit', onPress: onEdit },
+              { label: 'Delete', onPress: onDelete },
+            ]}
+          />
+        </View>
       </View>
 
-      <View className="flex-row justify-end">
-        <Tag
-          color={'#FFFFFF'}
-          icon={
-            isCopied ? (
-              <CheckIcon color="green" />
-            ) : (
-              <CopyIcon color={theme.blue.DEFAULT} size={20} />
-            )
-          }
+      <View
+        className="mt-4 flex-row items-center justify-between rounded-xl p-3"
+        style={{ backgroundColor: theme.white[300] }}
+      >
+        <Text
+          intent="sm"
+          numberOfLines={1}
+          style={{ flex: 1, color: theme.gray[500] }}
+        >
+          {visitor.purposeOfVisit || 'Not Specified'}
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          className="flex-row items-center gap-2 rounded-lg bg-white px-3 py-1.5"
           onPress={() => copyToClipboard(visitor.accessCode)}
-          style={{
-            borderWidth: 1,
-            borderColor: isCopied ? 'green' : theme.blue.DEFAULT,
-          }}
-          title={`${isCopied ? 'Copied!' : visitor.accessCode}`}
-        />
+          style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+        >
+          {isCopied ? (
+            <CheckIcon color={theme.green.DEFAULT} size={16} />
+          ) : (
+            <CopyIcon color={theme.blue.DEFAULT} size={16} />
+          )}
+          <Text intent="sm" style={{ color: theme.blue.DEFAULT }} weight="bold">
+            {isCopied ? 'Copied!' : visitor.accessCode}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const resolveStatus = (visitor: VisitorAccess) => {
+const resolveStatus = (
+  visitor: VisitorAccess,
+): { title: string; variant: TagVariant } => {
   if (visitor.accessCodeUsed) {
-    return {
-      title: 'Completed',
-      color: '#E8F5E9',
-      textColor: '#388E3C',
-    };
+    return { title: 'Completed', variant: 'success' };
   }
   if (moment().isAfter(moment(visitor.accessCodeExpiry))) {
-    return {
-      title: 'Expired',
-      color: '#FFEBEE',
-      textColor: '#D32F2F',
-    };
+    return { title: 'Expired', variant: 'danger' };
   }
-  return {
-    title: 'Awaiting Use',
-    color: '#E3F2FD',
-    textColor: '#1976D2',
-  };
+  return { title: 'Awaiting Use', variant: 'info' };
 };
 
 export default VisitorItem;

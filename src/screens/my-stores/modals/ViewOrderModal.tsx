@@ -4,6 +4,7 @@ import Button from '@wd/components/Button/Button';
 import DetailItem from '@wd/components/DetailItem/DetailItem';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
 import Loader from '@wd/components/Loader/Loader';
+import Tag, { TagVariant } from '@wd/components/Tag/Tag';
 import Text from '@wd/components/Text/Text';
 import { Order, OrderItem } from '@wd/generated';
 import useGetSingleOrder from '@wd/screens/orders/hooks/useGetSingleOrder';
@@ -22,16 +23,22 @@ interface Props {
   onCancelOrder?: (order: Order) => void;
 }
 
+const statusVariant = (status?: string): TagVariant => {
+  const s = (status || '').toLowerCase();
+  if (s.includes('paid') || s.includes('complete') || s.includes('deliver')) return 'success';
+  if (s.includes('pending') || s.includes('progress')) return 'info';
+  if (s.includes('cancel') || s.includes('fail')) return 'danger';
+  return 'neutral';
+};
+
 const OrderModal = ({ onClose, orderId }: Props) => {
+  const { theme } = useTheme();
   const { order, isLoading } = useGetSingleOrder({ orderId });
   const invoice = order?.invoice;
   const delivery = invoice?.delivery;
   const rider = delivery?.rider;
   const items = order?.items || [];
-  const totalAmount = items.reduce(
-    (acc, item) => acc + item.unitPrice * item.quantity,
-    0,
-  );
+  const totalAmount = items.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0);
   const resident = order?.user;
 
   return (
@@ -39,61 +46,56 @@ const OrderModal = ({ onClose, orderId }: Props) => {
       {isLoading ? (
         <Loader section />
       ) : invoice ? (
-        <View className="flex flex-col gap-4">
-          <View className="flex gap-4 flex-wrap mb-4">
-            <DetailItem
-              description={moment(invoice?.createdAt).format('Do MMM, YYYY')}
-              title="Order Date"
-            />
-            <DetailItem description={invoice?.status || ''} title="Status" />
-          </View>
-
-          <View className="flex-row items-start gap-2 flex-wrap mb-4">
+        <View className="gap-4">
+          <View className="flex-row items-center gap-3">
             <Avatar
               image={resident?.profilePic}
               name={`${resident?.firstName} ${resident?.lastName}`}
+              showName
+              size={44}
             />
-            <DetailItem
-              description=""
-              title={`${resident?.firstName} ${resident?.lastName}`}
-            />
+            <View style={{ flex: 1 }}>
+              <Text intent="md" numberOfLines={1} weight="bold">
+                {resident?.firstName} {resident?.lastName}
+              </Text>
+              <Text intent="xs" style={{ color: theme.gray[500] }}>
+                {moment(invoice?.createdAt).format('Do MMM, YYYY')}
+              </Text>
+            </View>
+            <Tag title={invoice?.status || ''} variant={statusVariant(invoice?.status)} />
           </View>
 
-          {delivery && (
-            <View className="flex flex-col gap-4 mb-4">
+          {delivery ? (
+            <View className="rounded-2xl px-4" style={{ borderWidth: 1, borderColor: theme.gray[200] }}>
+              <DetailItem description={delivery?.status || 'N/A'} title="Delivery Status" />
               <DetailItem
-                description={delivery?.status || 'N/A'}
-                title="Delivery Status"
-              />
-              <DetailItem
-                description={
-                  rider
-                    ? `${rider?.firstName} ${rider?.lastName}`
-                    : 'Awaiting Assignment'
-                }
+                description={rider ? `${rider?.firstName} ${rider?.lastName}` : 'Awaiting Assignment'}
+                last
                 title="Rider"
               />
             </View>
-          )}
+          ) : null}
 
-          <View>
-            <TableGrid items={items} />
-            <View className="mt-6 flex-row justify-end">
-              <DetailItem
-                description={formatNairaWithKobo(totalAmount)}
-                title="Total Amount"
-              />
-            </View>
+          <TableGrid items={items} />
+
+          <View
+            className="flex-row items-center justify-between rounded-2xl px-5 py-4"
+            style={{ backgroundColor: theme.blue.DEFAULT }}
+          >
+            <Text intent="sm" style={{ color: 'rgba(255,255,255,0.85)' }} weight="semibold">
+              TOTAL AMOUNT
+            </Text>
+            <Text intent="h3" style={{ color: '#fff' }} weight="extrabold">
+              {formatNairaWithKobo(totalAmount)}
+            </Text>
           </View>
 
-          <View className="flex w-full justify-between">
-            <Button label={'Close'} onPress={onClose} pale />
-          </View>
+          <Button label="Close" light onPress={onClose} />
         </View>
       ) : (
         <EmptyState
           description="The selected order does not exist."
-          icon={<FileIcon color={'white'} size={20} />}
+          icon={<FileIcon size={28} />}
           title="Order not found"
         />
       )}
@@ -101,65 +103,30 @@ const OrderModal = ({ onClose, orderId }: Props) => {
   );
 };
 
-interface ItemProps {
-  title: string;
-  description: string;
-}
-
-interface TableGridProps {
-  items: OrderItem[];
-}
-
-const TableGrid: React.FC<TableGridProps> = ({ items }) => {
+const TableGrid: React.FC<{ items: OrderItem[] }> = ({ items }) => {
   const { theme } = useTheme();
-
+  if (!items?.length) return null;
   return (
-    <View style={styles.container}>
-      {/* Table Header */}
-      <View style={styles.headerRow}>
-        <View style={[styles.headerCell, styles.snCell]}>
-          <Text style={styles.headerText}>SN</Text>
-        </View>
-        <View style={[styles.headerCell, styles.itemCell]}>
-          <Text style={styles.headerText}>Item</Text>
-        </View>
-        <View style={[styles.headerCell, styles.qtyCell]}>
-          <Text style={styles.headerText}>Qty</Text>
-        </View>
-        <View style={[styles.headerCell, styles.totalCell]}>
-          <Text style={styles.headerText}>Total</Text>
-        </View>
+    <View className="overflow-hidden rounded-2xl" style={{ borderWidth: 1, borderColor: theme.gray[200] }}>
+      <View style={[styles.headerRow, { backgroundColor: theme.white[300], borderBottomColor: theme.gray[200] }]}>
+        <View style={styles.snCell}><Text intent="xs" weight="semibold">SN</Text></View>
+        <View style={styles.itemCell}><Text intent="xs" weight="semibold">Item</Text></View>
+        <View style={styles.qtyCell}><Text intent="xs" weight="semibold">Qty</Text></View>
+        <View style={styles.totalCell}><Text intent="xs" weight="semibold">Total</Text></View>
       </View>
-
-      {/* Table Body */}
       <ScrollView>
-        {items?.map((item, index) => (
-          <View key={index} style={styles.dataRow}>
-            <View style={[styles.dataCell, styles.snCell]}>
-              <Text style={{ ...styles.dataText, ...styles.snText }}>
-                #{index + 1}
-              </Text>
+        {items.map((item, index) => (
+          <View
+            key={index}
+            style={[styles.dataRow, { borderBottomColor: theme.gray[200], borderBottomWidth: index === items.length - 1 ? 0 : 1 }]}
+          >
+            <View style={styles.snCell}><Text intent="sm" style={{ color: theme.gray[500] }}>#{index + 1}</Text></View>
+            <View style={styles.itemCell}>
+              <Text intent="sm" numberOfLines={1}>{item?.product.name}</Text>
+              <Text intent="xs" style={{ color: theme.blue.DEFAULT }} weight="semibold">{formatNaira(item?.unitPrice)}</Text>
             </View>
-            <View style={[styles.dataCell, styles.itemCell]}>
-              <Text style={styles.dataText}>{item?.product.name}</Text>
-              <Text
-                style={{
-                  ...styles.dataText,
-                  fontSize: 12,
-                  color: theme.blue.DEFAULT,
-                }}
-              >
-                {formatNaira(item?.unitPrice)}
-              </Text>
-            </View>
-            <View style={[styles.dataCell, styles.qtyCell]}>
-              <Text style={styles.dataText}>{item.quantity}</Text>
-            </View>
-            <View style={[styles.dataCell, styles.totalCell]}>
-              <Text style={styles.dataText}>
-                {formatNaira(item.unitPrice * item.quantity)}
-              </Text>
-            </View>
+            <View style={styles.qtyCell}><Text intent="sm" style={{ color: theme.gray[500] }}>{item.quantity}</Text></View>
+            <View style={styles.totalCell}><Text intent="sm" weight="semibold">{formatNaira(item.unitPrice * item.quantity)}</Text></View>
           </View>
         ))}
       </ScrollView>
@@ -168,12 +135,8 @@ const TableGrid: React.FC<TableGridProps> = ({ items }) => {
 };
 
 const ViewOrderModal = (props: Props) => {
-  const {
-    bottomSheetRef,
-    handlePresentBottomSheet,
-    handleSheetChanges,
-    handleCloseBottomSheet,
-  } = useAppBottomSheetModal();
+  const { bottomSheetRef, handlePresentBottomSheet, handleSheetChanges, handleCloseBottomSheet } =
+    useAppBottomSheetModal();
 
   useEffect(() => {
     if (props.isOpen) {
@@ -202,69 +165,12 @@ const ViewOrderModal = (props: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerRow: {
-    flexDirection: 'row',
-    backgroundColor: '#F7FAFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    paddingVertical: 12,
-  },
-  dataRow: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    paddingVertical: 12,
-    minHeight: 44,
-  },
-  headerCell: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    borderRightWidth: 1,
-    borderRightColor: '#E5E7EB',
-  },
-  dataCell: {
-    justifyContent: 'center',
-    paddingHorizontal: 8,
-    borderRightWidth: 1,
-    borderRightColor: '#E5E7EB',
-  },
-  headerText: {
-    fontWeight: '600',
-    fontSize: 14,
-    color: '#000',
-  },
-  dataText: {
-    fontSize: 14,
-    color: '#6C6A6A',
-  },
-  snText: {
-    fontWeight: '600',
-  },
-  // Column widths (similar to the original w-[50px] and flex distribution)
-  snCell: {
-    width: 60,
-    flex: 0, // Fixed width
-  },
-  itemCell: {
-    flex: 2,
-  },
-  unitPriceCell: {
-    flex: 1.5,
-  },
-  qtyCell: {
-    flex: 1,
-  },
-  totalCell: {
-    flex: 1.5,
-    borderRightWidth: 0, // Remove border for last cell
-  },
+  headerRow: { flexDirection: 'row', borderBottomWidth: 1, paddingVertical: 12, paddingHorizontal: 12 },
+  dataRow: { flexDirection: 'row', paddingVertical: 12, paddingHorizontal: 12, minHeight: 44 },
+  snCell: { width: 44 },
+  itemCell: { flex: 2 },
+  qtyCell: { flex: 1, alignItems: 'center' },
+  totalCell: { flex: 1.5, alignItems: 'flex-end' },
 });
 
 export default ViewOrderModal;

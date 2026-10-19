@@ -2,10 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 import { apiWrapper } from '@wd/api';
 import AppBottomSheetModal from '@wd/components/BottomSheet/AppBottomSheetModal';
 import Button from '@wd/components/Button/Button';
+import DetailItem from '@wd/components/DetailItem/DetailItem';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
 import Loader from '@wd/components/Loader/Loader';
 import usePaystack from '@wd/components/PaystackComponent/hooks/usePaystack';
 import { PaystackModal } from '@wd/components/PaystackComponent/Paystack';
+import Tag, { TagVariant } from '@wd/components/Tag/Tag';
 import Text from '@wd/components/Text/Text';
 import { BillingService, Invoice, OrderItem } from '@wd/generated';
 import useVerifyPayment from '@wd/screens/fees/hooks/useVerifyPayment';
@@ -26,7 +28,16 @@ interface Props {
   onPaySuccess?: () => void;
 }
 
+const statusVariant = (status?: string): TagVariant => {
+  const s = (status || '').toLowerCase();
+  if (s.includes('paid') || s.includes('complete') || s.includes('deliver')) return 'success';
+  if (s.includes('pending') || s.includes('progress')) return 'info';
+  if (s.includes('cancel') || s.includes('fail')) return 'danger';
+  return 'neutral';
+};
+
 const InvoiceModal = ({ onClose, invoiceId, onPaySuccess }: Props) => {
+  const { theme } = useTheme();
   const { invoice, isLoading, refetch } = useGetSingleInvoice({ invoiceId });
   const delivery = invoice?.delivery;
   const rider = delivery?.rider;
@@ -45,15 +56,8 @@ const InvoiceModal = ({ onClose, invoiceId, onPaySuccess }: Props) => {
     },
   });
 
-  const {
-    paystackHandle,
-    setPaystackConfig,
-    paystackModalProps,
-    paystackConfig,
-  } = usePaystack({
-    amount: totalAmount,
-    onSuccess: ref => verifyPayment(ref),
-  });
+  const { paystackHandle, setPaystackConfig, paystackModalProps, paystackConfig } =
+    usePaystack({ amount: totalAmount, onSuccess: ref => verifyPayment(ref) });
 
   const { mutate: initializeTransaction, isPending } = useMutation({
     mutationFn: (id: string) =>
@@ -64,56 +68,60 @@ const InvoiceModal = ({ onClose, invoiceId, onPaySuccess }: Props) => {
       void handleError(error);
     },
   });
+
   return (
     <View>
       {isLoading ? (
         <Loader section />
       ) : invoice ? (
-        <View className="flex flex-col gap-4">
-          <Text className="text-lg font-bold text-gray-800">
-            Invoice #{invoice?.id}
-          </Text>
-          <View className="flex gap-4 flex-wrap mb-4">
-            <Item
+        <View className="gap-4">
+          <View className="flex-row items-center justify-between">
+            <Text intent="h3" weight="bold">
+              Invoice #{invoice?.id}
+            </Text>
+            <Tag title={invoice?.status || ''} variant={statusVariant(invoice?.status)} />
+          </View>
+
+          <View
+            className="rounded-2xl px-4"
+            style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+          >
+            <DetailItem
               description={moment(invoice?.createdAt).format('Do MMM, YYYY')}
               title="Order Date"
             />
-            <Item description={invoice?.status || ''} title="Status" />
-          </View>
-
-          <View className="flex flex-col gap-4 mb-4">
-            <Item
+            <DetailItem
               description={delivery?.status || 'N/A'}
               title="Delivery Status"
             />
-            <Item
+            <DetailItem
               description={
-                rider
-                  ? `${rider?.firstName} ${rider?.lastName}`
-                  : 'Awaiting Assignment'
+                rider ? `${rider?.firstName} ${rider?.lastName}` : 'Awaiting Assignment'
               }
+              last
               title="Rider"
             />
           </View>
 
-          <View>
-            <TableGrid items={items} />
+          <TableGrid items={items} />
+
+          <View
+            className="flex-row items-center justify-between rounded-2xl px-5 py-4"
+            style={{ backgroundColor: theme.blue.DEFAULT }}
+          >
+            <Text intent="sm" style={{ color: 'rgba(255,255,255,0.85)' }} weight="semibold">
+              AMOUNT DUE
+            </Text>
+            <Text intent="h3" style={{ color: '#fff' }} weight="extrabold">
+              {formatNaira(totalAmount)}
+            </Text>
           </View>
 
-          <View className="flex w-full justify-between">
-            <Button label={'Close'} onPress={onClose} pale />
-
-            <View className="flex gap-2">
-              {/* <Button
-              variant={'default'}
-              disabled={isLoading}
-              onPress={() => {
-                if (invoice) onCancelInvoice?.(invoice);
-              }}
-            >
-              Cancel Order
-            </Button> */}
-
+          <View className="mt-2 flex-row gap-3">
+            <View style={{ flex: 1 }}>
+              <Button label="Close" light onPress={onClose} />
+            </View>
+            <View style={{ flex: 1 }}>
               <Button
                 disabled={isLoading || invoice?.status !== 'pending'}
                 isLoading={isPending}
@@ -137,7 +145,7 @@ const InvoiceModal = ({ onClose, invoiceId, onPaySuccess }: Props) => {
       ) : (
         <EmptyState
           description="The selected order does not exist."
-          icon={<FileIcon color={'white'} size={20} />}
+          icon={<FileIcon size={28} />}
           title="Order not found"
         />
       )}
@@ -149,75 +157,48 @@ const InvoiceModal = ({ onClose, invoiceId, onPaySuccess }: Props) => {
   );
 };
 
-interface ItemProps {
-  title: string;
-  description: string;
-}
-
-const Item = ({ title, description }: ItemProps) => {
-  return (
-    <View className="">
-      <Text className="font-semibold capitalize text-xs text-gray-600">
-        {title}
-      </Text>
-      <Text className="text-sm font-bold text-gray-700">{description}</Text>
-    </View>
-  );
-};
-
 interface TableGridProps {
   items: OrderItem[];
 }
 
 const TableGrid: React.FC<TableGridProps> = ({ items }) => {
   const { theme } = useTheme();
+  if (!items?.length) return null;
 
   return (
-    <View style={styles.container}>
-      {/* Table Header */}
-      <View style={styles.headerRow}>
-        <View style={[styles.headerCell, styles.snCell]}>
-          <Text style={styles.headerText}>SN</Text>
-        </View>
-        <View style={[styles.headerCell, styles.itemCell]}>
-          <Text style={styles.headerText}>Item</Text>
-        </View>
-        <View style={[styles.headerCell, styles.qtyCell]}>
-          <Text style={styles.headerText}>Qty</Text>
-        </View>
-        <View style={[styles.headerCell, styles.totalCell]}>
-          <Text style={styles.headerText}>Total</Text>
-        </View>
+    <View
+      className="overflow-hidden rounded-2xl"
+      style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+    >
+      <View style={[styles.headerRow, { backgroundColor: theme.white[300], borderBottomColor: theme.gray[200] }]}>
+        <View style={styles.snCell}><Text intent="xs" weight="semibold">SN</Text></View>
+        <View style={styles.itemCell}><Text intent="xs" weight="semibold">Item</Text></View>
+        <View style={styles.qtyCell}><Text intent="xs" weight="semibold">Qty</Text></View>
+        <View style={styles.totalCell}><Text intent="xs" weight="semibold">Total</Text></View>
       </View>
-
-      {/* Table Body */}
       <ScrollView>
-        {items?.map((item, index) => (
-          <View key={index} style={styles.dataRow}>
-            <View style={[styles.dataCell, styles.snCell]}>
-              <Text style={{ ...styles.dataText, ...styles.snText }}>
-                #{index + 1}
-              </Text>
+        {items.map((item, index) => (
+          <View
+            key={index}
+            style={[
+              styles.dataRow,
+              { borderBottomColor: theme.gray[200], borderBottomWidth: index === items.length - 1 ? 0 : 1 },
+            ]}
+          >
+            <View style={styles.snCell}>
+              <Text intent="sm" style={{ color: theme.gray[500] }}>#{index + 1}</Text>
             </View>
-            <View style={[styles.dataCell, styles.itemCell]}>
-              <Text style={styles.dataText}>{item?.product.name}</Text>
-              <Text
-                style={{
-                  ...styles.dataText,
-                  fontSize: 12,
-                  color: theme.blue.DEFAULT,
-                }}
-              >
+            <View style={styles.itemCell}>
+              <Text intent="sm" numberOfLines={1}>{item?.product.name}</Text>
+              <Text intent="xs" style={{ color: theme.blue.DEFAULT }} weight="semibold">
                 {formatNaira(item?.unitPrice)}
               </Text>
             </View>
-            <View style={[styles.dataCell, styles.qtyCell]}>
-              <Text style={styles.dataText}>{item.quantity}</Text>
+            <View style={styles.qtyCell}>
+              <Text intent="sm" style={{ color: theme.gray[500] }}>{item.quantity}</Text>
             </View>
-            <View style={[styles.dataCell, styles.totalCell]}>
-              <Text style={styles.dataText}>
-                {formatNaira(item.unitPrice * item.quantity)}
-              </Text>
+            <View style={styles.totalCell}>
+              <Text intent="sm" weight="semibold">{formatNaira(item.unitPrice * item.quantity)}</Text>
             </View>
           </View>
         ))}
@@ -261,69 +242,12 @@ const ViewInvoiceModal = (props: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerRow: {
-    flexDirection: 'row',
-    backgroundColor: '#F7FAFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    paddingVertical: 12,
-  },
-  dataRow: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-    paddingVertical: 12,
-    minHeight: 44,
-  },
-  headerCell: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    borderRightWidth: 1,
-    borderRightColor: '#E5E7EB',
-  },
-  dataCell: {
-    justifyContent: 'center',
-    paddingHorizontal: 8,
-    borderRightWidth: 1,
-    borderRightColor: '#E5E7EB',
-  },
-  headerText: {
-    fontWeight: '600',
-    fontSize: 14,
-    color: '#000',
-  },
-  dataText: {
-    fontSize: 14,
-    color: '#6C6A6A',
-  },
-  snText: {
-    fontWeight: '600',
-  },
-  // Column widths (similar to the original w-[50px] and flex distribution)
-  snCell: {
-    width: 60,
-    flex: 0, // Fixed width
-  },
-  itemCell: {
-    flex: 2,
-  },
-  unitPriceCell: {
-    flex: 1.5,
-  },
-  qtyCell: {
-    flex: 1,
-  },
-  totalCell: {
-    flex: 1.5,
-    borderRightWidth: 0, // Remove border for last cell
-  },
+  headerRow: { flexDirection: 'row', borderBottomWidth: 1, paddingVertical: 12, paddingHorizontal: 12 },
+  dataRow: { flexDirection: 'row', paddingVertical: 12, paddingHorizontal: 12, minHeight: 44 },
+  snCell: { width: 44 },
+  itemCell: { flex: 2 },
+  qtyCell: { flex: 1, alignItems: 'center' },
+  totalCell: { flex: 1.5, alignItems: 'flex-end' },
 });
 
 export default ViewInvoiceModal;

@@ -59,17 +59,27 @@ const SingleShopScreen: FC<
         ) : !store ? (
           <EmptyState
             description="There was an issue fetching the store details."
-            icon={<BuildingIcon color={'#FFFFFF'} size={40} />}
+            icon={<BuildingIcon size={34} />}
             section
             title="Store not found"
           />
         ) : (
           <>
-            <View className="mb-4 flex-row items-center gap-2">
-              <Avatar image={store.logo} size={80} />
-              <View>
-                <Text intent="h2">{store.name}</Text>
-                <Text className="mt-2" weight="light">
+            <View
+              className="mb-4 flex-row items-center gap-3 rounded-2xl bg-white p-4"
+              style={{ borderWidth: 1, borderColor: theme.gray[200] }}
+            >
+              <Avatar image={store.logo} name={store.name} showName size={64} />
+              <View style={{ flex: 1 }}>
+                <Text intent="h3" numberOfLines={1} weight="bold">
+                  {store.name}
+                </Text>
+                <Text
+                  className="mt-1"
+                  intent="sm"
+                  numberOfLines={2}
+                  style={{ color: theme.gray[500] }}
+                >
                   {store.description}
                 </Text>
               </View>
@@ -95,13 +105,13 @@ const SingleShopScreen: FC<
                 ) : totalElements === 0 ? (
                   <EmptyState
                     description="This store has no products available."
-                    icon={<ShoppingBagIcon color={'#FFFFFF'} size={40} />}
+                    icon={<ShoppingBagIcon size={34} />}
                     section
                     title="No Products"
                   />
                 ) : (
                   <>
-                    <View className="mt-8 flex-row justify-center flex-wrap gap-6">
+                    <View className="mt-6">
                       {products.map(product => (
                         <ProductItem
                           key={product.id}

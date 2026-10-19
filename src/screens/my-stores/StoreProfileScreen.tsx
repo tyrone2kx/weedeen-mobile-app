@@ -1,10 +1,10 @@
 import Avatar from '@wd/components/Avatar/Avatar';
-import BaseButton from '@wd/components/Button/BaseButton';
 import Circle from '@wd/components/Circle/Circle';
 import ConfirmationModal from '@wd/components/ConfirmationModal/ConfirmationModal';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
 import Loader from '@wd/components/Loader/Loader';
 import SafeAreaComponent from '@wd/components/SafeAreaComponent/SafeAreaComponent';
+import Tag, { TagVariant } from '@wd/components/Tag/Tag';
 import Text from '@wd/components/Text/Text';
 import TopTab from '@wd/components/TopTab';
 import { RoutesEnum } from '@wd/navigation/enum';
@@ -19,10 +19,11 @@ import {
   BuildingIcon,
   ChevronLeftIcon,
   EditIcon,
+  InfoIcon,
   TrashIcon,
 } from 'lucide-react-native';
 import React, { FC, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import useGetSingleStore from '../shop/hooks/useGetSingleStore';
 import useDeleteStore from './hooks/useDeleteStore';
 import CreateStoreModal from './modals/CreateStoreModal';
@@ -36,6 +37,14 @@ enum TabsEnum {
   INVENTORY = 'Inventory',
 }
 
+const statusVariant = (status?: string): TagVariant => {
+  const s = (status || '').toLowerCase();
+  if (s.includes('active') || s.includes('approved')) return 'success';
+  if (s.includes('pending')) return 'warning';
+  if (s.includes('reject')) return 'danger';
+  return 'neutral';
+};
+
 const StoreProfileScreen: FC<
   MyStoresStackScreenProps<RoutesEnum.STORE_PROFILE_SCREEN>
 > = ({ navigation, route }) => {
@@ -44,6 +53,7 @@ const StoreProfileScreen: FC<
   const { theme } = useTheme();
 
   const inverted = invertObject(StoreStatusEnum);
+  const statusLabel = inverted[store?.status || '']?.replaceAll('_', ' ');
   const deleteHandler = useDisclosure();
   const editStoreHandler = useDisclosure();
   const { deleteStore, isDeleting } = useDeleteStore();
@@ -53,106 +63,98 @@ const StoreProfileScreen: FC<
 
   const [activeTab, setActiveTab] = useState<TabsEnum>(TabsEnum.DETAILS);
   const tabItems = [
-    {
-      label: TabsEnum.DETAILS,
-      onPress: () => setActiveTab(TabsEnum.DETAILS),
-    },
-    {
-      label: TabsEnum.ORDERS,
-      onPress: () => setActiveTab(TabsEnum.ORDERS),
-    },
-    {
-      label: TabsEnum.INVENTORY,
-      onPress: () => setActiveTab(TabsEnum.INVENTORY),
-    },
+    { label: TabsEnum.DETAILS, onPress: () => setActiveTab(TabsEnum.DETAILS) },
+    { label: TabsEnum.ORDERS, onPress: () => setActiveTab(TabsEnum.ORDERS) },
+    { label: TabsEnum.INVENTORY, onPress: () => setActiveTab(TabsEnum.INVENTORY) },
   ];
+
   return (
     <>
       <SafeAreaComponent
-        statusBarProps={{
-          backgroundColor: theme.white[400],
-        }}
+        statusBarProps={{ backgroundColor: theme.white[400] }}
       />
-      <View className="bg-white p-4 flex-row items-center justify-between elevation-md border-b border-gray-200 flex-wrap">
-        <View className="flex-row items-center gap-2">
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <ChevronLeftIcon />
+      {/* Header */}
+      <View className="flex-row items-center justify-between bg-white px-4 py-3">
+        <View className="flex-1 flex-row items-center gap-3">
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.goBack()}
+            style={circleBtn(theme)}
+          >
+            <ChevronLeftIcon color={theme.black[600]} size={22} />
           </TouchableOpacity>
-          <Avatar image={store?.logo} />
-          <View>
-            <Text className="" intent="h4">
+          <Avatar image={store?.logo} name={store?.name} showName size={44} />
+          <View style={{ flex: 1 }}>
+            <Text intent="h4" numberOfLines={1} weight="bold">
               {store?.name || 'Store'}
             </Text>
-            <Text className="text-sm text-gray-600">
-              {inverted[store?.status || '']?.replaceAll('_', ' ')}
-            </Text>
+            {statusLabel ? (
+              <View className="mt-1 flex-row">
+                <Tag title={statusLabel} variant={statusVariant(store?.status)} />
+              </View>
+            ) : null}
           </View>
         </View>
-        <View className="flex-row gap-4">
-          <Circle
-            className="border border-gray-400"
-            color="white"
+        <View className="flex-row gap-2">
+          <TouchableOpacity
+            activeOpacity={0.8}
             onPress={editStoreHandler.onOpen}
-            size={40}
+            style={circleBtn(theme)}
           >
-            <EditIcon color={theme.gray[600]} size={20} />
-          </Circle>
-          <Circle
-            className="border border-gray-400"
-            color="white"
+            <EditIcon color={theme.gray[600]} size={18} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
             onPress={deleteHandler.onOpen}
-            size={40}
+            style={circleBtn(theme)}
           >
-            <TrashIcon color={theme.gray[600]} size={20} />
-          </Circle>
+            <TrashIcon color={theme.red.DEFAULT} size={18} />
+          </TouchableOpacity>
         </View>
       </View>
-      {!isSubscribed ? (
-        <View className="w-full p-4 bg-blue-50 border-l-4 border-blue-400 mb-4">
-          <Text className="text-blue-600">
-            Users cannot purchase items from your store without an active
-            subscription.
-          </Text>
-          <View className="flex-row justify-start mt-2">
-            <BaseButton
-              style={{
-                width: 'auto',
-                paddingVertical: 4,
-                backgroundColor: theme.white.DEFAULT,
-                borderWidth: 1,
-                borderColor: theme.blue.DEFAULT,
-                borderRadius: 10,
-              }}
-              textStyle={{ color: theme.blue.DEFAULT }}
-            >
-              Subscribe
-            </BaseButton>
-          </View>
-        </View>
-      ) : null}
 
       <View className="p-4 relative" style={globalStyles.screen}>
+        {!isSubscribed ? (
+          <View
+            className="mb-4 rounded-2xl p-4"
+            style={{ backgroundColor: theme.blue[300] }}
+          >
+            <View className="flex-row gap-2">
+              <InfoIcon color={theme.blue.DEFAULT} size={18} />
+              <Text intent="sm" style={{ flex: 1, color: theme.blue[600] }} weight="medium">
+                Users cannot purchase items from your store without an active
+                subscription.
+              </Text>
+            </View>
+            <TouchableOpacity
+              activeOpacity={0.85}
+              className="mt-3 self-start rounded-lg px-4 py-2"
+              style={{ backgroundColor: theme.blue.DEFAULT }}
+            >
+              <Text intent="sm" style={{ color: '#fff' }} weight="semibold">
+                Subscribe
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
         {isLoading ? (
           <Loader section />
         ) : !store ? (
           <EmptyState
             description="This might be a result of an invalid link or a network error."
-            icon={<BuildingIcon className="text-white" size={40} />}
+            icon={<BuildingIcon size={34} />}
             title="Store Not Found"
           />
         ) : (
           <View className="flex-1">
             <TopTab
               activeTab={activeTab}
-              buttonStyle="border-0"
-              style={{ marginBottom: 10 }}
+              style={{ marginBottom: 16 }}
               tabs={tabItems}
             />
 
-            {activeTab === TabsEnum.DETAILS && (
-              <StoreDetailsTab store={store} />
-            )}
-
+            {activeTab === TabsEnum.DETAILS && <StoreDetailsTab store={store} />}
             {activeTab === TabsEnum.ORDERS && <StoreOrdersTab store={store} />}
             {activeTab === TabsEnum.INVENTORY && (
               <StoreInventoryTab store={store} />
@@ -160,6 +162,7 @@ const StoreProfileScreen: FC<
           </View>
         )}
       </View>
+
       <CreateStoreModal
         isOpen={editStoreHandler.isOpen}
         onClose={editStoreHandler.onClose}
@@ -184,6 +187,20 @@ const StoreProfileScreen: FC<
   );
 };
 
-export default StoreProfileScreen;
+const circleBtn = (theme: any) => ({
+  width: 42,
+  height: 42,
+  borderRadius: 21,
+  alignItems: 'center' as const,
+  justifyContent: 'center' as const,
+  backgroundColor: '#FFFFFF',
+  borderWidth: 1,
+  borderColor: theme.gray[200],
+  shadowColor: '#101828',
+  shadowOpacity: 0.06,
+  shadowRadius: 8,
+  shadowOffset: { width: 0, height: 3 },
+  elevation: 2,
+});
 
-const styles = StyleSheet.create({});
+export default StoreProfileScreen;

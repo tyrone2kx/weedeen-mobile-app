@@ -1,13 +1,15 @@
-import CustomDatePicker from '@mh/components/custom-datepicker/CustomDatePicker';
-import EmptyState from '@mh/components/empty-state/EmptyState';
-import LoaderComponent from '@mh/components/loader/Loader';
-import { PaginationComponent } from '@mh/components/pagination-component/PaginationComponent';
-import { Staff } from '@mh/generated';
-import Input from '@mh/ui/input/Input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@mh/ui/table';
-import Tag from '@mh/ui/tags';
-import { ContactIcon, SearchIcon } from 'lucide-react';
+import EmptyState from '@wd/components/EmptyState/EmptyState';
+import DatePicker from '@wd/components/DatePicker/DatePicker';
+import InfiniteScrollView from '@wd/components/InfiniteScrollView/InfiniteScrollView';
+import Input from '@wd/components/Input/Input';
+import Loader from '@wd/components/Loader/Loader';
+import { Table, TD, THead, TRow } from '@wd/components/SimpleTable';
+import Tag from '@wd/components/Tag/Tag';
+import { Staff } from '@wd/generated';
+import useTheme from '@wd/utils/theme/useTheme';
+import { ContactIcon, SearchIcon } from 'lucide-react-native';
 import moment from 'moment';
+import { RefreshControl, View } from 'react-native';
 import useGetStaffLogs from '../hooks/useGetStaffLogs';
 
 interface Props {
@@ -15,100 +17,102 @@ interface Props {
 }
 
 const StaffLogsTab = ({ staff }: Props) => {
+  const { theme } = useTheme();
   const {
     searchText,
     setSearchText,
     limit,
-    setLimit,
     page,
-    setPage,
     logs,
-    totalPages,
     totalElements,
     isLoading,
     setEndDate,
     setStartDate,
     startDate,
     endDate,
+    infiniteScrollCallback,
+    refetch,
+    isRefreshing,
   } = useGetStaffLogs({ staffId: staff.id });
-  return (
-    <div>
-      <section className="mt-4 flex gap-2 flex-wrap justify-between items-center">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center w-full md:w-auto">
-          <Input
-            className="w-full md:w-[200px]"
-            placeholder="Search by access code"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            leftIcon={<SearchIcon />}
-          />
-          <CustomDatePicker
-            placeholder="Filter by start date"
-            value={startDate}
-            onChange={setStartDate}
-          />
-          <CustomDatePicker
-            placeholder="Filter by end date"
-            value={endDate}
-            onChange={setEndDate}
-          />
-        </div>
-      </section>
 
-      <section className="mt-8">
-        {isLoading ? (
-          <LoaderComponent isFullScreen />
+  return (
+    <View className="flex-1">
+      <View className="mt-4 gap-2">
+        <Input
+          IconLeft={<SearchIcon color={theme.black[600]} size={18} />}
+          onChange={setSearchText}
+          placeholder="Search by access code"
+          value={searchText}
+        />
+        <DatePicker
+          onChange={date => setStartDate(date ? date.toDate() : null)}
+          placeholder="Filter by start date"
+          value={startDate ? moment(startDate) : undefined}
+        />
+        <DatePicker
+          onChange={date => setEndDate(date ? date.toDate() : null)}
+          placeholder="Filter by end date"
+          value={endDate ? moment(endDate) : undefined}
+        />
+      </View>
+
+      <View className="mt-8 flex-1">
+        {isLoading && page <= 1 ? (
+          <Loader section />
         ) : totalElements === 0 ? (
           <EmptyState
-            icon={<ContactIcon size={40} className="text-white" />}
-            title="No Logs Found"
             description="There are no logs for this staff member yet. Logs will appear here once there is activity."
+            icon={<ContactIcon color={theme.white.DEFAULT} size={40} />}
+            title="No Logs Found"
           />
         ) : (
-          <>
+          <InfiniteScrollView
+            callback={infiniteScrollCallback}
+            fetching={isLoading}
+            refreshControl={
+              <RefreshControl
+                colors={[theme.blue.DEFAULT]}
+                onRefresh={refetch}
+                progressBackgroundColor={theme.gray[150]}
+                refreshing={isRefreshing}
+              />
+            }
+            showsVerticalScrollIndicator={false}
+            style={{ flex: 1 }}
+          >
             <Table>
-              <TableHeader className="">
-                <TableRow className="bg-[#F7FAFF] hover:bg-[#F7FAFF]">
-                  <TableHead className="border">SN</TableHead>
-                  <TableHead className="border">Code Used</TableHead>
-                  <TableHead className="border">Arrival Time</TableHead>
-                </TableRow>
-              </TableHeader>
+              <THead>
+                <TRow>
+                  <TD textProps={{ weight: 'bold' }}>SN</TD>
+                  <TD textProps={{ weight: 'bold' }}>Code Used</TD>
+                  <TD textProps={{ weight: 'bold' }}>Arrival Time</TD>
+                </TRow>
+              </THead>
 
-              <TableBody className="text-[#6C6A6A]">
-                {logs.map((log, index) => {
-                  return (
-                    <TableRow key={log.id}>
-                      <TableCell className="border">
-                        {/* factor in pagination  */}
-                        <span className="font-semibold">{index + 1 + (page - 1) * limit}</span>
-                      </TableCell>
-                      <TableCell className="border">
-                        <Tag hideBullet color="#666" className="cursor-pointer">
-                          <div className="flex items-center">{log.accessCode}</div>
-                        </Tag>
-                      </TableCell>
-                      <TableCell className="border">
-                        {moment(log.createdAt).format('Do MMM, YYYY, h:mm:ss a')}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
+              {logs.map((log, index) => (
+                <TRow
+                  key={log.id}
+                  style={{
+                    borderTopWidth: 1,
+                    borderTopColor: theme.gray[200],
+                  }}
+                >
+                  <TD textProps={{ weight: 'semibold' }}>
+                    {index + 1 + (page - 1) * limit}
+                  </TD>
+                  <View className="flex-1 border-r border-r-gray-400 p-2 items-center justify-center">
+                    <Tag color="#666" title={log.accessCode} />
+                  </View>
+                  <TD>
+                    {moment(log.createdAt).format('Do MMM, YYYY, h:mm:ss a')}
+                  </TD>
+                </TRow>
+              ))}
             </Table>
-
-            <PaginationComponent
-              onLimitChange={(val) => {
-                setLimit(val);
-                setPage(1);
-              }}
-              onPageChange={setPage}
-              totalPages={totalPages}
-            />
-          </>
+          </InfiniteScrollView>
         )}
-      </section>
-    </div>
+      </View>
+    </View>
   );
 };
 

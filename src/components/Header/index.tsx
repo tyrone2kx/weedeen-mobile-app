@@ -5,7 +5,6 @@ import React, { FC, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Icon from '../Icon/Icon';
 
-import { SOSAlert } from '@wd/generated';
 import ViewInvoiceModal from '@wd/screens/orders/modals/ViewInvoiceModal';
 import useDisclosure from '@wd/utils/useDisclosure/useDisclosure';
 import { MessageSquareIcon, ShoppingCartIcon } from 'lucide-react-native';
@@ -17,6 +16,7 @@ import Text from '../Text/Text';
 interface IProps {
   headerComponent?: React.ReactElement;
   headerTitle?: string;
+  eyebrow?: string;
   leftContent?: React.ReactElement;
   rightContent?: React.ReactElement;
   showRightContent?: boolean;
@@ -30,6 +30,7 @@ interface IProps {
 
 const Header: FC<IProps> = ({
   headerTitle,
+  eyebrow,
   leftContent,
   canGoBack,
   showRightContent = true,
@@ -43,8 +44,6 @@ const Header: FC<IProps> = ({
 }) => {
   const bgColorClassName = transparent ? 'bg-transparent' : 'bg-white';
 
-  const textColorClassName = 'text-black-600';
-
   const { theme } = useTheme();
   const cartHandler = useDisclosure();
   const invoiceHandler = useDisclosure();
@@ -54,11 +53,6 @@ const Header: FC<IProps> = ({
   );
   const { notifications, isLoading, totalElements, totalUnread } =
     useGetNotifications();
-  const alerts = notifications.filter(
-    item =>
-      item.notificationType === 'sos_alert' &&
-      (item.metadata as SOSAlert)?.status === 'pending',
-  ).length;
 
   const handleBackPress = () => {
     if (onBack) {
@@ -68,84 +62,75 @@ const Header: FC<IProps> = ({
     }
   };
 
+  const titleBlock =
+    leftContent || headerComponent || (
+      <View style={{ flexShrink: 1 }}>
+        {eyebrow ? (
+          <Text intent="sm" style={{ color: theme.gray[500] }} weight="medium">
+            {eyebrow}
+          </Text>
+        ) : null}
+        <Text
+          ellipsizeMode="tail"
+          intent={canGoBack ? 'h2' : 'h1'}
+          numberOfLines={1}
+          style={{ color: theme.black[700] }}
+          weight={canGoBack ? 'bold' : 'extrabold'}
+        >
+          {headerTitle ?? ''}
+        </Text>
+      </View>
+    );
+
   return (
     <View
-      className={`h-[64px] justify-center ${bgColorClassName}`}
+      className={`min-h-[64px] justify-center ${bgColorClassName}`}
       style={[style]}
     >
       <View
         className="flex-row items-center justify-between"
         style={globalStyles.screen_gutter}
       >
-        {canGoBack ? (
-          <TouchableOpacity
-            activeOpacity={0.8}
-            className="h-full flex-1 flex-row items-center gap-x-3"
-            onPress={handleBackPress}
-          >
-            {canGoBack ? (
+        <View className="flex-1 flex-row items-center gap-x-3">
+          {canGoBack ? (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={handleBackPress}
+              style={styles.circle_button}
+            >
               <Icon
                 color={iconColor ?? theme.black[600]}
                 name="arrow-left"
-                size={25}
+                size={22}
               />
-            ) : null}
-            {leftContent || headerComponent || (
-              <Text
-                className={`${textColorClassName}`}
-                ellipsizeMode="tail"
-                intent="h3"
-                numberOfLines={1}
-                style={{
-                  flex: showRightContent ? 0.6 : 0.9,
-                }}
-                weight="semibold"
-              >
-                {headerTitle ?? ''}
-              </Text>
-            )}
-          </TouchableOpacity>
-        ) : (
-          <View className="flex-1 flex-row items-center gap-x-3">
-            {leftContent || (
-              <Text
-                className={`${textColorClassName}`}
-                ellipsizeMode="tail"
-                intent="h3"
-                style={{ flex: showRightContent ? 0.5 : 0.9 }}
-                weight="semibold"
-              >
-                {headerTitle ?? ''}
-              </Text>
-            )}
-          </View>
-        )}
+            </TouchableOpacity>
+          ) : null}
+          {titleBlock}
+        </View>
+
         {showRightContent ? (
           <View className="flex-row items-center gap-x-3">
             <TouchableOpacity
               activeOpacity={0.8}
-              className="bg-gray-150 relative"
               onPress={notificationHandler.onOpen}
-              style={styles.header_button}
+              style={styles.circle_button}
             >
               <MessageSquareIcon color={theme.black[600]} size={20} />
-              <View
-                className="p-1 px-2 text-white rounded-full absolute"
-                style={{
-                  top: 0,
-                  right: -2,
-                }}
-              >
-                <Text className="text-xs" style={{ color: theme.red.DEFAULT }}>
-                  {totalUnread}
-                </Text>
-              </View>
+              {typeof totalUnread === 'number' ? (
+                <View style={styles.badge}>
+                  <Text
+                    style={{ color: '#fff', fontSize: 10, lineHeight: 14 }}
+                    weight="bold"
+                  >
+                    {totalUnread}
+                  </Text>
+                </View>
+              ) : null}
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
-              className="bg-gray-150"
               onPress={cartHandler.onOpen}
-              style={styles.header_button}
+              style={styles.circle_button}
             >
               <ShoppingCartIcon color={theme.black[600]} size={20} />
             </TouchableOpacity>
@@ -186,14 +171,35 @@ const Header: FC<IProps> = ({
 };
 
 const styles = StyleSheet.create({
-  header_button: {
-    width: 45,
-    height: 45,
-    borderRadius: 45,
+  circle_button: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#EAECF0',
+    shadowColor: '#101828',
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
     elevation: 2,
+    position: 'relative',
+  },
+  badge: {
+    position: 'absolute',
+    top: -3,
+    right: -3,
+    minWidth: 18,
+    height: 18,
+    paddingHorizontal: 4,
+    borderRadius: 9,
+    backgroundColor: '#F04438',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
 });
 

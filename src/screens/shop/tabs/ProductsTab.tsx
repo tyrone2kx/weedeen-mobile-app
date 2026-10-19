@@ -58,13 +58,13 @@ const ProductsTab = () => {
         ) : totalElements === 0 ? (
           <EmptyState
             description="You can change the search text or come back later."
-            icon={<ShoppingBagIcon color={'#FFFFFF'} size={40} />}
+            icon={<ShoppingBagIcon size={34} />}
             section
             title="There are no matching products"
           />
         ) : (
           <>
-            <View className="mt-8 flex-row justify-center flex-wrap gap-6">
+            <View className="mt-6">
               {products.map(product => (
                 <ProductItem key={product.id} product={product} />
               ))}

@@ -74,7 +74,7 @@ const MyStaffScreen: FC<
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
-            icon={<UserIcon color={theme.blue.DEFAULT} size={40} />}
+            icon={<UserIcon color={theme.blue.DEFAULT} size={22} />}
             isLoading={isLoading}
             title="Total Staff"
             value={staff.length}

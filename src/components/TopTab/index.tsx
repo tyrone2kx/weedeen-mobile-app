@@ -28,24 +28,11 @@ interface Props {
   style?: ViewStyle;
 }
 
-const variants = {
-  solid: {
-    button: {
-      active: '',
-      inactive: 'border border-gray-200',
-    },
-    text: {
-      active: '',
-      inactive: '',
-    },
-  },
-};
-
 const TopTab: React.FC<Props> = ({
   tabs,
   activeTab,
   activeTheme = Theme.colors.blue.DEFAULT,
-  activeTextColor = Theme.colors.white.DEFAULT,
+  activeTextColor = Theme.colors.blue.DEFAULT,
   type2,
   buttonStyle,
   textStyle,
@@ -72,9 +59,13 @@ const TopTab: React.FC<Props> = ({
             {tab.icon}
             <Text
               style={{
+                color:
+                  tab.label === activeTab
+                    ? activeTextColor
+                    : Theme.colors.gray[500],
                 ...textStyle,
-                ...(tab.label === activeTab ? { color: activeTextColor } : {}),
               }}
+              weight={tab.label === activeTab ? 'semibold' : 'medium'}
             >
               {tab.label}
             </Text>
@@ -83,43 +74,35 @@ const TopTab: React.FC<Props> = ({
       ))}
     </View>
   ) : (
-    <View className="flex-row gap-x-3" style={style}>
-      {tabs.map(tab => (
-        <TouchableOpacity
-          activeOpacity={0.8}
-          className={`flex-1 items-center justify-center rounded-xl p-2 ${
-            tab.label === activeTab
-              ? variants.solid.button.active
-              : variants.solid.button.inactive
-          }`}
-          key={tab.label}
-          onPress={tab.onPress}
-          style={[
-            tab.label === activeTab
-              ? {
-                  backgroundColor: activeTheme,
-                }
-              : {},
-            buttonStyle,
-          ]}
-        >
-          <View className="flex-row items-center gap-x-2">
+    // Segmented control: track with a white active pill (matches mockup).
+    <View style={[styles.track, style]}>
+      {tabs.map(tab => {
+        const active = tab.label === activeTab;
+        return (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            className="flex-1 flex-row items-center justify-center gap-x-2"
+            key={tab.label}
+            onPress={tab.onPress}
+            style={[
+              styles.segment,
+              active ? styles.segmentActive : null,
+              buttonStyle,
+            ]}
+          >
             {tab.icon}
             <Text
               style={{
-                color:
-                  tab.label === activeTab
-                    ? activeTextColor
-                    : Theme.colors.gray.DEFAULT,
+                color: active ? activeTextColor : Theme.colors.gray[500],
                 ...textStyle,
               }}
-              weight="medium"
+              weight={active ? 'semibold' : 'medium'}
             >
               {tab.label}
             </Text>
-          </View>
-        </TouchableOpacity>
-      ))}
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };
@@ -130,6 +113,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     marginBottom: -3,
+  },
+  track: {
+    flexDirection: 'row',
+    backgroundColor: Theme.colors.gray[100],
+    borderRadius: 14,
+    padding: 4,
+    gap: 4,
+  },
+  segment: {
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+  },
+  segmentActive: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#101828',
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
 });
 

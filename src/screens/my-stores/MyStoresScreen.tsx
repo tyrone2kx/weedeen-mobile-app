@@ -12,6 +12,7 @@ import { Store } from '@wd/generated';
 import { RoutesEnum } from '@wd/navigation/enum';
 import { MyStoresStackScreenProps } from '@wd/navigation/types';
 import { globalStyles } from '@wd/utils/GlobalStyles';
+import { formatNairaWithKobo } from '@wd/utils/helpers';
 import useTheme from '@wd/utils/theme/useTheme';
 import { StoreStatusEnum } from '@wd/utils/types';
 import useDisclosure from '@wd/utils/useDisclosure/useDisclosure';
@@ -74,17 +75,18 @@ const MyStoresScreen: FC<
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
-            icon={<BuildingIcon color={theme.blue.DEFAULT} size={40} />}
+            icon={<BuildingIcon color={theme.blue.DEFAULT} size={22} />}
             isLoading={statisticsLoading}
             title="Active Stores"
             value={statistics?.totalApprovedStores}
           />
           <StatCard
             className="flex-1"
-            icon={<Wallet2Icon color={theme.blue.DEFAULT} size={40} />}
+            filled
+            icon={<Wallet2Icon color="#FFFFFF" size={22} />}
             isLoading={statisticsLoading}
             title="Total Revenue"
-            value={statistics?.totalRevenue}
+            value={formatNairaWithKobo(statistics?.totalRevenue)}
           />
         </View>
 
@@ -92,7 +94,7 @@ const MyStoresScreen: FC<
           <View className=" gap-1 w-full md:w-auto">
             <Input
               className="w-full md:w-[200px] !mb-1"
-              IconLeft={<SearchIcon />}
+              IconLeft={<SearchIcon color={theme.gray[400]} size={18} style={{ marginRight: 10 }} />}
               onChange={e => setSearchText(e)}
               placeholder="Search by store name"
               value={searchText}
@@ -148,6 +150,7 @@ const MyStoresScreen: FC<
                 <ShopItem
                   key={store.id}
                   onPress={() => onView(store)}
+                  showStatus
                   store={store}
                 />
               ))}
@@ -155,10 +158,10 @@ const MyStoresScreen: FC<
           )}
         </ScrollView>
         <Circle
-          className="absolute right-6 bottom-6 elevation-md"
+          className="absolute right-6 bottom-6"
           color={theme.blue.DEFAULT}
           onPress={addStoreHandler.onOpen}
-          size={70}
+          size={60}
         >
           <BuildingIcon color={theme.white.DEFAULT} />
         </Circle>

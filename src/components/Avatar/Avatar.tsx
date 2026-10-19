@@ -1,6 +1,5 @@
 import { Theme } from '@wd/utils/Theme';
 import { generateUserInitials } from '@wd/utils/helpers';
-import { useState } from 'react';
 import {
   Image,
   ImageResizeMode,
@@ -30,10 +29,6 @@ interface IProps {
   borderColor?: string;
 }
 
-function getRandomNumber() {
-  return Math.floor(Math.random() * 4);
-}
-
 const Avatar = ({
   image,
   style = {},
@@ -48,22 +43,18 @@ const Avatar = ({
   fallbackToLogo,
   borderColor,
 }: IProps) => {
-  const obj = {
-    primary: '#4E00DA',
-    tertiary: '#F14FAD',
-    secondary: '#FEB76A',
-    blue: '#437EF7',
-  };
-  const colors = [obj.primary, obj.secondary, obj.tertiary, obj.blue];
-  const backgroundColor = color || colors[getRandomNumber()];
-  const [bgColor] = useState(backgroundColor);
   const { theme } = useTheme();
+
+  // Default: brand-tinted circle with brand-blue initials (matches mockup).
+  const useTint = !color;
+  const backgroundColor = color || theme.blue[300];
+  const initialsColor = useTint ? theme.blue.DEFAULT : '#FFFFFF';
 
   const avatarStyle = {
     height: size,
     width: size,
     borderRadius: size / 2,
-    borderColor: borderColor || theme.gray.DEFAULT,
+    borderColor: borderColor || theme.gray[200],
   };
 
   const avatarIconStyle = {
@@ -76,18 +67,11 @@ const Avatar = ({
       {!image && showName ? (
         <View
           className="flex-row items-center justify-center"
-          style={[
-            {
-              backgroundColor: bgColor,
-            },
-            avatarStyle,
-            style,
-          ]}
+          style={[{ backgroundColor }, avatarStyle, style]}
         >
           <Text
-            className="uppercase text-white"
             intent="h6"
-            style={textStyles}
+            style={{ color: initialsColor, ...textStyles }}
             weight="bold"
           >
             {generateUserInitials(name ?? '')}
@@ -98,10 +82,7 @@ const Avatar = ({
           resizeMode={resizeMode}
           source={require('@assets/images/logo512.png')}
           style={[
-            {
-              borderWidth: 4,
-              borderColor: Theme.colors.gray[150],
-            },
+            { borderWidth: 4, borderColor: Theme.colors.gray[150] },
             avatarStyle,
             style,
           ]}
@@ -111,21 +92,18 @@ const Avatar = ({
           resizeMode={resizeMode}
           source={{ uri: image }}
           style={[
-            {
-              borderWidth: 4,
-              borderColor: Theme.colors.gray[150],
-            },
+            { borderWidth: 4, borderColor: Theme.colors.gray[150] },
             avatarStyle,
             style,
           ]}
         />
       ) : (
         <View
-          className="items-center justify-center border-4 border-solid bg-gray-400"
-          style={[avatarStyle, style]}
+          className="items-center justify-center"
+          style={[{ backgroundColor: theme.blue[300] }, avatarStyle, style]}
         >
           <UserIcon
-            color="white"
+            color={theme.blue.DEFAULT}
             height={avatarIconStyle.height}
             width={avatarIconStyle.width}
           />

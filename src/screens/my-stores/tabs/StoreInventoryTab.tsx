@@ -94,14 +94,15 @@ const StoreInventoryTab = ({ store }: Props) => {
       <View className="flex-row gap-2 justify-between">
         <StatCard
           className="flex-1"
-          icon={<ShoppingBasketIcon color={theme.blue.DEFAULT} size={30} />}
+          icon={<ShoppingBasketIcon color={theme.blue.DEFAULT} size={22} />}
           isLoading={isLoadingStats}
           title="Total Products"
           value={stats?.totalProducts}
         />
         <StatCard
           className="flex-1"
-          icon={<Wallet2Icon color={theme.blue.DEFAULT} size={30} />}
+          filled
+          icon={<Wallet2Icon color="#FFFFFF" size={22} />}
           isLoading={isLoadingStats}
           title="Total Cost"
           value={formatNairaWithKobo(stats?.totalWorth || 0)}
@@ -182,13 +183,13 @@ const StoreInventoryTab = ({ store }: Props) => {
         ) : totalElements === 0 ? (
           <EmptyState
             description="You can change the search text or come back later."
-            icon={<ShoppingBagIcon color={'#FFFFFF'} size={40} />}
+            icon={<ShoppingBagIcon size={34} />}
             section
             title="There are no matching products"
           />
         ) : (
           <>
-            <View className="mt-8 flex-row justify-center flex-wrap gap-6">
+            <View className="mt-6">
               {products.map(product => (
                 <InventoryItem
                   key={product.id}

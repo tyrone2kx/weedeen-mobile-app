@@ -2,6 +2,7 @@ import Button from '@wd/components/Button/Button';
 import Text from '@wd/components/Text/Text';
 import { Billing, Invoice, Plan } from '@wd/generated';
 import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
+import useTheme from '@wd/utils/theme/useTheme';
 import { UserTypeEnum } from '@wd/utils/types';
 import useBreakpointValue from '@wd/utils/useBreakpointValue';
 import { CheckCircle2 } from 'lucide-react-native';
@@ -23,6 +24,7 @@ const PlanItem = ({
   storeId,
   cannotSubscribe = false,
 }: Props) => {
+  const { theme } = useTheme();
   const { isSubscribing, subscribeToPlan } = useGenerateInvoice();
   const currentOrgSub = useAppSelector(state => state.user.activeSubscription);
   const userSubs = useAppSelector(state => state.user.activeUserSubscriptions);
@@ -35,41 +37,58 @@ const PlanItem = ({
   const isFree = isCurrent && plan?.price === 0;
 
   const { width } = Dimensions.get('screen');
-  const planWidth = useBreakpointValue({
-    base: width - 40,
-    md: 300,
-    lg: 350,
-  });
+  const planWidth = useBreakpointValue({ base: width - 40, md: 300, lg: 350 });
 
   return (
     <View
-      className="border mr-4 border-blue-400 p-4 rounded-2xl justify-between"
-      style={{ width: planWidth }}
+      className="mr-4 justify-between rounded-3xl bg-white p-5"
+      style={{
+        width: planWidth,
+        borderWidth: isCurrent ? 2 : 1,
+        borderColor: isCurrent ? theme.blue.DEFAULT : theme.gray[200],
+        shadowColor: '#101828',
+        shadowOpacity: 0.05,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 4 },
+        elevation: 2,
+      }}
     >
       <View>
-        <Text className="font-semibold mb-2">{plan?.name}</Text>
-        <Text className="font-bold text-gray-900 text-4xl" intent="h2">
+        <Text intent="h4" style={{ color: theme.blue.DEFAULT }} weight="bold">
+          {plan?.name}
+        </Text>
+        <Text intent="h1" style={{ marginTop: 6 }} weight="extrabold">
           {plan?.currency} {plan?.price}
         </Text>
-        <Text className="text-sm text-[#595959] my-2">{plan?.subtitle}</Text>
-        <View className="bg-gray-100 flex-row rounded-lg p-4 my-6">
-          <Text className="ml-4 text-sm  text-gray-700">
+        <Text intent="sm" style={{ color: theme.gray[500], marginTop: 6 }}>
+          {plan?.subtitle}
+        </Text>
+
+        <View
+          className="my-6 rounded-xl p-4"
+          style={{ backgroundColor: theme.blue[300] }}
+        >
+          <Text intent="sm" style={{ color: theme.blue[600] }} weight="medium">
             {plan?.description}
           </Text>
         </View>
 
-        <View className="mb-10">
-          <Text className="text-[#6C6A6A] text-sm mb-4">Features</Text>
-
+        <View className="mb-8">
+          <Text intent="sm" style={{ color: theme.gray[500], marginBottom: 12 }} weight="medium">
+            Features
+          </Text>
           {plan?.features.map((item, index) => (
-            <View className="flex-row gap-2 items-center mb-2" key={index}>
-              <CheckCircle2 />
-              <Text className="text-[#6C6A6A] text-sm">{item}</Text>
+            <View className="mb-3 flex-row items-center gap-2" key={index}>
+              <CheckCircle2 color={theme.green[600]} size={18} />
+              <Text intent="sm" style={{ flex: 1, color: theme.black[600] }}>
+                {item}
+              </Text>
             </View>
           ))}
         </View>
       </View>
-      <View className="flex gap-2">
+
+      <View className="gap-2">
         <Button
           className="w-full"
           disabled={(isCurrent && !isFree) || cannotSubscribe}
@@ -86,7 +105,8 @@ const PlanItem = ({
         {isCurrent && subscription && (
           <Button
             className="w-full"
-            label={'Cancel Subscription'}
+            label="Cancel Subscription"
+            light
             onPress={() => onCancelSubscription?.(subscription)}
           />
         )}

@@ -34,7 +34,7 @@ const StoreTab = () => {
       <View>
         <Input
           className="w-full md:w-[200px]"
-          IconLeft={<SearchIcon />}
+          IconLeft={<SearchIcon color={theme.gray[400]} size={18} style={{ marginRight: 10 }} />}
           onChange={e => setSearchText(e)}
           placeholder={`Search for store`}
           value={searchText}
@@ -60,13 +60,13 @@ const StoreTab = () => {
         ) : totalElements === 0 ? (
           <EmptyState
             description="You can change the search text or come back later."
-            icon={<BuildingIcon color={'#FFFFFF'} size={40} />}
+            icon={<BuildingIcon size={34} />}
             section
             title="There are no matching stores"
           />
         ) : (
           <>
-            <View className="mt-8 flex flex-wrap gap-6">
+            <View className="mt-6">
               {stores.map(store => (
                 <ShopItem key={store.id} store={store} />
               ))}

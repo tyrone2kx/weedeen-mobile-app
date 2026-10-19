@@ -1,5 +1,5 @@
 import { remapProps } from 'nativewind';
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, cloneElement, isValidElement } from 'react';
 import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 
 import useTheme from '@wd/utils/theme/useTheme';
@@ -28,12 +28,20 @@ const EmptyState: FC<EmptyStateProp> = ({
   iconIsImage,
 }) => {
   const { theme } = useTheme();
+
+  const tintedIcon =
+    icon && isValidElement(icon) && !iconIsImage
+      ? cloneElement(icon as ReactElement<any>, {
+          color: theme.blue.DEFAULT,
+        })
+      : icon;
+
   return (
     <View
       style={[
         styles.container,
         {
-          marginVertical: section ? '50%' : 'auto',
+          marginVertical: section ? '25%' : 'auto',
         },
         style,
       ]}
@@ -44,24 +52,26 @@ const EmptyState: FC<EmptyStateProp> = ({
             icon
           ) : (
             <View
-              className="flex-row items-center justify-center rounded-lg bg-gray-600 border"
               style={{
-                height: 80,
-                width: 80,
-                borderColor: theme.gray[300],
-                backgroundColor: '#4b5563',
+                height: 76,
+                width: 76,
+                borderRadius: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: theme.blue[300],
               }}
             >
-              {icon}
+              {tintedIcon}
             </View>
           )}
         </View>
       )}
       {title && (
         <Text
-          className="mt-4 text-center"
+          className="mt-2 text-center"
           intent="h3"
-          style={{ color: theme.black[400], ...titleStyle }}
+          style={{ color: theme.black[700], ...titleStyle }}
+          weight="bold"
         >
           {title}
         </Text>
@@ -69,13 +79,13 @@ const EmptyState: FC<EmptyStateProp> = ({
       {description && (
         <Text
           className="mt-1 text-center"
-          style={descriptionStyle}
-          weight="light"
+          intent="sm"
+          style={{ color: theme.gray[500], ...descriptionStyle }}
         >
           {description}
         </Text>
       )}
-      {Action && <View className="mt-4 flex-row">{Action}</View>}
+      {Action && <View className="mt-5 flex-row">{Action}</View>}
     </View>
   );
 };

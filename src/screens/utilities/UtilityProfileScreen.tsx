@@ -1,4 +1,3 @@
-import Circle from '@wd/components/Circle/Circle';
 import ConfirmationModal from '@wd/components/ConfirmationModal/ConfirmationModal';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
 import Header from '@wd/components/Header';
@@ -14,7 +13,7 @@ import { RoutesEnum } from '@wd/navigation/enum';
 import { UtilitiesStackScreenProps } from '@wd/navigation/types';
 import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
 import { globalStyles } from '@wd/utils/GlobalStyles';
-import { Notify } from '@wd/utils/helpers';
+import { formatNairaWithKobo, Notify } from '@wd/utils/helpers';
 import useTheme from '@wd/utils/theme/useTheme';
 import useDisclosure from '@wd/utils/useDisclosure/useDisclosure';
 import {
@@ -24,7 +23,7 @@ import {
   WrenchIcon,
 } from 'lucide-react-native';
 import React, { FC, useState } from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import ResidentInvoicesComponent from '../fees/components/ResidentInvoicesComponent';
 import useGetFeesStatistics from '../fees/hooks/useGetFeesStatistics';
 import useVerifyPayment from '../fees/hooks/useVerifyPayment';
@@ -114,17 +113,18 @@ const UtilityProfileScreen: FC<
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
-            icon={<ReceiptIcon color={theme.blue.DEFAULT} size={40} />}
+            icon={<ReceiptIcon color={theme.blue.DEFAULT} size={22} />}
             isLoading={isLoadingStats}
             title="Total Invoices"
             value={stats?.totalInvoices}
           />
           <StatCard
             className="flex-1"
-            icon={<Wallet2Icon color={theme.blue.DEFAULT} size={40} />}
+            filled
+            icon={<Wallet2Icon color="#FFFFFF" size={22} />}
             isLoading={isLoadingStats}
             title="Total Amount Unpaid"
-            value={stats?.totalAmountUnpaid}
+            value={formatNairaWithKobo(stats?.totalAmountUnpaid)}
           />
         </View>
 
@@ -135,6 +135,7 @@ const UtilityProfileScreen: FC<
             <EmptyState
               description="This might be a result of an invalid link or a network error."
               icon={<WrenchIcon className="text-white" size={40} />}
+              section
               title="Utility Not Found"
             />
           ) : (
@@ -159,18 +160,28 @@ const UtilityProfileScreen: FC<
             </View>
           )}
         </View>
-        <Circle
-          className="absolute right-6 bottom-6 elevation-md"
-          color={theme.blue.DEFAULT}
+        <TouchableOpacity
+          activeOpacity={0.9}
+          className="absolute bottom-6 right-6 flex-row items-center gap-2 rounded-full px-6 py-4"
           onPress={buyNowHandler.onOpen}
-          size={70}
+          style={{
+            backgroundColor: theme.blue.DEFAULT,
+            shadowColor: theme.blue.DEFAULT,
+            shadowOpacity: 0.3,
+            shadowRadius: 12,
+            shadowOffset: { width: 0, height: 8 },
+            elevation: 6,
+          }}
         >
-          <WalletIcon color={theme.white.DEFAULT} />
-        </Circle>
+          <WalletIcon color={theme.white.DEFAULT} size={20} />
+          <Text intent="md" style={{ color: '#fff' }} weight="semibold">
+            Pay for {utility?.name}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <ConfirmationModal
-        buttonColor="#15bca0"
+        buttonColor={theme.blue.DEFAULT}
         buttonText="Submit"
         descriptionComponent={
           <View>

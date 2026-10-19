@@ -15,6 +15,7 @@ const useGetStaffLogs = ({ ignorePagination = false, staffId }: Props) => {
   const user = useAppSelector(state => state.user?.currentUser);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [logs, setLogs] = useState<any[]>([]);
   const {
     searchText,
     setSearchText,
@@ -26,9 +27,10 @@ const useGetStaffLogs = ({ ignorePagination = false, staffId }: Props) => {
     setPageable,
     totalPages,
     totalElements,
+    infiniteScrollCallback,
   } = usePaginationWrapper();
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [
       'staff-logs',
       user?.id,
@@ -54,12 +56,24 @@ const useGetStaffLogs = ({ ignorePagination = false, staffId }: Props) => {
   });
 
   useEffect(() => {
-    if (data) setPageable(data);
+    if (data) {
+      setPageable(data);
+      const newLogs = data?.data || [];
+      setLogs(prev => (page <= 1 ? newLogs : [...prev, ...newLogs]));
+    }
   }, [data]);
+
+  // Reset to the first page whenever the date filters change so the
+  // accumulated list starts fresh for the new filter.
+  useEffect(() => {
+    setPage(1);
+  }, [startDate, endDate]);
 
   useEffect(() => {
     if (error) handleError(error);
   }, [error]);
+
+  const isRefreshing = isLoading && page > 1;
 
   return {
     startDate,
@@ -69,13 +83,16 @@ const useGetStaffLogs = ({ ignorePagination = false, staffId }: Props) => {
     searchText,
     setSearchText,
     isLoading,
-    logs: data?.data || [],
+    logs,
     limit,
     setLimit,
     page,
     setPage,
     totalPages,
     totalElements,
+    infiniteScrollCallback,
+    refetch,
+    isRefreshing,
   };
 };
 

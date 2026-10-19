@@ -26,10 +26,22 @@ const CustomTabBar: FC<CustomTabBarProps> = ({
   );
 
   const { theme } = useTheme();
+  const inactive = theme.gray[500];
 
   return tabBarStyle === 'flex' ? (
     <Animated.View entering={FadeInUp} exiting={FadeOutDown}>
-      <View className="h-[90px] flex-row items-center justify-between bg-white border-t border-gray-200 px-3">
+      <View
+        className="h-[84px] flex-row items-center justify-between bg-white px-2"
+        style={{
+          borderTopWidth: 1,
+          borderTopColor: theme.gray[200],
+          shadowColor: '#101828',
+          shadowOpacity: 0.05,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: -4 },
+          elevation: 8,
+        }}
+      >
         {state.routes.map((route, index) => {
           const routeName = route.name as StacksEnum;
           const { options } = descriptors[route.key];
@@ -39,6 +51,8 @@ const CustomTabBar: FC<CustomTabBarProps> = ({
               : route.name;
 
           const isFocused = state.index === index;
+          const activeColor = theme.blue.DEFAULT;
+          const iconColor = isFocused ? activeColor : inactive;
 
           const onPress = () => {
             const event = navigation.emit({
@@ -61,34 +75,18 @@ const CustomTabBar: FC<CustomTabBarProps> = ({
 
           const renderTabIcon =
             routeName === StacksEnum.DASHBOARD_STACK ? (
-              <HomeIcon
-                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
-              />
+              <HomeIcon color={iconColor} size={24} />
             ) : routeName === StacksEnum.MENU_STACK ? (
-              <Icon
-                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
-                name="dashboard"
-                size={24}
-              />
+              <Icon color={iconColor} name="dashboard" size={24} />
             ) : routeName === StacksEnum.VISITORS_STACK ? (
-              <UserCircleIcon
-                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
-              />
+              <UserCircleIcon color={iconColor} size={24} />
             ) : routeName === StacksEnum.SHOP_NOW_STACK ? (
-              <ShoppingCartIcon
-                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
-              />
+              <ShoppingCartIcon color={iconColor} size={24} />
             ) : routeName === StacksEnum.FEES_STACK ? (
-              <WalletIcon
-                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
-              />
+              <WalletIcon color={iconColor} size={24} />
             ) : (
-              <HomeIcon
-                color={isFocused ? theme.blue.DEFAULT : theme.black[600]}
-              />
+              <HomeIcon color={iconColor} size={24} />
             );
-
-          const textColor = isFocused ? theme.blue.DEFAULT : theme.black[600];
 
           return (
             <TabButton
@@ -100,7 +98,7 @@ const CustomTabBar: FC<CustomTabBarProps> = ({
               renderTabIcon={renderTabIcon}
               routeName={routeName}
               tabBarAccessibilityLabel={options.tabBarAccessibilityLabel}
-              textColor={textColor}
+              textColor={isFocused ? activeColor : inactive}
             />
           );
         })}

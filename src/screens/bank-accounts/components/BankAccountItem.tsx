@@ -1,9 +1,8 @@
-import Circle from '@wd/components/Circle/Circle';
 import MenuComponent from '@wd/components/MenuComponent/MenuComponent';
 import Text from '@wd/components/Text/Text';
 import { BankAccount } from '@wd/generated';
 import useTheme from '@wd/utils/theme/useTheme';
-import { BriefcaseIcon } from 'lucide-react-native';
+import { LandmarkIcon } from 'lucide-react-native';
 import moment from 'moment';
 import React from 'react';
 import { View } from 'react-native';
@@ -21,40 +20,59 @@ const BankAccountItem = ({ bankAccount, onDelete }: Props) => {
 
   return (
     <View
-      className="rounded-xl bg-white border p-4 mb-4"
+      className="mb-4 rounded-2xl bg-white p-4"
       style={{
-        borderColor: theme.gray[300],
+        borderWidth: 1,
+        borderColor: theme.gray[200],
+        shadowColor: '#101828',
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 3 },
+        elevation: 2,
       }}
     >
-      <View className="flex-row justify-between">
-        <View className="items-start gap-2 flex-row mb-4">
-          <BriefcaseIcon color={theme.blue.DEFAULT} size={30} />
-          <View>
-            <View className="flex-row gap-2">
-              <Text>{bankAccount.bankName}</Text>
-              <View className="flex-row gap-2 items-center">
-                <Circle size={5} />
-                <Text className="text-sm text-gray-400" weight="light">
-                  {moment(bankAccount.createdAt).fromNow()}
-                </Text>
-              </View>
-            </View>
-            <Text className="text-sm">{bankAccount.accountName}</Text>
-            <Text className="text-sm">{bankAccount.accountNumber}</Text>
+      <View className="flex-row items-start justify-between">
+        <View className="flex-1 flex-row items-center gap-3">
+          <View
+            className="items-center justify-center rounded-xl"
+            style={{ width: 44, height: 44, backgroundColor: theme.blue[300] }}
+          >
+            <LandmarkIcon color={theme.blue.DEFAULT} size={20} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text intent="md" numberOfLines={1} weight="bold">
+              {bankAccount.bankName}
+            </Text>
+            <Text intent="xs" style={{ color: theme.gray[500] }}>
+              {moment(bankAccount.createdAt).fromNow()}
+            </Text>
           </View>
         </View>
-
         <MenuComponent
           id={`bank-account-item-${bankAccount.id}`}
           menuList={[{ label: 'Delete', onPress: onDelete }]}
         />
       </View>
+
       <View
-        className={`p-2 rounded-lg mb-4`}
-        style={{ backgroundColor: '#f2f2f2' }}
+        className="mt-4 rounded-xl p-3"
+        style={{ backgroundColor: theme.white[300] }}
       >
-        <Text className="text-sm font-semibold">Stores</Text>
-        <Text className="mt-2">{stores || 'Not Specified'}</Text>
+        <Text intent="sm" weight="semibold">
+          {bankAccount.accountName}
+        </Text>
+        <Text
+          intent="md"
+          style={{ color: theme.blue.DEFAULT, letterSpacing: 1, marginTop: 2 }}
+          weight="bold"
+        >
+          {bankAccount.accountNumber}
+        </Text>
+        {stores ? (
+          <Text intent="xs" style={{ color: theme.gray[500], marginTop: 6 }}>
+            Stores: {stores}
+          </Text>
+        ) : null}
       </View>
     </View>
   );

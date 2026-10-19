@@ -78,6 +78,14 @@ const ResidentInvoicesComponent = ({
     viewInvoiceHandler.onOpen();
   };
 
+  // Bridge: from the invoice modal straight into the payment flow.
+  // Close the view modal WITHOUT clearing activeFee, then open the
+  // confirmation modal on the same fee.
+  const onPayFromInvoice = () => {
+    viewInvoiceHandler.onClose();
+    setTimeout(() => payNowHandler.onOpen(), 250);
+  };
+
   const { mutate: verifyPayment } = useVerifyPayment({
     onSuccess: () => {
       callback();
@@ -174,7 +182,7 @@ const ResidentInvoicesComponent = ({
         ) : !invoices.length ? (
           <EmptyState
             description="You have no fees at the moment."
-            icon={<ReceiptIcon color={'white'} size={40} />}
+            icon={<ReceiptIcon size={28} />}
             section
             title="No Fees"
           />
@@ -199,6 +207,7 @@ const ResidentInvoicesComponent = ({
           viewInvoiceHandler.onClose();
           setActiveFee(undefined);
         }}
+        onPayNow={onPayFromInvoice}
       />
 
       <PaystackModal
@@ -207,7 +216,7 @@ const ResidentInvoicesComponent = ({
       />
 
       <ConfirmationModal
-        buttonColor="#15bca0"
+        buttonColor={theme.blue.DEFAULT}
         buttonText="Yes, Proceed to Pay"
         description={`You are about to pay the fee for ${activeFee?.fee?.title}. Do you want to continue?`}
         isLoading={isCreating}

@@ -28,7 +28,14 @@ export type TextProps = AppTextProps & {
     | 'sm'
     | 'xs'
     | 'label';
-  weight?: 'bold' | 'semibold' | 'medium' | 'normal' | 'light' | 'none';
+  weight?:
+    | 'extrabold'
+    | 'bold'
+    | 'semibold'
+    | 'medium'
+    | 'normal'
+    | 'light'
+    | 'none';
   italicStyle?: 'normal' | 'medium' | 'semibold' | 'none';
   className?: string;
 };
@@ -36,29 +43,29 @@ export type TextProps = AppTextProps & {
 export const variants = {
   intent: {
     h1: {
-      fontFamily: Fonts.bold,
-      fontSize: 24,
-      lineHeight: 28,
+      fontFamily: Fonts.extrabold,
+      fontSize: 28,
+      lineHeight: 34,
     },
     h2: {
       fontFamily: Fonts.bold,
-      fontSize: 20,
-      lineHeight: 24,
+      fontSize: 22,
+      lineHeight: 28,
     },
     h3: {
       fontFamily: Fonts.semibold,
       fontSize: 18,
-      lineHeight: 22,
+      lineHeight: 24,
     },
     h4: {
       fontFamily: Fonts.semibold,
       fontSize: 16,
-      lineHeight: 20,
+      lineHeight: 22,
     },
     h5: {
       fontFamily: Fonts.semibold,
       fontSize: 14,
-      lineHeight: 18,
+      lineHeight: 20,
     },
     h6: {
       fontFamily: Fonts.medium,
@@ -87,12 +94,12 @@ export const variants = {
     },
     sm: {
       fontSize: 12,
-      lineHeight: 20,
+      lineHeight: 18,
       fontFamily: Fonts.medium,
     },
     xs: {
       fontSize: 11,
-      lineHeight: 18,
+      lineHeight: 16,
       fontFamily: Fonts.medium,
     },
     label: {
@@ -103,6 +110,9 @@ export const variants = {
   },
   weight: {
     none: {},
+    extrabold: {
+      fontFamily: Fonts.extrabold,
+    },
     bold: {
       fontFamily: Fonts.bold,
     },

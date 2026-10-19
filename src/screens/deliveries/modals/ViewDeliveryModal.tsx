@@ -1,10 +1,13 @@
 import Avatar from '@wd/components/Avatar/Avatar';
 import AppBottomSheetModal from '@wd/components/BottomSheet/AppBottomSheetModal';
 import Button from '@wd/components/Button/Button';
+import DetailItem from '@wd/components/DetailItem/DetailItem';
+import Tag, { TagVariant } from '@wd/components/Tag/Tag';
 import Text from '@wd/components/Text/Text';
 import { Delivery } from '@wd/generated';
 import ViewInvoiceModal from '@wd/screens/orders/modals/ViewInvoiceModal';
 import { formatNaira } from '@wd/utils/helpers';
+import useTheme from '@wd/utils/theme/useTheme';
 import { InvoiceTypeEnum } from '@wd/utils/types';
 import useAppBottomSheetModal from '@wd/utils/useAppBottomSheet/useBottomSheetModal';
 import useDisclosure from '@wd/utils/useDisclosure/useDisclosure';
@@ -22,6 +25,40 @@ interface Props {
   onPaySuccess?: () => void;
 }
 
+const statusVariant = (status?: string): TagVariant => {
+  const s = (status || '').toLowerCase();
+  if (s.includes('paid') || s.includes('complete') || s.includes('deliver') || s.includes('progress')) return 'success';
+  if (s.includes('pending')) return 'info';
+  if (s.includes('cancel') || s.includes('fail')) return 'danger';
+  return 'neutral';
+};
+
+const LocationCard = ({
+  heading,
+  name,
+  phone,
+  address,
+}: {
+  heading: string;
+  name?: string;
+  phone?: string;
+  address?: string;
+}) => {
+  const { theme } = useTheme();
+  return (
+    <View className="rounded-2xl px-4" style={{ borderWidth: 1, borderColor: theme.gray[200] }}>
+      <View style={{ paddingTop: 14 }}>
+        <Text intent="sm" weight="bold">
+          {heading}
+        </Text>
+      </View>
+      <DetailItem description={name || 'N/A'} title="Contact Person" />
+      <DetailItem description={phone || 'N/A'} title="Phone" />
+      <DetailItem description={address || 'N/A'} last title="Location" />
+    </View>
+  );
+};
+
 const ViewDeliveryComponent = ({
   onClose,
   isLoading,
@@ -29,149 +66,83 @@ const ViewDeliveryComponent = ({
   delivery,
   onPaySuccess,
 }: Props) => {
+  const { theme } = useTheme();
   const invoice = delivery?.invoice;
   const rider = delivery?.rider;
-  const isProductPurchase =
-    invoice?.invoiceType === InvoiceTypeEnum.PRODUCT_PURCHASE;
-
+  const isProductPurchase = invoice?.invoiceType === InvoiceTypeEnum.PRODUCT_PURCHASE;
   const invoiceHandler = useDisclosure();
 
   return (
     <View>
-      <View className="flex flex-col gap-4">
-        <View className="flex gap-4 flex-wrap mb-4">
-          <Item
+      <View className="gap-4">
+        {/* Summary */}
+        <View className="rounded-2xl px-4" style={{ borderWidth: 1, borderColor: theme.gray[200] }}>
+          <DetailItem
             description={moment(invoice?.createdAt).format('Do MMM, YYYY')}
             title="Delivery Date"
           />
-          <Item
-            description={
-              isProductPurchase ? 'Product Purchase' : 'Rider Request'
-            }
+          <DetailItem
+            description={isProductPurchase ? 'Product Purchase' : 'Rider Request'}
             title="Delivery Type"
           />
+          <View className="flex-row items-center justify-between py-3.5" style={{ borderTopWidth: 1, borderTopColor: theme.gray[200] }}>
+            <View>
+              <Text intent="xs" style={{ color: theme.gray[500] }} weight="medium">Delivery Status</Text>
+              <View className="mt-1 flex-row">
+                <Tag title={delivery?.status || 'N/A'} variant={statusVariant(delivery?.status)} />
+              </View>
+            </View>
+            <View style={{ alignItems: 'flex-end' }}>
+              <Text intent="xs" style={{ color: theme.gray[500] }} weight="medium">Delivery Fee</Text>
+              <Text intent="sm" style={{ marginTop: 4 }} weight="bold">
+                {delivery?.deliveryFee ? formatNaira(delivery?.invoice?.amount) : 'N/A'}
+              </Text>
+            </View>
+          </View>
         </View>
 
-        <View className="flex flex-col gap-4 mb-4">
-          <View className="flex flex-wrap gap-4">
-            <Item
-              description={delivery?.status || 'N/A'}
-              title="Delivery Status"
-            />
-            <Item
-              description={
-                delivery?.deliveryFee
-                  ? formatNaira(delivery?.invoice?.amount)
-                  : 'N/A'
-              }
-              title="Delivery Fee"
-            />
-            <Item
-              description={invoice?.status || 'N/A'}
-              title="Payment Status"
-            />
+        {/* Rider */}
+        <View className="flex-row items-center gap-3 rounded-2xl p-4" style={{ borderWidth: 1, borderColor: theme.gray[200] }}>
+          <Avatar name={rider ? `${rider.firstName} ${rider?.lastName}` : 'NA'} showName size={44} />
+          <View style={{ flex: 1 }}>
+            <Text intent="xs" style={{ color: theme.gray[500] }} weight="medium">Rider</Text>
+            <Text intent="md" weight="bold">
+              {rider ? `${rider.firstName} ${rider?.lastName}` : 'Awaiting Assignment'}
+            </Text>
           </View>
-          <Item
-            description={
-              rider
-                ? `${rider?.firstName} ${rider?.lastName}`
-                : 'Awaiting Assignment'
-            }
-            descriptionComponent={
-              rider ? (
-                <ProfileCard
-                  name={
-                    rider ? `${rider.firstName} ${rider?.lastName}` : undefined
-                  }
-                  size={50}
-                />
-              ) : undefined
-            }
-            title="Rider"
+        </View>
+
+        <LocationCard
+          address={delivery?.pickUpAddress}
+          heading="Pick Up Details"
+          name={delivery?.pickUpName}
+          phone={delivery?.pickUpPhoneNo}
+        />
+
+        <View className="items-center">
+          <ArrowDownIcon color={theme.gray[400]} size={20} />
+        </View>
+
+        <LocationCard
+          address={delivery?.deliveryAddress}
+          heading="Drop Off Details"
+          name={delivery?.receiverName}
+          phone={delivery?.deliveryPhoneNo}
+        />
+
+        <View className="mt-2 gap-3">
+          {invoice && invoice.status === 'pending' ? (
+            <Button label="Pay Now" onPress={invoiceHandler.onOpen} />
+          ) : null}
+          <Button
+            backgroundColor={theme.red.DEFAULT}
+            disabled={isLoading}
+            label="Cancel Delivery"
+            onPress={() => {
+              if (delivery) onCancelDelivery?.();
+            }}
           />
-        </View>
-
-        <View className="border p-2 bg-gray-50">
-          <Text className="text-sm font-semibold mb-4">Pick Up Details</Text>
-          <View className="flex gap-4 flex-wrap">
-            <Item
-              description={delivery?.pickUpName || 'N/A'}
-              title="Contact Person"
-            />
-            <Item
-              description={delivery?.pickUpPhoneNo || 'N/A'}
-              descriptionComponent={
-                delivery?.pickUpPhoneNo ? (
-                  <a
-                    className="text-blue-500 hover:underline"
-                    href={`tel:${delivery?.pickUpPhoneNo}`}
-                  >
-                    {delivery?.pickUpPhoneNo}
-                  </a>
-                ) : undefined
-              }
-              title="Pick Up Phone"
-            />
-            <View className="w-full">
-              <Item
-                description={delivery?.pickUpAddress || 'N/A'}
-                title="Pick Up Location"
-              />
-            </View>
-          </View>
-        </View>
-
-        <View className="flex justify-center my-4">
-          <ArrowDownIcon className="text-gray-400" />
-        </View>
-        <View className="border p-2 bg-gray-50">
-          <Text className="text-sm font-semibold mb-4">Drop Off Details</Text>
-          <View className="flex gap-4 flex-wrap">
-            <Item
-              description={delivery?.receiverName || 'N/A'}
-              title="Contact Person"
-            />
-            <Item
-              description={delivery?.deliveryPhoneNo || 'N/A'}
-              descriptionComponent={
-                delivery?.deliveryPhoneNo ? (
-                  <Text className="text-blue-500 hover:underline">
-                    {delivery?.deliveryPhoneNo}
-                  </Text>
-                ) : null
-              }
-              title="Phone No"
-            />
-            <View className="w-full">
-              <Item
-                description={delivery?.deliveryAddress || 'N/A'}
-                title="Pick Up Location"
-              />
-            </View>
-          </View>
-        </View>
-
-        <View className="flex w-full justify-between">
-          <Button label="Close" onPress={onClose} pale />
-
-          <View className="flex gap-2">
-            {invoice && invoice.status === 'pending' && (
-              <Button
-                className="bg-green-500"
-                label={'Pay Now'}
-                onPress={invoiceHandler.onOpen}
-              />
-            )}
-            <Button
-              className="bg-red-500"
-              disabled={isLoading}
-              label={'Cancel Delivery'}
-              onPress={() => {
-                if (delivery) onCancelDelivery?.();
-              }}
-              pale
-            />
-          </View>
+          <Button label="Close" light onPress={onClose} />
         </View>
       </View>
 
@@ -186,49 +157,10 @@ const ViewDeliveryComponent = ({
     </View>
   );
 };
-interface ItemProps {
-  title: string;
-  description?: string;
-  descriptionComponent?: React.ReactNode;
-}
-
-const Item = ({ title, description, descriptionComponent }: ItemProps) => {
-  return (
-    <View className="">
-      <Text className="font-semibold capitalize text-xs text-gray-600">
-        {title}
-      </Text>
-      {descriptionComponent || (
-        <Text className="text-sm font-bold text-gray-700">{description}</Text>
-      )}
-    </View>
-  );
-};
-interface ProfileCardProps {
-  size?: number;
-  name?: string;
-  role?: string;
-}
-
-const ProfileCard = ({ size, name, role }: ProfileCardProps) => {
-  return (
-    <View className="bg-white border p-2 rounded-lg flex items-center gap-2">
-      <Avatar size={size || 80} />
-      <View>
-        <Text className="font-semibold text-sm text-gray-700">{name}</Text>
-        <Text className="text-xs text-gray-500">{role || 'Store Manager'}</Text>
-      </View>
-    </View>
-  );
-};
 
 const ViewDeliveryModal = (props: Props) => {
-  const {
-    bottomSheetRef,
-    handlePresentBottomSheet,
-    handleSheetChanges,
-    handleCloseBottomSheet,
-  } = useAppBottomSheetModal();
+  const { bottomSheetRef, handlePresentBottomSheet, handleSheetChanges, handleCloseBottomSheet } =
+    useAppBottomSheetModal();
 
   useEffect(() => {
     if (props.isOpen) {

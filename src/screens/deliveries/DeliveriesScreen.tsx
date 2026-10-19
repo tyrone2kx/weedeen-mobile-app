@@ -116,7 +116,7 @@ const DeliveriesScreen: FC<
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
-            icon={<BikeIcon color={theme.blue.DEFAULT} size={30} />}
+            icon={<BikeIcon color={theme.blue.DEFAULT} size={22} />}
             isLoading={statisticsLoading}
             title="Pending Deliveries"
             value={statistics?.totalPendingDeliveries}

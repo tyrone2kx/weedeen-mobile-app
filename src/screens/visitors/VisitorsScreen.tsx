@@ -105,19 +105,20 @@ const VisitorsScreen: FC<
           backgroundColor: theme.white[400],
         }}
       />
-      <Header headerTitle="My Visitors" navigation={navigation} />
+      <Header eyebrow="Guest access" headerTitle="My Visitors" navigation={navigation} />
       <View className="p-4 relative" style={globalStyles.screen}>
-        <View className="flex-row gap-2 justify-between">
+        <View className="flex-row gap-3 justify-between">
           <StatCard
             className="flex-1"
-            icon={<UserIcon color={theme.blue.DEFAULT} size={40} />}
+            icon={<UserIcon color={theme.blue.DEFAULT} size={22} />}
             isLoading={statisticsLoading}
             title="Total Visitors"
             value={statistics?.totalVisitors}
           />
           <StatCard
             className="flex-1"
-            icon={<UserPlusIcon color={theme.blue.DEFAULT} size={40} />}
+            filled
+            icon={<UserPlusIcon color="#FFFFFF" size={22} />}
             isLoading={statisticsLoading}
             title="Incoming Visitors"
             value={statistics?.totalExpectantVisitors}
@@ -133,9 +134,9 @@ const VisitorsScreen: FC<
                   <FilterIcon color={theme.black[600]} size={18} />
                 </TouchableOpacity>
               }
-              IconLeft={<SearchIcon />}
+              IconLeft={<SearchIcon color={theme.gray[400]} size={18} />}
               onChange={e => setSearchText(e)}
-              placeholder="Seach by guest name"
+              placeholder="Search by guest name"
               value={searchText}
             />
             <Accordion handler={filterHandler} title="Select filters">
@@ -194,7 +195,7 @@ const VisitorsScreen: FC<
                 <Button label="Generate Access Code" onPress={handler.onOpen} />
               }
               description="There are no visitors."
-              icon={<UserCircleIcon size={40} />}
+              icon={<UserCircleIcon size={34} />}
               section
               title="No Visitors"
             />
@@ -214,10 +215,10 @@ const VisitorsScreen: FC<
       </View>
 
       <Circle
-        className="absolute right-6 bottom-6 elevation-md"
+        className="absolute right-6 bottom-6"
         color={theme.blue.DEFAULT}
         onPress={handler.onOpen}
-        size={70}
+        size={60}
       >
         <UserPlusIcon color={theme.white.DEFAULT} />
       </Circle>

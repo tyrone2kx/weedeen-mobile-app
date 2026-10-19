@@ -1,127 +1,128 @@
+import Button from '@wd/components/Button/Button';
 import CustomModal from '@wd/components/CustomModal/CustomModal';
-import Tag from '@wd/components/Tag/Tag';
+import Tag, { TagVariant } from '@wd/components/Tag/Tag';
 import Text from '@wd/components/Text/Text';
 import { UserFee } from '@wd/generated';
-import { useAppSelector } from '@wd/redux-store/hooks/useAppSelector';
-import {
-  formatNairaWithKobo,
-  resolveInvoiceStatusColors,
-} from '@wd/utils/helpers';
+import { formatNairaWithKobo } from '@wd/utils/helpers';
+import useTheme from '@wd/utils/theme/useTheme';
 import moment from 'moment';
-import { Dimensions, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 interface Props {
   invoice: UserFee;
   isOpen: boolean;
   onClose: () => void;
+  /** Called when the resident taps "Pay Now" on an unpaid invoice. */
+  onPayNow?: () => void;
 }
 
-const ViewUserFeeModal = ({ invoice, isOpen, onClose }: Props) => {
-  const { height } = Dimensions.get('screen');
-  const user = useAppSelector(state => state.user);
-  const currentUser = user.currentUser;
-
-  const userAddress = currentUser?.unitLabel || '';
+const ViewUserFeeModal = ({ invoice, isOpen, onClose, onPayNow }: Props) => {
+  const { theme } = useTheme();
   const fee = invoice?.fee;
+  const isPaid = !!invoice?.isPaid;
+  const status: { title: string; variant: TagVariant } = isPaid
+    ? { title: 'Paid', variant: 'success' }
+    : { title: 'Unpaid', variant: 'danger' };
+
   return (
     <CustomModal
-      className="p-0"
+      buttons={
+        !isPaid && onPayNow ? (
+          <Button label="Pay Now" light onPress={onPayNow} />
+        ) : undefined
+      }
       isOpen={isOpen}
       onClose={onClose}
       title="Invoice"
     >
-      <View className="w-full p-4 bg-gray-100 flex-row justify-around">
-        {
-          <>
-            <View
-              className="w-full md:w-[60%] xl:w-[70%] max-w-[800] bg-gray-50 border-gray-400 border-1 rounded-xl shadow-lg flex-col justify-between"
-              style={{
-                minHeight: height - 300,
-              }}
-            >
-              <View>
-                <View className="p-4 rounded-xl gap-4 justify-between text-[#5E6470]">
-                  <View className="flex-row  justify-between ">
-                    <View className="flex-row gap-3">
-                      <Image
-                        className="h-12 w-12 rounded-lg"
-                        source={require('@assets/images/weedeen.png')}
-                      />
-                      <View>
-                        <Text className="font-bold text-[#1A1C21] whitespace-nowrap">
-                          Weedeen Inc
-                        </Text>
-                        <Text className="text-xs">hello@weedeen.com</Text>
-                      </View>
-                    </View>
-                    <View>
-                      <Tag
-                        color={resolveInvoiceStatusColors(
-                          invoice?.isPaid ? 'paid' : 'pending',
-                        )}
-                        title={invoice?.isPaid ? 'Paid' : 'Unpaid'}
-                      />
-                    </View>
-                  </View>
-
-                  <View>
-                    <Text className="text-2xl font-bold">Fee</Text>
-                    <Text className="text-xs">{invoice?.fee?.title}</Text>
-                  </View>
-                </View>
-
-                <View className="p-4 justify-between my-2">
-                  <View className="flex-row gap-3 text-center">
-                    <View className="mb-3">
-                      <Text className=" text-[10px]">Invoice Date</Text>
-                      <Text className="font-bold">
-                        {moment(invoice?.createdAt).format('Do MMM, YYYY')}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text className=" text-[10px]">Due Date</Text>
-                      <Text className="font-bold">
-                        {moment(invoice?.createdAt)
-                          .add(1, 'y')
-                          .format('Do MMM, YYYY')}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View>
-                    <Text className="text-[10px] text-right mr-4 uppercase">
-                      Amount Due
-                    </Text>
-                    <View className="p-2 px-4 bg-[#E3FA7D]">
-                      <Text className="text-right text-[#6735F4] font-semibold text-sm">
-                        {formatNairaWithKobo(fee?.amount)}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-
-                <View className="px-4 text-xs">
-                  <View className="flex-row justify-between text-[#5E6470] border-b py-2 mb-4 uppercase text-[10px]">
-                    <View className="flex-row space-x-3">
-                      <Text>#</Text>
-                      <Text>Title/Description</Text>
-                    </View>
-                  </View>
-
-                  <View className="flex-row justify-between text-[#5E6470] border-b py-2 ">
-                    <View className="">
-                      <Text className="font-bold">{fee?.description}</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View className="p-4 text-[#5E6470] text-xs">
-                <Text className="my-6">Thank you for the business!</Text>
-              </View>
+      <View className="gap-5">
+        {/* Issuer */}
+        <View className="flex-row items-start justify-between">
+          <View className="flex-row items-center gap-3">
+            <Image
+              source={require('@assets/images/weedeen.png')}
+              style={{ height: 44, width: 44, borderRadius: 12 }}
+            />
+            <View>
+              <Text intent="md" weight="bold">
+                Weedeen Inc
+              </Text>
+              <Text intent="xs" style={{ color: theme.gray[500] }}>
+                hello@weedeen.com
+              </Text>
             </View>
-          </>
-        }
+          </View>
+          <Tag title={status.title} variant={status.variant} />
+        </View>
+
+        {/* Fee */}
+        <View
+          className="rounded-2xl p-4"
+          style={{ backgroundColor: theme.white[300] }}
+        >
+          <Text intent="xs" style={{ color: theme.gray[500] }} weight="medium">
+            Fee
+          </Text>
+          <Text intent="h4" style={{ marginTop: 2 }} weight="bold">
+            {fee?.title}
+          </Text>
+
+          <View className="mt-4 flex-row">
+            <View style={{ flex: 1 }}>
+              <Text intent="xs" style={{ color: theme.gray[500] }}>
+                Invoice Date
+              </Text>
+              <Text intent="sm" style={{ marginTop: 2 }} weight="semibold">
+                {moment(invoice?.createdAt).format('Do MMM, YYYY')}
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text intent="xs" style={{ color: theme.gray[500] }}>
+                Due Date
+              </Text>
+              <Text intent="sm" style={{ marginTop: 2 }} weight="semibold">
+                {moment(invoice?.createdAt).add(1, 'y').format('Do MMM, YYYY')}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Amount due banner */}
+        <View
+          className="flex-row items-center justify-between rounded-2xl px-5 py-4"
+          style={{ backgroundColor: theme.blue.DEFAULT }}
+        >
+          <Text
+            intent="sm"
+            style={{ color: 'rgba(255,255,255,0.85)' }}
+            weight="semibold"
+          >
+            AMOUNT DUE
+          </Text>
+          <Text intent="h3" style={{ color: '#fff' }} weight="extrabold">
+            {formatNairaWithKobo(fee?.amount)}
+          </Text>
+        </View>
+
+        {/* Description */}
+        {fee?.description ? (
+          <View>
+            <Text
+              intent="xs"
+              style={{ color: theme.gray[500] }}
+              weight="medium"
+            >
+              Title/Description
+            </Text>
+            <Text intent="sm" style={{ marginTop: 6, color: theme.black[600] }}>
+              {fee?.description}
+            </Text>
+          </View>
+        ) : null}
+
+        <Text intent="sm" style={{ color: theme.gray[500], marginTop: 4 }}>
+          Thank you for the business!
+        </Text>
       </View>
     </CustomModal>
   );

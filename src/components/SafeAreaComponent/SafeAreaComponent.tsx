@@ -1,23 +1,21 @@
 import { useColorScheme } from 'nativewind';
 import { FC } from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StatusBarProps,
-  ViewProps,
-} from 'react-native';
+import { StatusBar, StatusBarProps, ViewProps } from 'react-native';
+import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 import FocusAwareStatusBar from '../StatusBar/StatusBar';
 
 type SafeAreaComponentProps = ViewProps & {
   isDark?: boolean;
   statusBarProps?: StatusBarProps;
   focusAwareStatusBar?: boolean;
+  edges?: readonly Edge[];
 };
 
 const SafeAreaComponent: FC<SafeAreaComponentProps> = ({
   isDark,
   statusBarProps,
   focusAwareStatusBar = false,
+  edges = ['top'],
   ...props
 }) => {
   const { colorScheme = 'light' } = useColorScheme();
@@ -29,7 +27,7 @@ const SafeAreaComponent: FC<SafeAreaComponentProps> = ({
 
   return (
     <>
-      <SafeAreaView {...props} />
+      <SafeAreaView edges={edges} {...props} />
       {focusAwareStatusBar ? (
         <FocusAwareStatusBar
           animated

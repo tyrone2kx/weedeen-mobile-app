@@ -203,14 +203,15 @@ const OrdersScreen: FC<MenuStackScreenProps<RoutesEnum.ORDERS_SCREEN>> = ({
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
-            icon={<ShoppingBagIcon color={theme.blue.DEFAULT} size={30} />}
+            icon={<ShoppingBagIcon color={theme.blue.DEFAULT} size={22} />}
             isLoading={isLoadingStats}
             title="Pending Orders"
             value={stats?.pendingOrders}
           />
           <StatCard
             className="flex-1"
-            icon={<ReceiptTextIcon color={theme.blue.DEFAULT} size={30} />}
+            filled
+            icon={<ReceiptTextIcon color="#FFFFFF" size={22} />}
             isLoading={isLoadingStats}
             title="Total Amount Spent"
             value={formatNairaWithKobo(stats?.totalAmount)}

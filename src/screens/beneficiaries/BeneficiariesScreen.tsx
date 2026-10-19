@@ -1,3 +1,4 @@
+import Avatar from '@wd/components/Avatar/Avatar';
 import Button from '@wd/components/Button/Button';
 import ConfirmationModal from '@wd/components/ConfirmationModal/ConfirmationModal';
 import EmptyState from '@wd/components/EmptyState/EmptyState';
@@ -52,7 +53,7 @@ const BeneficiariesScreen: FC<
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
-            icon={<UsersIcon color={theme.blue.DEFAULT} size={40} />}
+            icon={<UsersIcon color={theme.blue.DEFAULT} size={22} />}
             isLoading={isLoading}
             title="Total Beneficiaries"
             value={beneficiaries.length}
@@ -95,18 +96,32 @@ const BeneficiariesScreen: FC<
               {beneficiaries.map((item, index) => (
                 <View
                   key={`${item.id || ''}${index}`}
-                  className="mb-3 flex-row items-center justify-between rounded-lg border border-gray-200 p-4"
+                  className="mb-3 flex-row items-center gap-3 rounded-2xl bg-white p-4"
+                  style={{
+                    borderWidth: 1,
+                    borderColor: theme.gray[200],
+                    shadowColor: '#101828',
+                    shadowOpacity: 0.05,
+                    shadowRadius: 8,
+                    shadowOffset: { width: 0, height: 3 },
+                    elevation: 2,
+                  }}
                 >
-                  <View>
-                    <Text className="font-semibold">
+                  <Avatar
+                    name={`${item.user?.firstName} ${item.user?.lastName}`}
+                    showName
+                    size={44}
+                  />
+                  <View style={{ flex: 1 }}>
+                    <Text intent="md" numberOfLines={1} weight="bold">
                       {item.user?.firstName} {item.user?.lastName}
                     </Text>
-                    <Text className="text-xs text-gray-500">
+                    <Text intent="xs" style={{ color: theme.gray[500] }}>
                       {item.user?.email}
                     </Text>
                   </View>
-                  <TouchableOpacity onPress={() => onRemove(item)}>
-                    <Text className="text-sm font-semibold text-red-500">
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => onRemove(item)}>
+                    <Text intent="sm" style={{ color: theme.red.DEFAULT }} weight="semibold">
                       Remove
                     </Text>
                   </TouchableOpacity>

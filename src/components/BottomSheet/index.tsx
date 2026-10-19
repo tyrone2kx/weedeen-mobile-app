@@ -79,23 +79,28 @@ export const AppBottomSheet: FC<AppBottomSheetProps> = ({
       {...props}
     >
       <View
-        className="flex-auto bg-white-300"
+        className="flex-auto overflow-hidden rounded-t-[24px] bg-white"
         style={[borderTopStyle, { paddingTop: top }]}
       >
-        <View className="flex-row items-center justify-between gap-x-4 border-b border-b-gray-200 bg-white px-5 py-4">
+        {/* Grab handle */}
+        <View style={styles.handleWrap}>
+          <View style={styles.handle} />
+        </View>
+
+        <View className="flex-row items-center justify-between gap-x-4 px-5 pb-4">
           {headerComponent || (
             <Text
               className="flex-1"
-              intent="h4"
+              intent="h3"
               numberOfLines={1}
-              weight="semibold"
+              weight="bold"
             >
               {headerTitle}
             </Text>
           )}
           <TouchableOpacity
             activeOpacity={0.8}
-            className="h-[42px] w-[42px] items-center justify-center rounded-full bg-gray-150"
+            className="h-[38px] w-[38px] items-center justify-center rounded-full bg-gray-150"
             onPress={() => {
               callBackOnClose?.();
               bottomSheetRef?.current?.close();
@@ -104,9 +109,10 @@ export const AppBottomSheet: FC<AppBottomSheetProps> = ({
               }, 100);
             }}
           >
-            <CloseIcon color={Theme.colors.black[600]} height={20} width={20} />
+            <CloseIcon color={Theme.colors.black[600]} height={18} width={18} />
           </TouchableOpacity>
         </View>
+
         <BottomSheetScrollView
           contentContainerStyle={[styles.sheetContentContainer]}
           showsVerticalScrollIndicator={false}
@@ -131,14 +137,23 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
   },
-
+  handleWrap: {
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 12,
+  },
+  handle: {
+    width: 40,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: '#D0D5DD',
+  },
   sheetContainer: {
     flex: 1,
   },
-
   sheetContentContainer: {
     paddingHorizontal: 18,
-    paddingTop: 20,
+    paddingTop: 8,
     paddingBottom: 64,
     flexGrow: 1,
   },

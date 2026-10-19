@@ -396,8 +396,9 @@ export const handleError = (
   const { body, status } = err;
   if (body && !response) {
     response = {
-      data: body.error || body,
-      status: body?.error?.statusCode || body?.status || status,
+      data: body,
+      status:
+        body?.error?.statusCode || body?.statusCode || body?.status || status,
     };
   }
   let msg;
@@ -445,7 +446,8 @@ export const handleError = (
     (limitErrorCode === 'UNIT_LIMIT_EXCEEDED' ||
       limitErrorCode === 'USER_LIMIT_PER_UNIT_EXCEEDED')
   ) {
-    msgObj['403'] = `${msg} Please upgrade your plan or contact support to add more.`;
+    msgObj['403'] =
+      `${msg} Please upgrade your plan or contact support to add more.`;
   }
   if (!msgObj[`${statusCode}`]) {
     msgObj[`${statusCode}`] = constMessage;

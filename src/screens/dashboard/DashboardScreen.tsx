@@ -28,7 +28,11 @@ const DashboardScreen: FC<
           backgroundColor: theme.white[400],
         }}
       />
-      <Header headerTitle={`Hi ${user?.firstName}`} navigation={navigation} />
+      <Header
+        eyebrow="Welcome back"
+        headerTitle={`Hi ${user?.firstName} 👋`}
+        navigation={navigation}
+      />
       <View className="p-4 relative" style={globalStyles.screen}>
         <InfiniteScrollView
           callback={() => {
@@ -53,7 +57,7 @@ const DashboardScreen: FC<
           ) : !posts.length ? (
             <EmptyState
               description="There are no available news and updates at this time"
-              icon={<ImageIcon color={'white'} size={40} />}
+              icon={<ImageIcon size={34} />}
               section
               title="No posts available"
             />

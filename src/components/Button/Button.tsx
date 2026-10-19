@@ -58,28 +58,23 @@ const Button: FC<ButtonProps> = ({
 
   const { theme } = useTheme();
 
-  const background =
-    pale || light
-      ? 'transparent'
-      : backgroundColor || style?.backgroundColor || theme.blue.DEFAULT;
+  const isOutline = pale || light;
 
-  const paleStyle = pale
+  const background = isOutline
+    ? 'transparent'
+    : backgroundColor || style?.backgroundColor || theme.blue.DEFAULT;
+
+  const outlineStyle = isOutline
     ? {
-        borderWidth: 1,
+        borderWidth: 1.5,
         borderColor: theme.blue.DEFAULT,
       }
-    : light
-      ? {
-          borderWidth: 1,
-          borderColor: theme.blue.DEFAULT,
-        }
-      : {};
+    : {};
 
-  const textColor = pale
-    ? theme.blue.DEFAULT
-    : light
-      ? theme.blue.DEFAULT
-      : theme.white.DEFAULT;
+  const textColor = isOutline ? theme.blue.DEFAULT : theme.white.DEFAULT;
+
+  // Disabled: solid buttons get a light-brand tint (matches mockup); outlines dim.
+  const disabledBackground = isOutline ? 'transparent' : 'rgba(37,99,235,0.45)';
 
   const reanimatedStyle = useAnimatedStyle(() => {
     return {
@@ -107,7 +102,7 @@ const Button: FC<ButtonProps> = ({
   }, [isLoading, startLoading, stopLoading]);
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={0.85}
       disabled={disabled}
       onPress={() => {
         if (!isLoading) {
@@ -116,8 +111,8 @@ const Button: FC<ButtonProps> = ({
       }}
       style={[
         styles.buttonContainer,
-        paleStyle,
-        { backgroundColor: disabled ? theme.gray[150] : background },
+        outlineStyle,
+        { backgroundColor: disabled ? disabledBackground : background },
         style,
       ]}
       {...props}
@@ -126,22 +121,22 @@ const Button: FC<ButtonProps> = ({
         className={getStringValue(textContainerStyle)}
         style={[
           styles.animatedView,
-          { backgroundColor: 'rgba(0,0,0,0.5)' },
+          { backgroundColor: 'rgba(255,255,255,0.25)' },
           reanimatedStyle,
           getObjectValue(textContainerStyle),
         ]}
       />
       {isLoading ? (
-        <ActivityIndicator color="#fff" />
+        <ActivityIndicator color={isOutline ? theme.blue.DEFAULT : '#fff'} />
       ) : (
         <>
           {IconLeft && IconLeft}
-          {label && (
+          {label !== undefined && label !== '' && (
             <Text
               style={[
                 styles.text,
                 {
-                  color: disabled ? theme.gray.DEFAULT : textColor,
+                  color: textColor,
                 },
                 fontStyle,
               ]}
@@ -159,22 +154,22 @@ const Button: FC<ButtonProps> = ({
 const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 14,
     flexDirection: 'row',
-    height: 48,
+    height: 52,
     justifyContent: 'center',
     marginLeft: 'auto',
     marginRight: 'auto',
     overflow: 'hidden',
-    paddingHorizontal: 10,
+    paddingHorizontal: 16,
     position: 'relative',
     width: '100%',
+    gap: 8,
   },
   text: {
-    fontFamily: Fonts.medium,
-    fontSize: 14,
+    fontFamily: Fonts.semibold,
+    fontSize: 15,
     textAlign: 'center',
-    marginHorizontal: 8,
   },
   animatedView: {
     bottom: 0,

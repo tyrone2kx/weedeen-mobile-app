@@ -31,15 +31,13 @@ const FeesScreen: FC<FeesStackScreenProps<RoutesEnum.FEES_SCREEN>> = ({
       />
       <Header headerTitle="My Fees" navigation={navigation} />
       <View className="p-4 relative" style={globalStyles.screen}>
-        <View className="flex-row gap-2 justify-between">
-          <StatCard
-            className="flex-1"
-            icon={<ReceiptIcon color={theme.blue.DEFAULT} size={40} />}
-            isLoading={isLoadingStats}
-            title="Outstanding Amount"
-            value={formatNairaWithKobo(stats?.totalAmountUnpaid)}
-          />
-        </View>
+        <StatCard
+          filled
+          icon={<ReceiptIcon color="#FFFFFF" size={22} />}
+          isLoading={isLoadingStats}
+          title="Outstanding Amount"
+          value={formatNairaWithKobo(stats?.totalAmountUnpaid)}
+        />
 
         <ResidentInvoicesComponent refetchStats={refetchStats} />
       </View>

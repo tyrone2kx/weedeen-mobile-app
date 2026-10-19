@@ -14,13 +14,14 @@ const Circle: FC<IProps> = ({
   size,
   style,
   children,
-  color = '#9ca3af',
+  color = '#2563EB',
   className,
   onPress,
 }) => {
   return (
     <TouchableOpacity
-      className={`h-[36px] w-[36px] items-center bg-gray-400 justify-center rounded-[36px] bg-gray ${className}`}
+      activeOpacity={0.85}
+      className={`items-center justify-center ${className ?? ''}`}
       onPress={onPress}
       style={[
         {
@@ -28,6 +29,11 @@ const Circle: FC<IProps> = ({
           height: size,
           borderRadius: size / 2,
           backgroundColor: color || style?.backgroundColor,
+          shadowColor: color || '#2563EB',
+          shadowOpacity: 0.3,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: 8 },
+          elevation: 6,
         },
         style,
       ]}

@@ -2,19 +2,19 @@ import { light } from './theme/colors';
 
 export const Theme = {
   passport: {
-    green: '#4ABE82',
-    orange: '#FD6E5E',
-    blue: '#3677FF',
-    yellow: '#FFC531',
-    purple: '#D156FF',
+    green: '#12B76A',
+    orange: '#F79009',
+    blue: '#2563EB',
+    yellow: '#F5C518',
+    purple: '#7C3AED',
     pale_orange: '#FFA588',
     brown: '#854F28',
-    gray: '#8C8C8C',
+    gray: '#98A2B3',
   },
-  green: '#0B7A68',
+  green: '#039855',
   red: '#D92D20',
-  amber: '#F59E0B',
-  primary: '#0057FF',
+  amber: '#DC6803',
+  primary: '#2563EB',
 
   colors: light,
 } as const;

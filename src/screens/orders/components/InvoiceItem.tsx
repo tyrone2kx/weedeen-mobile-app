@@ -1,5 +1,5 @@
-import Circle from '@wd/components/Circle/Circle';
 import MenuComponent from '@wd/components/MenuComponent/MenuComponent';
+import Tag, { TagVariant } from '@wd/components/Tag/Tag';
 import Text from '@wd/components/Text/Text';
 import { Invoice } from '@wd/generated';
 import { formatNairaWithKobo } from '@wd/utils/helpers';
@@ -15,101 +15,80 @@ interface Props {
   onView?: () => void;
 }
 
+const statusMap: Record<string, { title: string; variant: TagVariant }> = {
+  completed: { title: 'Completed', variant: 'success' },
+  paid: { title: 'Paid', variant: 'success' },
+  pending: { title: 'Pending', variant: 'info' },
+  cancelled: { title: 'Canceled', variant: 'danger' },
+  failed: { title: 'Canceled', variant: 'danger' },
+};
+
 const InvoiceItem = ({ invoice, onCancel, onView }: Props) => {
   const { theme } = useTheme();
-  const { color, title, textColor } = resolveStatus(invoice);
+  const s = statusMap[invoice.status] || { title: 'Unknown', variant: 'neutral' };
   const stores = invoice.orders.map(order => order.store?.name).join(', ');
 
   return (
     <View
-      className="rounded-xl bg-white border p-4 mb-4"
+      className="mb-4 rounded-2xl bg-white p-4"
       style={{
-        borderColor: theme.gray[300],
-        borderLeftWidth: 3,
-        borderLeftColor: color,
+        borderWidth: 1,
+        borderColor: theme.gray[200],
+        shadowColor: '#101828',
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 3 },
+        elevation: 2,
       }}
     >
-      <View className="flex-row justify-between">
-        <View className="items-start gap-2 flex-row mb-4">
-          <HashIcon color={theme.blue.DEFAULT} size={30} />
-          <View>
-            <View className="flex-row gap-2">
-              <Text>{invoice.id}</Text>
-              <View className="flex-row gap-2 items-center">
-                <Circle size={5} />
-                <Text className="text-sm text-gray-400" weight="light">
-                  {moment(invoice.createdAt).fromNow()}
-                </Text>
-              </View>
-            </View>
-            <Text className="text-sm" style={{ color: textColor }}>
-              {title}
+      <View className="flex-row items-start justify-between">
+        <View className="flex-1 flex-row items-center gap-3">
+          <View
+            className="items-center justify-center rounded-xl"
+            style={{ width: 44, height: 44, backgroundColor: theme.blue[300] }}
+          >
+            <HashIcon color={theme.blue.DEFAULT} size={20} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text intent="md" numberOfLines={1} weight="bold">
+              {invoice.id}
+            </Text>
+            <Text intent="xs" style={{ color: theme.gray[500] }}>
+              {moment(invoice.createdAt).fromNow()}
             </Text>
           </View>
         </View>
-
-        <MenuComponent
-          id={`inv-item-${invoice.id}`}
-          menuList={[
-            { label: 'View', onPress: onView },
-            { label: 'Cancel', onPress: onCancel },
-          ]}
-        />
+        <View className="flex-row items-center gap-2">
+          <Tag title={s.title} variant={s.variant} />
+          <MenuComponent
+            id={`inv-item-${invoice.id}`}
+            menuList={[
+              { label: 'View', onPress: onView },
+              { label: 'Cancel', onPress: onCancel },
+            ]}
+          />
+        </View>
       </View>
+
       <View
-        className={`p-2 rounded-lg mb-4`}
-        style={{ backgroundColor: '#f2f2f2' }}
+        className="mt-3 rounded-xl p-3"
+        style={{ backgroundColor: theme.white[300] }}
       >
-        <Text className="text-sm font-semibold">Stores</Text>
-        <Text className="mt-2">{stores || 'Not Specified'}</Text>
+        <Text intent="xs" style={{ color: theme.gray[500] }} weight="semibold">
+          Stores
+        </Text>
+        <Text intent="sm" style={{ marginTop: 2 }}>
+          {stores || 'Not Specified'}
+        </Text>
       </View>
 
-      <View className="flex-row justify-end">
-        <Text className="font-bold">{formatNairaWithKobo(invoice.amount)}</Text>
+      <View className="mt-3 flex-row justify-end">
+        <Text intent="md" weight="bold">
+          {formatNairaWithKobo(invoice.amount)}
+        </Text>
       </View>
     </View>
   );
-};
-
-const resolveStatus = (order: Invoice) => {
-  switch (order.status) {
-    case 'completed':
-      return {
-        title: 'Completed',
-        color: '#E8F5E9',
-        textColor: '#388E3C',
-      };
-    case 'cancelled':
-      return {
-        title: 'Canceled',
-        color: '#FFEBEE',
-        textColor: '#D32F2F',
-      };
-    case 'pending':
-      return {
-        title: 'Pending',
-        color: '#E3F2FD',
-        textColor: '#1976D2',
-      };
-    case 'paid':
-      return {
-        title: 'Paid',
-        color: '#E8F5E9',
-        textColor: '#388E3C',
-      };
-    case 'failed':
-      return {
-        title: 'Canceled',
-        color: '#FFEBEE',
-        textColor: '#D32F2F',
-      };
-    default:
-      return {
-        title: 'Unknown',
-        color: '#EEEEEE',
-        textColor: '#888888',
-      };
-  }
 };
 
 export default InvoiceItem;

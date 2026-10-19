@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/immutability */
 import Text from '@wd/components/Text/Text';
+import useTheme from '@wd/utils/theme/useTheme';
 import { FC, ReactNode, useCallback, useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withRepeat,
   withSpring,
 } from 'react-native-reanimated';
 
@@ -30,34 +30,18 @@ const TabButton: FC<TabButtonProps> = ({
   textColor,
   onLongPress,
 }) => {
-  const animatedScale = useSharedValue(1);
+  const { theme } = useTheme();
   const animatedTranslateY = useSharedValue(0);
 
   const animatedIconStyles = useAnimatedStyle(() => {
     return {
-      transform: [
-        { scale: animatedScale.value },
-        { translateY: animatedTranslateY.value },
-      ],
+      transform: [{ translateY: animatedTranslateY.value }],
     };
   });
 
-  const handleFocusButton = useCallback(() => {
-    animatedScale.value = withRepeat(withSpring(0.9), 2, true);
-    animatedTranslateY.value = withSpring(-3);
-  }, [animatedScale, animatedTranslateY]);
-
-  const handleUnFocusButton = useCallback(() => {
-    animatedTranslateY.value = withSpring(0);
-  }, [animatedTranslateY]);
-
   useEffect(() => {
-    if (isFocused) {
-      handleFocusButton();
-    } else {
-      handleUnFocusButton();
-    }
-  }, [handleFocusButton, handleUnFocusButton, isFocused]);
+    animatedTranslateY.value = withSpring(isFocused ? -2 : 0);
+  }, [animatedTranslateY, isFocused]);
 
   return (
     <TouchableOpacity
@@ -65,22 +49,31 @@ const TabButton: FC<TabButtonProps> = ({
       accessibilityRole="button"
       accessibilityState={isFocused ? { selected: true } : {}}
       activeOpacity={0.8}
-      className="h-full items-center justify-center px-4"
+      className="h-full flex-1 items-center justify-center"
       key={routeName}
       onLongPress={onLongPress}
       onPress={onPress}
     >
-      <Animated.View style={[animatedIconStyles]}>
+      <Animated.View
+        style={[
+          animatedIconStyles,
+          {
+            paddingHorizontal: 18,
+            paddingVertical: 6,
+            borderRadius: 999,
+            backgroundColor: isFocused ? theme.blue[300] : 'transparent',
+          },
+        ]}
+      >
         {renderTabIcon}
       </Animated.View>
       {label ? (
         <Text
           className="mt-1 capitalize"
-          intent="sm"
+          intent="xs"
           numberOfLines={1}
-          style={{
-            color: textColor,
-          }}
+          style={{ color: textColor }}
+          weight={isFocused ? 'semibold' : 'medium'}
         >
           {label}
         </Text>

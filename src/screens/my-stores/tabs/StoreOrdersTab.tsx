@@ -76,14 +76,15 @@ const StoreOrdersTab = ({ store }: Props) => {
         <View className="flex-row gap-2 justify-between">
           <StatCard
             className="flex-1"
-            icon={<ShoppingBagIcon color={theme.blue.DEFAULT} size={30} />}
+            icon={<ShoppingBagIcon color={theme.blue.DEFAULT} size={22} />}
             isLoading={isLoadingStats}
             title="Pending Orders"
             value={statistics?.pendingOrders}
           />
           <StatCard
             className="flex-1"
-            icon={<WalletIcon color={theme.blue.DEFAULT} size={30} />}
+            filled
+            icon={<WalletIcon color="#FFFFFF" size={22} />}
             isLoading={isLoadingStats}
             title="Total Revenue"
             value={formatNairaWithKobo(statistics?.totalAmount)}

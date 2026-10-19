@@ -14,6 +14,7 @@ import { isValidNGNPhoneNumber } from '@wd/utils/formValidations';
 import { handleError, Notify } from '@wd/utils/helpers';
 import useTheme from '@wd/utils/theme/useTheme';
 import { useFormik } from 'formik';
+import { LockIcon, MailIcon } from 'lucide-react-native';
 import React, { FC, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -76,13 +77,11 @@ const LoginScreen: FC<AuthStackScreenProps<RoutesEnum.LOGIN_SCREEN>> = ({
         'Please enter a valid email',
         (value, context) => {
           if (loginType === 'email') {
-            // Check for valid email
             return Yup.string()
               .email('Please enter a valid email address')
               .required('Email is required')
               .isValidSync(value);
           } else if (loginType === 'phone') {
-            // Check for valid phone number (NGN currently)
             if (!value) {
               return context.createError({
                 message: 'Phone number is required',
@@ -164,7 +163,7 @@ const LoginScreen: FC<AuthStackScreenProps<RoutesEnum.LOGIN_SCREEN>> = ({
               <Text className="mb-3" intent="h1">
                 Log In
               </Text>
-              <Text intent="md">
+              <Text intent="md" style={{ color: theme.gray[500] }}>
                 Enter your email and password to log into your account
               </Text>
             </View>
@@ -173,6 +172,13 @@ const LoginScreen: FC<AuthStackScreenProps<RoutesEnum.LOGIN_SCREEN>> = ({
                 autoCapitalize="none"
                 className="mb-8"
                 error={touched.email ? errors.email : ''}
+                IconLeft={
+                  <MailIcon
+                    color={theme.gray[400]}
+                    size={18}
+                    style={{ marginRight: 10 }}
+                  />
+                }
                 intent="solid"
                 labelComponent={
                   <View className="w-full flex-row items-center justify-between">
@@ -183,7 +189,10 @@ const LoginScreen: FC<AuthStackScreenProps<RoutesEnum.LOGIN_SCREEN>> = ({
                         onChangeLoginType('phone');
                       }}
                     >
-                      <Text className="text-blue" intent="label">
+                      <Text
+                        intent="label"
+                        style={{ color: theme.blue.DEFAULT }}
+                      >
                         Use Phone
                       </Text>
                     </TouchableOpacity>
@@ -198,6 +207,13 @@ const LoginScreen: FC<AuthStackScreenProps<RoutesEnum.LOGIN_SCREEN>> = ({
               <Input
                 autoCapitalize="none"
                 error={touched.password ? errors.password : ''}
+                IconLeft={
+                  <LockIcon
+                    color={theme.gray[400]}
+                    size={18}
+                    style={{ marginRight: 10 }}
+                  />
+                }
                 intent="solid"
                 label="Password"
                 onBlur={() => void setFieldTouched('password')}
@@ -209,7 +225,7 @@ const LoginScreen: FC<AuthStackScreenProps<RoutesEnum.LOGIN_SCREEN>> = ({
             </View>
           </View>
           <View className="mt-8 w-full">
-            <View className="mb-10 mt-20 px-6">
+            <View className="mb-10 mt-10 px-[18px]">
               <Button
                 isLoading={loading}
                 label="Login"
@@ -224,8 +240,8 @@ const LoginScreen: FC<AuthStackScreenProps<RoutesEnum.LOGIN_SCREEN>> = ({
                     navigation.navigate(RoutesEnum.FORGOT_PASSWORD_SCREEN)
                   }
                 >
-                  <Text className="underline" weight="medium">
-                    Forgot Password
+                  <Text style={{ color: theme.blue.DEFAULT }} weight="semibold">
+                    Forgot Password?
                   </Text>
                 </TouchableOpacity>
               </View>

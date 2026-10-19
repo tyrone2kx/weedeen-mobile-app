@@ -1,5 +1,6 @@
 import { Theme } from '@wd/utils/Theme';
-import { Trash } from 'lucide-react-native';
+import useTheme from '@wd/utils/theme/useTheme';
+import { Trash2Icon } from 'lucide-react-native';
 import React, { ReactNode } from 'react';
 import { View } from 'react-native';
 import Button from '../Button/Button';
@@ -33,12 +34,17 @@ const ConfirmationModal = ({
   cancelButtonText = 'Cancel',
   descriptionComponent,
 }: IProps) => {
+  const { theme } = useTheme();
+  // A custom icon signals a non-destructive flow (e.g. payment) → brand tile.
+  const danger = !icon;
+  const tileBg = danger ? theme.red[300] : theme.blue[300];
+
   return (
     <CustomModal
       buttons={
         <View className="flex-row items-center justify-between gap-x-4">
           <View className="flex-1">
-            <Button label={cancelButtonText} onPress={onClose} />
+            <Button label={cancelButtonText} light onPress={onClose} />
           </View>
           <View className="flex-1">
             <Button
@@ -57,12 +63,18 @@ const ConfirmationModal = ({
     >
       <View className="flex-1 justify-center">
         <View className="mb-5 items-center">
-          <View className="mb-5 h-[76px] w-[76px] items-center justify-center rounded-full bg-gray-150">
-            {icon ?? <Trash color={Theme.colors.red.DEFAULT} size={30} />}
+          <View
+            className="mb-5 h-[76px] w-[76px] items-center justify-center rounded-2xl"
+            style={{ backgroundColor: tileBg }}
+          >
+            {icon ?? <Trash2Icon color={theme.red.DEFAULT} size={30} />}
           </View>
           <View className="items-center">
             {descriptionComponent ?? (
-              <Text style={{ fontSize: 15, color: Theme.colors.gray.DEFAULT }}>
+              <Text
+                intent="sm"
+                style={{ color: theme.gray[500], textAlign: 'center' }}
+              >
                 {description}
               </Text>
             )}

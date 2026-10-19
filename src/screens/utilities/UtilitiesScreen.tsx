@@ -2,12 +2,18 @@ import EmptyState from '@wd/components/EmptyState/EmptyState';
 import Header from '@wd/components/Header';
 import Loader from '@wd/components/Loader/Loader';
 import SafeAreaComponent from '@wd/components/SafeAreaComponent/SafeAreaComponent';
+import Text from '@wd/components/Text/Text';
 import { Utility } from '@wd/generated';
 import { RoutesEnum } from '@wd/navigation/enum';
 import { UtilitiesStackScreenProps } from '@wd/navigation/types';
 import { globalStyles } from '@wd/utils/GlobalStyles';
 import useTheme from '@wd/utils/theme/useTheme';
-import { WrenchIcon } from 'lucide-react-native';
+import {
+  ChevronRightIcon,
+  DropletIcon,
+  WrenchIcon,
+  ZapIcon,
+} from 'lucide-react-native';
 import { FC } from 'react';
 import {
   RefreshControl,
@@ -54,7 +60,7 @@ const UtilitiesScreen: FC<
             <EmptyState
               className="h-full"
               description="No utilities available at the moment."
-              icon={<WrenchIcon color="#fff" size={32} />}
+              icon={<WrenchIcon size={34} />}
               title="No Utility"
             />
           ) : (
@@ -85,13 +91,44 @@ const UtilityItem = ({
   item: Utility;
   onPress: () => void;
 }) => {
+  const { theme } = useTheme();
+  const name = (item.name || '').toLowerCase();
+  const Icon = name.includes('water')
+    ? DropletIcon
+    : name.includes('electric') || name.includes('power')
+      ? ZapIcon
+      : WrenchIcon;
+
   return (
     <TouchableOpacity
-      className="p-4 rounded-lg border border-l-8 border-l-blue-500 hover:border-l-green-500 hover:shadow-md w-[350px] max-w-full cursor-pointer transition-all"
+      activeOpacity={0.85}
+      className="mb-3 flex-row items-center gap-3 rounded-2xl bg-white p-4"
       onPress={onPress}
+      style={{
+        borderWidth: 1,
+        borderColor: theme.gray[200],
+        shadowColor: '#101828',
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 3 },
+        elevation: 2,
+      }}
     >
-      <h3 className="text-lg font-medium mb-2">{item.name}</h3>
-      <p className="text-sm text-gray-600">{item.description}</p>
+      <View
+        className="items-center justify-center rounded-xl"
+        style={{ width: 44, height: 44, backgroundColor: theme.blue[300] }}
+      >
+        <Icon color={theme.blue.DEFAULT} size={22} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text intent="md" weight="bold">
+          {item.name}
+        </Text>
+        <Text intent="sm" numberOfLines={2} style={{ color: theme.gray[500] }}>
+          {item.description}
+        </Text>
+      </View>
+      <ChevronRightIcon color={theme.gray[400]} size={20} />
     </TouchableOpacity>
   );
 };
