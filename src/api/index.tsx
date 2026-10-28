@@ -29,7 +29,7 @@ const config = {
     PAY_STACK_DEFAULT_EMAIL: 'info@weedeen.com',
   },
   production: {
-    API_URL: 'https://weeden-backend-dev-743175012151.us-central1.run.app',
+    API_URL: 'https://api.weedeen.com',
     PAY_STACK_KEY: 'pk_live_fa40e05c29621919e23c75941719e01948d06248',
     PAY_STACK_DEFAULT_EMAIL: 'payment@weedeen.com',
   },
