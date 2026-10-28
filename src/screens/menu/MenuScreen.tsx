@@ -45,7 +45,7 @@ const menuList = (navigate: any): MenuItem[] => [
   { title: 'Utilities', icon: <WrenchIcon color={ICON} size={20} />, onPress: () => navigate(StacksEnum.UTILITIES_STACK) },
   { title: 'My Orders', icon: <ShoppingBagIcon color={ICON} size={20} />, onPress: () => navigate(RoutesEnum.ORDERS_SCREEN) },
   { title: 'Deliveries', icon: <BikeIcon color={ICON} size={20} />, onPress: () => navigate(RoutesEnum.DELIVERIES_SCREEN) },
-  { title: 'Emergencies', icon: <AlertTriangleIcon color={ICON} size={20} />, onPress: () => navigate(RoutesEnum.EMERGENCIES_SCREEN) },
+  { title: 'Emergencies', icon: <AlertTriangleIcon color={ICON} size={20} />, onPress: () => navigate(StacksEnum.EMERGENCIES_STACK) },
   { title: 'My Stores', icon: <BuildingIcon color={ICON} size={20} />, onPress: () => navigate(StacksEnum.MY_STORES_STACK) },
   { title: 'My Staff', icon: <Contact2Icon color={ICON} size={20} />, onPress: () => navigate(StacksEnum.MY_STAFF_STACK) },
   { title: 'Beneficiaries', icon: <UserCircleIcon color={ICON} size={20} />, onPress: () => navigate(RoutesEnum.BENEFICIARIES_SCREEN), requiresPrimary: true },

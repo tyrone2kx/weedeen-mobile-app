@@ -113,46 +113,6 @@ const DeliveriesScreen: FC<
         transparent={false}
       />
       <View className="p-4 relative" style={globalStyles.screen}>
-        <View className="flex-row gap-2 justify-between">
-          <StatCard
-            className="flex-1"
-            icon={<BikeIcon color={theme.blue.DEFAULT} size={22} />}
-            isLoading={statisticsLoading}
-            title="Pending Deliveries"
-            value={statistics?.totalPendingDeliveries}
-          />
-        </View>
-
-        <View className="mt-8 flex gap-2 flex-wrap justify-between items-center">
-          <View className=" gap-2 w-full md:w-auto">
-            <Accordion title="Select filters">
-              <View className="flex flex-col md:flex-row gap-1 md:items-center w-full md:w-auto">
-                <Select
-                  className="min-w-[200px]"
-                  onChange={setStatus}
-                  options={[
-                    { label: 'Pending', value: DeliveryStatusEnum.PENDING },
-                    { label: 'Cancelled', value: DeliveryStatusEnum.CANCELLED },
-                    { label: 'Completed', value: DeliveryStatusEnum.COMPLETED },
-                  ]}
-                  placeholder="Filter by status"
-                  value={status}
-                />
-                <DatePicker
-                  onChange={setStartDate}
-                  placeholder="Filter by start date"
-                  value={startDate ? moment(startDate) : undefined}
-                />
-                <DatePicker
-                  onChange={setEndDate}
-                  placeholder="Filter by end date"
-                  value={endDate ? moment(endDate) : undefined}
-                />
-              </View>
-            </Accordion>
-          </View>
-        </View>
-
         <InfiniteScrollView
           callback={infiniteScrollCallback}
           fetching={isLoading}
@@ -167,6 +127,52 @@ const DeliveriesScreen: FC<
           showsVerticalScrollIndicator={false}
           style={{ flex: 1 }}
         >
+          <View className="flex-row gap-2 justify-between">
+            <StatCard
+              className="flex-1"
+              icon={<BikeIcon color={theme.blue.DEFAULT} size={22} />}
+              isLoading={statisticsLoading}
+              title="Pending Deliveries"
+              value={statistics?.totalPendingDeliveries}
+            />
+          </View>
+
+          <View className="mt-8 flex gap-2 flex-wrap justify-between items-center">
+            <View className=" gap-2 w-full md:w-auto">
+              <Accordion title="Select filters">
+                <View className="flex flex-col md:flex-row gap-1 md:items-center w-full md:w-auto">
+                  <Select
+                    className="min-w-[200px]"
+                    onChange={setStatus}
+                    options={[
+                      { label: 'Pending', value: DeliveryStatusEnum.PENDING },
+                      {
+                        label: 'Cancelled',
+                        value: DeliveryStatusEnum.CANCELLED,
+                      },
+                      {
+                        label: 'Completed',
+                        value: DeliveryStatusEnum.COMPLETED,
+                      },
+                    ]}
+                    placeholder="Filter by status"
+                    value={status}
+                  />
+                  <DatePicker
+                    onChange={setStartDate}
+                    placeholder="Filter by start date"
+                    value={startDate ? moment(startDate) : undefined}
+                  />
+                  <DatePicker
+                    onChange={setEndDate}
+                    placeholder="Filter by end date"
+                    value={endDate ? moment(endDate) : undefined}
+                  />
+                </View>
+              </Accordion>
+            </View>
+          </View>
+
           {isLoading ? (
             <Loader style={{ marginVertical: '50%' }} />
           ) : !deliveries.length ? (

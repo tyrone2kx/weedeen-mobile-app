@@ -23,7 +23,7 @@ import {
   WrenchIcon,
 } from 'lucide-react-native';
 import React, { FC, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import ResidentInvoicesComponent from '../fees/components/ResidentInvoicesComponent';
 import useGetFeesStatistics from '../fees/hooks/useGetFeesStatistics';
 import useVerifyPayment from '../fees/hooks/useVerifyPayment';
@@ -95,8 +95,28 @@ const UtilityProfileScreen: FC<
     },
   ];
 
+  const statsSection = (
+    <View className="flex-row gap-2 justify-between">
+      <StatCard
+        className="flex-1"
+        icon={<ReceiptIcon color={theme.blue.DEFAULT} size={22} />}
+        isLoading={isLoadingStats}
+        title="Total Invoices"
+        value={stats?.totalInvoices}
+      />
+      <StatCard
+        className="flex-1"
+        filled
+        icon={<Wallet2Icon color="#FFFFFF" size={22} />}
+        isLoading={isLoadingStats}
+        title="Total Amount Unpaid"
+        value={formatNairaWithKobo(stats?.totalAmountUnpaid)}
+      />
+    </View>
+  );
+
   return (
-    <>
+    <View className="relative" style={globalStyles.screen}>
       <SafeAreaComponent
         statusBarProps={{
           backgroundColor: theme.white[400],
@@ -109,76 +129,62 @@ const UtilityProfileScreen: FC<
         transparent={false}
       />
 
-      <View className="p-4 relative" style={globalStyles.screen}>
-        <View className="flex-row gap-2 justify-between">
-          <StatCard
-            className="flex-1"
-            icon={<ReceiptIcon color={theme.blue.DEFAULT} size={22} />}
-            isLoading={isLoadingStats}
-            title="Total Invoices"
-            value={stats?.totalInvoices}
+      <View className="flex-1 p-4">
+        {isLoading ? (
+          <Loader section />
+        ) : !utility ? (
+          <EmptyState
+            description="This might be a result of an invalid link or a network error."
+            icon={<WrenchIcon className="text-white" size={40} />}
+            section
+            title="Utility Not Found"
           />
-          <StatCard
-            className="flex-1"
-            filled
-            icon={<Wallet2Icon color="#FFFFFF" size={22} />}
-            isLoading={isLoadingStats}
-            title="Total Amount Unpaid"
-            value={formatNairaWithKobo(stats?.totalAmountUnpaid)}
-          />
-        </View>
-
-        <View>
-          {isLoading ? (
-            <Loader section />
-          ) : !utility ? (
-            <EmptyState
-              description="This might be a result of an invalid link or a network error."
-              icon={<WrenchIcon className="text-white" size={40} />}
-              section
-              title="Utility Not Found"
+        ) : (
+          <View className="flex-1">
+            <TopTab
+              activeTab={activeTab}
+              buttonStyle="border-0"
+              style={{ marginBottom: 10 }}
+              tabs={tabItems}
             />
-          ) : (
-            <View className="flex-1">
-              <TopTab
-                activeTab={activeTab}
-                buttonStyle="border-0"
-                style={{ marginBottom: 10 }}
-                tabs={tabItems}
+
+            {activeTab === TabsEnum.DETAILS && (
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {statsSection}
+                <View className="mt-4">
+                  <UtilityDetailsTab utility={utility} />
+                </View>
+              </ScrollView>
+            )}
+
+            {activeTab === TabsEnum.INVOICES && (
+              <ResidentInvoicesComponent
+                header={statsSection}
+                refetchStats={refetchStats}
+                utilityId={id}
               />
-
-              {activeTab === TabsEnum.DETAILS && (
-                <UtilityDetailsTab utility={utility} />
-              )}
-
-              {activeTab === TabsEnum.INVOICES && (
-                <ResidentInvoicesComponent
-                  refetchStats={refetchStats}
-                  utilityId={id}
-                />
-              )}
-            </View>
-          )}
-        </View>
-        <TouchableOpacity
-          activeOpacity={0.9}
-          className="absolute bottom-6 right-6 flex-row items-center gap-2 rounded-full px-6 py-4"
-          onPress={buyNowHandler.onOpen}
-          style={{
-            backgroundColor: theme.blue.DEFAULT,
-            shadowColor: theme.blue.DEFAULT,
-            shadowOpacity: 0.3,
-            shadowRadius: 12,
-            shadowOffset: { width: 0, height: 8 },
-            elevation: 6,
-          }}
-        >
-          <WalletIcon color={theme.white.DEFAULT} size={20} />
-          <Text intent="md" style={{ color: '#fff' }} weight="semibold">
-            Pay for {utility?.name}
-          </Text>
-        </TouchableOpacity>
+            )}
+          </View>
+        )}
       </View>
+      <TouchableOpacity
+        activeOpacity={0.9}
+        className="absolute bottom-6 right-6 flex-row items-center gap-2 rounded-full px-6 py-4"
+        onPress={buyNowHandler.onOpen}
+        style={{
+          backgroundColor: theme.blue.DEFAULT,
+          shadowColor: theme.blue.DEFAULT,
+          shadowOpacity: 0.3,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: 8 },
+          elevation: 6,
+        }}
+      >
+        <WalletIcon color={theme.white.DEFAULT} size={20} />
+        <Text intent="md" style={{ color: '#fff' }} weight="semibold">
+          Pay for {utility?.name}
+        </Text>
+      </TouchableOpacity>
 
       <ConfirmationModal
         buttonColor={theme.blue.DEFAULT}
@@ -194,6 +200,7 @@ const UtilityProfileScreen: FC<
             />
           </View>
         }
+        hideIcon
         isLoading={controller.isPending}
         isOpen={buyNowHandler.isOpen}
         onClose={() => {
@@ -207,7 +214,7 @@ const UtilityProfileScreen: FC<
         isOpen={paystackHandle.isOpen && !!paystackConfig?.reference}
         {...paystackModalProps}
       />
-    </>
+    </View>
   );
 };
 

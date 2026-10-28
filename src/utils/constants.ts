@@ -51,3 +51,6 @@ export const StatusMaps = {
     color: Theme.red,
   },
 };
+
+
+export const HEADER_HEIGHT = 64;

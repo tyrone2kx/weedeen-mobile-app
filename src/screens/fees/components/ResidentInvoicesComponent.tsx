@@ -30,6 +30,8 @@ interface Props {
   feeId?: string;
   utilityId?: string;
   onVerifySuccess?: () => void;
+  /** Rendered as the first (scroll-away) content inside the list's scroll view. */
+  header?: React.ReactNode;
 }
 
 const ResidentInvoicesComponent = ({
@@ -37,6 +39,7 @@ const ResidentInvoicesComponent = ({
   feeId,
   utilityId,
   onVerifySuccess,
+  header,
 }: Props) => {
   const { theme } = useTheme();
   const currentUser = useAppSelector(state => state.user?.currentUser);
@@ -115,54 +118,6 @@ const ResidentInvoicesComponent = ({
 
   return (
     <>
-      <View className="mt-8 flex gap-2 flex-wrap justify-between items-center">
-        <View className=" gap-2 w-full md:w-auto">
-          <Input
-            className="w-full md:w-[200px]"
-            Icon={
-              <TouchableOpacity onPress={filterHandler.toggle}>
-                <FilterIcon color={theme.black[600]} size={18} />
-              </TouchableOpacity>
-            }
-            IconLeft={<SearchIcon />}
-            onChange={e => setSearchText(e)}
-            placeholder="Search by fee name"
-            value={searchText}
-          />
-          <Accordion handler={filterHandler} title="Select filters">
-            <View className="flex-row justify-between items-center">
-              <Text className="mb-4" intent="h4">
-                Advanced Filters
-              </Text>
-
-              <CloseButtonIcon onPress={filterHandler.onClose} />
-            </View>
-            <View className="flex flex-col md:flex-row gap-1 md:items-center w-full md:w-auto">
-              <Select
-                className="min-w-[200px]"
-                onChange={setStatus}
-                options={[
-                  { label: 'Only Paid', value: 'paid' },
-                  { label: 'Only Unpaid', value: 'unpaid' },
-                ]}
-                placeholder="Filter by status"
-                value={status}
-              />
-              <DatePicker
-                onChange={setStartDate}
-                placeholder="Filter by start date"
-                value={startDate ? moment(startDate) : undefined}
-              />
-              <DatePicker
-                onChange={setEndDate}
-                placeholder="Filter by end date"
-                value={endDate ? moment(endDate) : undefined}
-              />
-            </View>
-          </Accordion>
-        </View>
-      </View>
-
       <InfiniteScrollView
         callback={infiniteScrollCallback}
         fetching={isLoading}
@@ -177,6 +132,56 @@ const ResidentInvoicesComponent = ({
         showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
       >
+        {header}
+
+        <View className="mt-8 flex gap-2 flex-wrap justify-between items-center">
+          <View className=" gap-2 w-full md:w-auto">
+            <Input
+              className="w-full md:w-[200px]"
+              Icon={
+                <TouchableOpacity onPress={filterHandler.toggle}>
+                  <FilterIcon color={theme.black[600]} size={18} />
+                </TouchableOpacity>
+              }
+              IconLeft={<SearchIcon />}
+              onChange={e => setSearchText(e)}
+              placeholder="Search by fee name"
+              value={searchText}
+            />
+            <Accordion handler={filterHandler} title="Select filters">
+              <View className="flex-row justify-between items-center">
+                <Text className="mb-4" intent="h4">
+                  Advanced Filters
+                </Text>
+
+                <CloseButtonIcon onPress={filterHandler.onClose} />
+              </View>
+              <View className="flex flex-col md:flex-row gap-1 md:items-center w-full md:w-auto">
+                <Select
+                  className="min-w-[200px]"
+                  onChange={setStatus}
+                  options={[
+                    { label: 'Only Paid', value: 'paid' },
+                    { label: 'Only Unpaid', value: 'unpaid' },
+                  ]}
+                  placeholder="Filter by status"
+                  value={status}
+                />
+                <DatePicker
+                  onChange={setStartDate}
+                  placeholder="Filter by start date"
+                  value={startDate ? moment(startDate) : undefined}
+                />
+                <DatePicker
+                  onChange={setEndDate}
+                  placeholder="Filter by end date"
+                  value={endDate ? moment(endDate) : undefined}
+                />
+              </View>
+            </Accordion>
+          </View>
+        </View>
+
         {isLoading ? (
           <Loader style={{ marginVertical: '50%' }} />
         ) : !invoices.length ? (

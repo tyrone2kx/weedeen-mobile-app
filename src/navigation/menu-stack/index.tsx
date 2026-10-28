@@ -12,6 +12,7 @@ import { RoutesEnum, StacksEnum } from '../enum';
 import MyStaffStack from '../my-staff-stack';
 import MyStoresStack from '../my-stores-stack';
 import SubscriptionsStack from '../subscriptions-stack';
+import EmergenciesStack from '../emergencies-stack';
 import UtilitiesStack from '../utilities-stack';
 
 const MenuNav = createNativeStackNavigator<MenuStackParamList>();
@@ -62,6 +63,10 @@ const MenuStack: FC = () => {
       <MenuNav.Screen
         component={UtilitiesStack}
         name={StacksEnum.UTILITIES_STACK}
+      />
+      <MenuNav.Screen
+        component={EmergenciesStack}
+        name={StacksEnum.EMERGENCIES_STACK}
       />
     </MenuNav.Navigator>
   );
